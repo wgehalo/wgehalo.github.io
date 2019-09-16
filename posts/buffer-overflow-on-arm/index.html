@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <title>ARM CTF - Challenge 1 :: Forest Hex — Explore Hacking</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="Hello again faithful readers! Today&amp;rsquo;s post is about exploiting a buffer overflow.
+A few days ago I was invited to attempt some binary exploitation challenges for ARM architecture. Of course I agreed, despite the fact that I have no experience debugging ARM binaries. That&amp;rsquo;s okay though, it&amp;rsquo;s how you learn.
+I was happy to see the source code provided, and even happier when I was able to quickly identify the path to success without needing a debugger at all."/>
+<meta name="keywords" content="[hacking ctf binary overflow pentest shell]"/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="/posts/buffer-overflow-on-arm/" />
+
+
+<link rel="stylesheet" href="/assets/style.css">
+
+  <link rel="stylesheet" href="/assets/green.css">
+
+
+
+
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144-precomposed.png">
+
+<link rel="shortcut icon" href="/img/favicon/green.png">
+
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="ARM CTF - Challenge 1 :: Forest Hex — Explore Hacking" />
+<meta name="twitter:description" content="Hello again faithful readers! Today&amp;rsquo;s post is about exploiting a buffer overflow.
+A few days ago I was invited to attempt some binary exploitation challenges for ARM architecture. Of course I agreed, despite the fact that I have no experience debugging ARM binaries. That&amp;rsquo;s okay though, it&amp;rsquo;s how you learn.
+I was happy to see the source code provided, and even happier when I was able to quickly identify the path to success without needing a debugger at all." />
+<meta name="twitter:site" content="/" />
+<meta name="twitter:creator" content="jivex5k" />
+<meta name="twitter:image" content="">
+
+
+<meta property="og:locale" content="en" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="ARM CTF - Challenge 1 :: Forest Hex — Explore Hacking">
+<meta property="og:description" content="Hello again faithful readers! Today&amp;rsquo;s post is about exploiting a buffer overflow.
+A few days ago I was invited to attempt some binary exploitation challenges for ARM architecture. Of course I agreed, despite the fact that I have no experience debugging ARM binaries. That&amp;rsquo;s okay though, it&amp;rsquo;s how you learn.
+I was happy to see the source code provided, and even happier when I was able to quickly identify the path to success without needing a debugger at all." />
+<meta property="og:url" content="/posts/buffer-overflow-on-arm/" />
+<meta property="og:site_name" content="ARM CTF - Challenge 1" />
+<meta property="og:image" content="">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+<meta property="article:section" content="Binary Exploitation" />
+<meta property="article:published_time" content="2019-08-30 20:27:30 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+
+
+</head>
+<body class="">
+
+
+<div class="container">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/">
+  <div class="logo">
+    Forest Hex
+  </div>
+</a>
+
+    </div>
+    <div class="menu-trigger">menu</div>
+  </div>
+  
+    <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+      
+    
+
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<div class="post">
+  <h1 class="post-title">
+    <a href="/posts/buffer-overflow-on-arm/">ARM CTF - Challenge 1</a></h1>
+  <div class="post-meta">
+    
+    <span class="post-date">
+      2019-08-30
+    </span>
+    
+    
+    <span class="post-author">::
+      jivex5k
+    </span>
+    
+  </div>
+
+  
+  <span class="post-tags">
+    tags:
+    
+    #<a href="/tags/binary-explotation/">binary explotation</a>&nbsp;
+    
+    #<a href="/tags/ctf/">ctf</a>&nbsp;
+    
+    #<a href="/tags/arm/">arm</a>&nbsp;
+    
+    #<a href="/tags/overflow/">overflow</a>&nbsp;
+    
+  </span>
+  
+
+  
+
+  <div class="post-content">
+    
+
+<p>Hello again faithful readers! Today&rsquo;s post is about exploiting a buffer overflow.</p>
+
+<p>A few days ago I was invited to attempt some binary exploitation challenges for ARM architecture. Of course I agreed, despite the fact that I have no experience debugging ARM binaries. That&rsquo;s okay though, it&rsquo;s how you learn.</p>
+
+<p>I was happy to see the source code provided, and even happier when I was able to quickly identify the path to success without needing a debugger at all. Here&rsquo;s the code:</p>
+
+<pre><code class="language-cpp">int main(int argc, char **argv)
+{
+        struct {
+                char buffer[0x80]; //Reserves 0x80 (128) bytes in memory.
+                char secret[0x10]; //Reserves 0x10 (16) bytes in memory.
+        } local_vars; //Allows access to reserved memory.
+        int i;
+        for(i=0; i&lt;0x10; i++) //Loops 0x10 (16) times.
+        {
+        		//Stores a random number in local_vars.secret
+                local_vars.secret[i] = (char)(random()%94+33);
+        }
+        printf(&quot;Try to guess my secret:&quot;);
+
+        //Saves input from STDIN in local_vars.buffer
+        gets(local_vars.buffer);
+
+        //Compares values of buffer against secret, gives flag if they match.
+        if(!strcmp(local_vars.buffer,local_vars.secret))
+        {
+                printf(&quot;Congratulations, here's your flag %s&quot;, FLAG);
+        }
+        else
+        {
+                printf(&quot;Failed!\n&quot;;);
+        }
+}
+</code></pre>
+
+<p>I&rsquo;ve commented the code explaining what each piece does. Keep in mind, when numbers are defined using <code>0xn</code> notation it means they are hexadecimal numbers, so <code>0x80</code> is <code>128</code> bytes.</p>
+
+<p>The vulnerability exists because of the function <code>gets()</code>, which has since been removed from glibc. You can read about it here: <a href="https://linux.die.net/man/3/fgets">https://linux.die.net/man/3/fgets</a></p>
+
+<pre><code class="language-root">gets() reads a line from stdin into the buffer pointed to by s until either a terminating newline or EOF,
+which it replaces with a null byte ('\0').
+No check for buffer overrun is performed (see BUGS below).
+</code></pre>
+
+<p>The gets command will continue to store values from STDIN in memory until it reaches a <code>newline</code>, <code>EOF</code>, or it runs out of memory.</p>
+
+<hr />
+
+<h1 id="so-how-can-we-exploit-this">So how can we exploit this?</h1>
+
+<p>Well, seeing as we only have 128 bytes allocated for our input, once we hit the 129th byte it will continue to overwrite into the 16 bytes reserved for the <code>local_vars.secret</code> data. We can overwrite the secret with whatever value we want by sending 128 characters to input. The next 16 characters of our input will become the new value for secret.</p>
+
+<p>The code will then compare the strings using <code>strcmp</code>, which&hellip;well&hellip; according to the man page:</p>
+
+<blockquote>
+<p>The strcmp() function compares the two strings s1 and s2.  It returns an integer less than, equal to, or greater than zero if s1 is found, respectively, to be less than, to match, or be greater than s2.</p>
+</blockquote>
+
+<p>That didn&rsquo;t really make sense to me, so I found the source code for the function to see what&rsquo;s going on. Here it is:</p>
+
+<pre><code class="language-cpp">STRCMP (const char *p1, const char *p2) // p1 and p2 are memory addresses
+{
+  //saves both addresses in new memory location
+  const unsigned char *s1 = (const unsigned char *) p1;
+  const unsigned char *s2 = (const unsigned char *) p2;
+
+  //allocate memory for values at addresses
+  unsigned char c1, c2;
+  do
+    {
+      c1 = (unsigned char) *s1++; //saves value at address
+      c2 = (unsigned char) *s2++; //saves value at address
+      if (c1 == '\0') //check first value for null byte
+
+        //subtract value of c1 from c2.
+        return c1 - c2;
+    }
+
+  //keep going if it matches and there's no null byte yet
+  while (c1 == c2);
+
+  //If it ever doesnt match, end up here.
+  return c1 - c2;
+}
+</code></pre>
+
+<p>I added comments to the code, but basically it iterates through both strings one character at a time until it hits a null byte (0) in the first string, or a character which doesn&rsquo;t match. It then returns the value of the last characters compared, subtracted from each other, which will always be 0 if it&rsquo;s a match.</p>
+
+<p>So the takeaway here is, <code>gets()</code> won&rsquo;t stop at null bytes, but <code>strcmp()</code> will. Because of this, we can happily pass null bytes to the input, and still execute an overflow into <code>local_vars.secret</code></p>
+
+<hr />
+
+<h1 id="crafting-the-payload-the-magic-part">Crafting the payload (the magic part)</h1>
+
+<p>Knowing this we can craft a payload that will overwrite <code>local_vars.secret</code> with whatever value we want, and can set our <code>local_vars.buffer</code> to the same string using null bytes to terminate it for <code>strcmp()</code>. On top of that, we can abuse the fact the <code>gets()</code> will happily save as many null bytes as we want, which means we can make both our input, and the secret, immediately terminate by setting the first byte value to 0. It will work like this:</p>
+
+<p><code>0</code> + <code>127 bytes of whatever we want</code> + <code>\n (for newline)</code></p>
+
+<p>That&rsquo;s 129 bytes of data, for the 128 byte buffer. Let&rsquo;s step through the logic and see why this works.</p>
+
+<pre><code class="language-cpp">char buffer[0x80]; //Reserves 0x80 (128) bytes in memory.
+char secret[0x10]; //Reserves 0x10 (16) bytes in memory.
+</code></pre>
+
+<p>This code reserves <code>128 bytes</code> in memory for our buffer, and 16 bytes for our secret. This is a continuous block of memory, so immediately after the 128 bytes for the buffer are the 16 bytes for the secret.</p>
+
+<pre><code class="language-cpp">gets(local_vars.buffer); //Saves input from STDIN in memory allocated for local_vars.buffer
+</code></pre>
+
+<p>This accepts our input, which is <code>0</code> + <code>127 bytes of whatever</code> + <code>\n</code>, and stores it in memory starting at the address reserved for our buffer. Once it hits the <code>\n</code> value, it will know to stop copying. On top of that, it replaces the <code>\n</code> with <code>0</code>, this is simply how the function works. That&rsquo;s not something I knew off hand, I had to research the <code>gets()</code> function.</p>
+
+<p>Since the memory allocated for the secret is immediately after the first byte of the secret is now <code>0</code> since <code>gets()</code> replaced <code>\n</code> with it.</p>
+
+<pre><code class="language-cpp">if(!strcmp(local_vars.buffer,local_vars.secret))
+</code></pre>
+
+<p>This conditional statement checks if the value returned by <code>strcmp()</code> is 0. We must again refer to documentation, or in this case the source code, to understand what the function is doing.</p>
+
+<pre><code class="language-cpp">if (c1 == '\0') //check first value for null byte
+</code></pre>
+
+<p>In the above snippet from the <code>strcmp()</code> source code, it checks the first byte at the starting memory address of the first argument passed to the function, which in this case is <code>local_vars.buffer</code>. We set this byte to <code>0</code> with our payload.</p>
+
+<p>Since the if condition is met, the following code is executed:</p>
+
+<pre><code class="language-cpp">return c1 - c2; //if null, subtract value of c1 from c2. will be 0 if same
+</code></pre>
+
+<p>So, it will subtract <code>c2</code> from <code>c1</code>. Well <code>c2</code> is the value at the starting memory address of the second argument passed to the function, which in this case is <code>local_vars.secret</code>. Since our payload overwrote this value by exceeding the 128 byte buffer, the value here is now <code>0</code>.</p>
+
+<p>Well, <code>0-0 = 0</code>, so it returns 0, which means the statement <code>if(!strcmp(local_vars.buffer,local_vars.secret))</code> evaluates to true, and execution continues to this line:</p>
+
+<pre><code class="language-cpp">printf(&quot;Congratulations, here's your flag %s&quot;, FLAG);
+</code></pre>
+
+<p>Now getting these values to the actual program is kind of tricky. <a href="https://foresthex.com/buffer-overflow-on-arm-part-2/">I made a post that goes into more detail about how to do this.</a></p>
+
+<p>I&rsquo;m not going to leave you hanging though, the following python statement will send raw binary, represented by <code>\xNN</code> where N is a hexadecimal digit, to netcat:</p>
+
+<p><code>python -c 'print(&quot;\x00&quot;*128 + &quot;\n&quot;)' | nc localhost 9001</code></p>
+
+<p><img src="/images/arm_ctf_win.png" alt="Got the flag!" /></p>
+
+<h1 id="bingo-there-s-our-lovely-flag">Bingo, there&rsquo;s our lovely flag.</h1>
+
+  </div>
+  <br>
+
+  
+  <span class="post-tags">
+    tags:
+    
+    #<a href="/tags/binary-explotation/">binary explotation</a>&nbsp;
+    
+    #<a href="/tags/ctf/">ctf</a>&nbsp;
+    
+    #<a href="/tags/arm/">arm</a>&nbsp;
+    
+    #<a href="/tags/overflow/">overflow</a>&nbsp;
+    
+  </span>
+  
+
+
+  
+  <div class="pagination">
+    <div class="pagination__title">
+      <span class="pagination__title-h">Read other posts</span>
+      <hr />
+    </div>
+    <div class="pagination__buttons">
+      
+      <span class="button previous">
+        <a href="/posts/buffer-overflow-on-arm-part-2/">
+          <span class="button__icon">←</span>
+          <span class="button__text">ARM CTF - Sending Bytes</span>
+        </a>
+      </span>
+      
+      
+    </div>
+  </div>
+  
+
+  
+
+</div>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+    <div class="copyright copyright--user">
+      <span>Forest Hex 2019</span>
+      
+
+      </div>
+    </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script>
+
+
+
+
+  
+</div>
+
+</body>
+</html>

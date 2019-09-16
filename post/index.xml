@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Forest Hex</title>
+    <link>/post/</link>
+    <description>Recent content in Posts on Forest Hex</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Forest Hex 2019</copyright>
+    <lastBuildDate>Tue, 11 Jun 2019 21:14:35 +0000</lastBuildDate>
+    
+	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Cryptopals Set 1 - Challenge 1</title>
+      <link>/post/cryptopals-set-1-challenge-1/</link>
+      <pubDate>Tue, 11 Jun 2019 21:14:35 +0000</pubDate>
+      
+      <guid>/post/cryptopals-set-1-challenge-1/</guid>
+      <description>Cryptopals is a series of cryptology related challenges broken into sets, escalating in difficulty. I was recommended to check out this site by another user in a Nintendo Switch Hacking discord server.You can find this server here: https://discord.gg/ZdqEhed
+In fact, a lot of my recent drive to learn hacking was watching the Nintendo Switch hacking scene unfold. It was extremely interesting to see the breadth, and depth of knowledge that came together.</description>
+    </item>
+    
+    <item>
+      <title>Welcome, and happy hacking!</title>
+      <link>/post/welcome-and-happy-hacking/</link>
+      <pubDate>Mon, 10 Jun 2019 20:52:34 +0000</pubDate>
+      
+      <guid>/post/welcome-and-happy-hacking/</guid>
+      <description>Hello there.
+My name is Brian, learn hacking with me.</description>
+    </item>
+    
+  </channel>
+</rss>

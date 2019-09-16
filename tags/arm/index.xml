@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>arm on Forest Hex</title>
+    <link>/tags/arm/</link>
+    <description>Recent content in arm on Forest Hex</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Forest Hex 2019</copyright>
+    <lastBuildDate>Fri, 30 Aug 2019 20:27:30 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/arm/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ARM CTF - Challenge 1</title>
+      <link>/posts/buffer-overflow-on-arm/</link>
+      <pubDate>Fri, 30 Aug 2019 20:27:30 +0000</pubDate>
+      
+      <guid>/posts/buffer-overflow-on-arm/</guid>
+      <description>Hello again faithful readers! Today&amp;rsquo;s post is about exploiting a buffer overflow.
+A few days ago I was invited to attempt some binary exploitation challenges for ARM architecture. Of course I agreed, despite the fact that I have no experience debugging ARM binaries. That&amp;rsquo;s okay though, it&amp;rsquo;s how you learn.
+I was happy to see the source code provided, and even happier when I was able to quickly identify the path to success without needing a debugger at all.</description>
+    </item>
+    
+  </channel>
+</rss>
