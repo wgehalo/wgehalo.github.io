@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/posts/buffer-overflow-on-arm-controlling-the-return-address/</loc>
+    <loc>/tags/arm/</loc>
     <lastmod>2019-09-04T02:30:14+00:00</lastmod>
   </url>
   
@@ -13,7 +13,12 @@
   </url>
   
   <url>
-    <loc>/tags/binary-exploitation/</loc>
+    <loc>/tags/binary-explotation/</loc>
+    <lastmod>2019-09-04T02:30:14+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/buffer-overflow-on-arm-controlling-the-return-address/</loc>
     <lastmod>2019-09-04T02:30:14+00:00</lastmod>
   </url>
   
@@ -23,7 +28,17 @@
   </url>
   
   <url>
+    <loc>/tags/ctf/</loc>
+    <lastmod>2019-09-04T02:30:14+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/</loc>
+    <lastmod>2019-09-04T02:30:14+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/overflow/</loc>
     <lastmod>2019-09-04T02:30:14+00:00</lastmod>
   </url>
   
@@ -43,7 +58,7 @@
   </url>
   
   <url>
-    <loc>/tags/arm/</loc>
+    <loc>/categories/binary-explotation/</loc>
     <lastmod>2019-08-30T20:27:30+00:00</lastmod>
   </url>
   
@@ -53,23 +68,8 @@
   </url>
   
   <url>
-    <loc>/tags/binary-explotation/</loc>
-    <lastmod>2019-08-30T20:27:30+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/binary-explotation/</loc>
-    <lastmod>2019-08-30T20:27:30+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/ctf/</loc>
-    <lastmod>2019-08-30T20:27:30+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/overflow/</loc>
-    <lastmod>2019-08-30T20:27:30+00:00</lastmod>
+    <loc>/tags/challenge/</loc>
+    <lastmod>2019-06-11T21:14:35+00:00</lastmod>
   </url>
   
   <url>
@@ -78,17 +78,12 @@
   </url>
   
   <url>
-    <loc>/tags/challenge/</loc>
+    <loc>/categories/crypto/</loc>
     <lastmod>2019-06-11T21:14:35+00:00</lastmod>
   </url>
   
   <url>
     <loc>/tags/crypto/</loc>
-    <lastmod>2019-06-11T21:14:35+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/crypto/</loc>
     <lastmod>2019-06-11T21:14:35+00:00</lastmod>
   </url>
   
@@ -138,12 +133,12 @@
   </url>
   
   <url>
-    <loc>/categories/software/</loc>
+    <loc>/tags/software/</loc>
     <lastmod>2019-06-10T20:52:34+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/software/</loc>
+    <loc>/categories/software/</loc>
     <lastmod>2019-06-10T20:52:34+00:00</lastmod>
   </url>
   

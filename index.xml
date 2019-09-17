@@ -13,7 +13,7 @@
     
     
     <item>
-      <title>ARM CTF - Challenge 2</title>
+      <title>Buffer Overflow on Arm (2/2)</title>
       <link>/posts/buffer-overflow-on-arm-controlling-the-return-address/</link>
       <pubDate>Wed, 04 Sep 2019 02:30:14 +0000</pubDate>
       
@@ -35,7 +35,7 @@ So, a quick recap:
     </item>
     
     <item>
-      <title>ARM CTF - Challenge 1</title>
+      <title>Buffer Overflow on Arm (1/2)</title>
       <link>/posts/buffer-overflow-on-arm/</link>
       <pubDate>Fri, 30 Aug 2019 20:27:30 +0000</pubDate>
       
