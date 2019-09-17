@@ -78,17 +78,12 @@
   </url>
   
   <url>
-    <loc>/categories/crypto/</loc>
-    <lastmod>2019-06-11T21:14:35+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/tags/crypto/</loc>
     <lastmod>2019-06-11T21:14:35+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/cryptography/</loc>
+    <loc>/categories/crypto/</loc>
     <lastmod>2019-06-11T21:14:35+00:00</lastmod>
   </url>
   
@@ -98,12 +93,17 @@
   </url>
   
   <url>
-    <loc>/categories/cryptology/</loc>
+    <loc>/categories/cryptography/</loc>
     <lastmod>2019-06-11T21:14:35+00:00</lastmod>
   </url>
   
   <url>
     <loc>/tags/cryptology/</loc>
+    <lastmod>2019-06-11T21:14:35+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/cryptology/</loc>
     <lastmod>2019-06-11T21:14:35+00:00</lastmod>
   </url>
   
@@ -133,12 +133,12 @@
   </url>
   
   <url>
-    <loc>/categories/software/</loc>
+    <loc>/tags/software/</loc>
     <lastmod>2019-06-10T20:52:34+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/software/</loc>
+    <loc>/categories/software/</loc>
     <lastmod>2019-06-10T20:52:34+00:00</lastmod>
   </url>
   
