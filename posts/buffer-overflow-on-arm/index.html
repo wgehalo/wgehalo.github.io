@@ -6,32 +6,48 @@
   
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<meta name="description" content="Hello again faithful readers! Today&amp;rsquo;s post is about exploiting a buffer overflow.
+<meta name="description"
+  content="Hello again faithful readers! Today&amp;rsquo;s post is about exploiting a buffer overflow.
 A few days ago I was invited to attempt some binary exploitation challenges for ARM architecture. Of course I agreed, despite the fact that I have no experience debugging ARM binaries. That&amp;rsquo;s okay though, it&amp;rsquo;s how you learn.
-I was happy to see the source code provided, and even happier when I was able to quickly identify the path to success without needing a debugger at all."/>
-<meta name="keywords" content="[hacking ctf binary overflow pentest shell]"/>
-<meta name="robots" content="noodp"/>
+I was happy to see the source code provided, and even happier when I was able to quickly identify the path to success without needing a debugger at all." />
+<meta name="keywords"
+  content="[hacking ctf binary overflow pentest shell]" />
+<meta name="robots" content="noodp" />
 <link rel="canonical" href="/posts/buffer-overflow-on-arm/" />
 
 
 <link rel="stylesheet" href="/assets/style.css">
 
-  <link rel="stylesheet" href="/assets/green.css">
+<link rel="stylesheet" href="/assets/green.css">
 
 
 
 <link rel="stylesheet" href="/style.css">
 
 
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144-precomposed.png">
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-148164972-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-148164972-1');
+</script>
+
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144"
+  href="/img/apple-touch-icon-144-precomposed.png">
 
 <link rel="shortcut icon" href="/img/favicon/green.png">
 
 
 
 <meta name="twitter:card" content="summary" />
-<meta name="twitter:title" content="Buffer Overflow on ARM #1 :: Forest Hex — Explore Hacking" />
-<meta name="twitter:description" content="Hello again faithful readers! Today&amp;rsquo;s post is about exploiting a buffer overflow.
+<meta name="twitter:title"
+  content="Buffer Overflow on ARM #1 :: Forest Hex — Explore Hacking" />
+<meta name="twitter:description"
+  content="Hello again faithful readers! Today&amp;rsquo;s post is about exploiting a buffer overflow.
 A few days ago I was invited to attempt some binary exploitation challenges for ARM architecture. Of course I agreed, despite the fact that I have no experience debugging ARM binaries. That&amp;rsquo;s okay though, it&amp;rsquo;s how you learn.
 I was happy to see the source code provided, and even happier when I was able to quickly identify the path to success without needing a debugger at all." />
 <meta name="twitter:site" content="/" />
@@ -41,8 +57,10 @@ I was happy to see the source code provided, and even happier when I was able to
 
 <meta property="og:locale" content="en" />
 <meta property="og:type" content="article" />
-<meta property="og:title" content="Buffer Overflow on ARM #1 :: Forest Hex — Explore Hacking">
-<meta property="og:description" content="Hello again faithful readers! Today&amp;rsquo;s post is about exploiting a buffer overflow.
+<meta property="og:title"
+  content="Buffer Overflow on ARM #1 :: Forest Hex — Explore Hacking">
+<meta property="og:description"
+  content="Hello again faithful readers! Today&amp;rsquo;s post is about exploiting a buffer overflow.
 A few days ago I was invited to attempt some binary exploitation challenges for ARM architecture. Of course I agreed, despite the fact that I have no experience debugging ARM binaries. That&amp;rsquo;s okay though, it&amp;rsquo;s how you learn.
 I was happy to see the source code provided, and even happier when I was able to quickly identify the path to success without needing a debugger at all." />
 <meta property="og:url" content="/posts/buffer-overflow-on-arm/" />
@@ -50,9 +68,10 @@ I was happy to see the source code provided, and even happier when I was able to
 <meta property="og:image" content="">
 <meta property="og:image:width" content="2048">
 <meta property="og:image:height" content="1024">
-<meta property="article:section" content="binary explotation" />
-<meta property="article:published_time" content="2019-08-30 20:27:30 &#43;0000 UTC" />
 
+<meta property="article:section" content="binary explotation" />
+
+<meta property="article:published_time" content="2019-08-30 20:27:30 &#43;0000 UTC" />
 
 
 
