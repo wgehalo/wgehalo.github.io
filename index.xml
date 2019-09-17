@@ -52,8 +52,8 @@ I was happy to see the source code provided, and even happier when I was able to
       
       <guid>/about/</guid>
       <description>I created this page to follow my journey through the world of hacking. The term hacking is very broad however, so to be more specific this blog will focus on hacking software.
-That&amp;rsquo;s still a pretty large field, so let&amp;rsquo;s break it down into 3 main categories:
- Native Exploitation Web Application Exploitation Cryptography Cracking  My main method for learning will be participating in CTF challenges.
+That&amp;rsquo;s still a pretty large field, so let&amp;rsquo;s break it down a bit:
+ Binary Exploitation Web App Exploitation Cryptography Cracking  My main method for learning will be participating in CTF challenges.
 CTF (Capture the Flag) challenges are systems that are set up with the purpose of being exploited.</description>
     </item>
     
