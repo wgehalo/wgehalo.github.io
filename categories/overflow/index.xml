@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>overflow on Forest Hex</title>
+    <link>/categories/overflow/</link>
+    <description>Recent content in overflow on Forest Hex</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Forest Hex 2019</copyright>
+    <lastBuildDate>Mon, 02 Sep 2019 23:34:59 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/overflow/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ARM CTF - Sending Bytes</title>
+      <link>/posts/buffer-overflow-on-arm-part-2/</link>
+      <pubDate>Mon, 02 Sep 2019 23:34:59 +0000</pubDate>
+      
+      <guid>/posts/buffer-overflow-on-arm-part-2/</guid>
+      <description>Why hello there faithful reader! It&amp;rsquo;s time again for another hacking related post.
+Today we&amp;rsquo;ll be continuing on from our last post where we executed a buffer overflow to overwrite a secret number to reveal a flag.
+So, a quick recap:
+ We have a buffer overflow for a service which accepts our input. We can send it anything we want, if we have some way to represent non-printable characters.</description>
+    </item>
+    
+  </channel>
+</rss>
