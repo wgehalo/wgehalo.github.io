@@ -7,19 +7,10 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Forest Hex 2019</copyright>
-    <lastBuildDate>Mon, 16 Sep 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Sep 2019 02:30:14 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>ROP Chain on ARM</title>
-      <link>/posts/rop/</link>
-      <pubDate>Mon, 16 Sep 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/rop/</guid>
-      <description> Greetings again my faithful readers. Today we will explore crafting an ROP chain on an ARM binary. </description>
-    </item>
     
     <item>
       <title>ARM CTF - Challenge 2</title>
