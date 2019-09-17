@@ -46,16 +46,6 @@ I was happy to see the source code provided, and even happier when I was able to
     </item>
     
     <item>
-      <title>Cryptopals Set 1 - Challenge 1</title>
-      <link>/post/cryptopals-set-1-challenge-1/</link>
-      <pubDate>Tue, 11 Jun 2019 21:14:35 +0000</pubDate>
-      
-      <guid>/post/cryptopals-set-1-challenge-1/</guid>
-      <description>Cryptopals is a series of cryptology related challenges broken into sets, escalating in difficulty. I was recommended to check out this site by another user in a Nintendo Switch Hacking discord server.You can find this server here: https://discord.gg/ZdqEhed
-In fact, a lot of my recent drive to learn hacking was watching the Nintendo Switch hacking scene unfold. It was extremely interesting to see the breadth, and depth of knowledge that came together.</description>
-    </item>
-    
-    <item>
       <title>About this blog:</title>
       <link>/about/</link>
       <pubDate>Tue, 11 Jun 2019 18:51:11 +0000</pubDate>
@@ -65,16 +55,6 @@ In fact, a lot of my recent drive to learn hacking was watching the Nintendo Swi
 That&amp;rsquo;s still a pretty large field, so let&amp;rsquo;s break it down into 3 main categories:
  Native Exploitation Web Application Exploitation Cryptography Cracking  My main method for learning will be participating in CTF challenges.
 CTF (Capture the Flag) challenges are systems that are set up with the purpose of being exploited.</description>
-    </item>
-    
-    <item>
-      <title>Welcome, and happy hacking!</title>
-      <link>/post/welcome-and-happy-hacking/</link>
-      <pubDate>Mon, 10 Jun 2019 20:52:34 +0000</pubDate>
-      
-      <guid>/post/welcome-and-happy-hacking/</guid>
-      <description>Hello there.
-My name is Brian, learn hacking with me.</description>
     </item>
     
   </channel>
