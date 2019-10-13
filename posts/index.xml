@@ -45,14 +45,5 @@ A few days ago I was invited to attempt some binary exploitation challenges for 
 I was happy to see the source code provided, and even happier when I was able to quickly identify the path to success without needing a debugger at all.</description>
     </item>
     
-    <item>
-      <title>Bep</title>
-      <link>/posts/beep/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/posts/beep/</guid>
-      <description> Hi there! </description>
-    </item>
-    
   </channel>
 </rss>
