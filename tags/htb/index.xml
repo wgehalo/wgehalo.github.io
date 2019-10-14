@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>htb on Forest Hex</title>
+    <link>/tags/htb/</link>
+    <description>Recent content in htb on Forest Hex</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Forest Hex 2019</copyright>
+    <lastBuildDate>Sun, 13 Oct 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/htb/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Hack The Box - Beep</title>
+      <link>/posts/beep/</link>
+      <pubDate>Sun, 13 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/beep/</guid>
+      <description>Welcome to another Forest Hex hacking adventure! Today&amp;rsquo;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&amp;rsquo;s easy, it&amp;rsquo;s linux, and it&amp;rsquo;s rated very highly. All that put together should add up to some serious fun, so let&amp;rsquo;s get started:
+ Port Scan The first thing, as always, is a port scan:
+#!/bin/bash ports=$(nmap -p- --min-rate=1000 -T4 $1 | grep ^[0-9] | cut -d &#39;/&#39; -f 1 | tr &#39;\n&#39; &#39;,&#39; | sed s/,$//) nmap -sC -sV -p$ports $1  Using my bash script we can ensure every port is checked, and that a deeper scan is only performed on open ports.</description>
+    </item>
+    
+  </channel>
+</rss>
