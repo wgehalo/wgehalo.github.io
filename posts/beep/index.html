@@ -7,9 +7,9 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 <meta name="description"
-  content="Welcome to another Forest Hex hacking adventure! Today&amp;rsquo;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&amp;rsquo;s easy, it&amp;rsquo;s linux, and it&amp;rsquo;s rated very highly. All that put together should add up to some serious fun, so let&amp;rsquo;s get started:
+  content="Welcome to another Forest Hex hacking adventure! 🌲🏹 Today&amp;rsquo;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&amp;rsquo;s easy, it&amp;rsquo;s linux, and it&amp;rsquo;s rated very highly. All that put together should add up to some serious fun, so let&amp;rsquo;s get started:
  Port Scan The first thing, as always, is a port scan:
-#!/bin/bash ports=$(nmap -p- --min-rate=1000 -T4 $1 | grep ^[0-9] | cut -d &#39;/&#39; -f 1 | tr &#39;\n&#39; &#39;,&#39; | sed s/,$//) nmap -sC -sV -p$ports $1  Using my bash script we can ensure every port is checked, and that a deeper scan is only performed on open ports." />
+#!/bin/bash ports=$(nmap -p- --min-rate=1000 -T4 $1 | grep ^[0-9] | cut -d &#39;/&#39; -f 1 | tr &#39;\n&#39; &#39;,&#39; | sed s/,$//) nmap -sC -sV -p$ports $1  Using my bash script (which was taken from an HTB official writeup) we can ensure every port is checked, and that a deeper scan is only performed on open ports." />
 <meta name="keywords"
   content="hacking, " />
 <meta name="robots" content="noodp" />
@@ -47,9 +47,9 @@
 <meta name="twitter:title"
   content="Hack The Box - Beep :: Forest Hex — Explore Hacking" />
 <meta name="twitter:description"
-  content="Welcome to another Forest Hex hacking adventure! Today&amp;rsquo;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&amp;rsquo;s easy, it&amp;rsquo;s linux, and it&amp;rsquo;s rated very highly. All that put together should add up to some serious fun, so let&amp;rsquo;s get started:
+  content="Welcome to another Forest Hex hacking adventure! 🌲🏹 Today&amp;rsquo;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&amp;rsquo;s easy, it&amp;rsquo;s linux, and it&amp;rsquo;s rated very highly. All that put together should add up to some serious fun, so let&amp;rsquo;s get started:
  Port Scan The first thing, as always, is a port scan:
-#!/bin/bash ports=$(nmap -p- --min-rate=1000 -T4 $1 | grep ^[0-9] | cut -d &#39;/&#39; -f 1 | tr &#39;\n&#39; &#39;,&#39; | sed s/,$//) nmap -sC -sV -p$ports $1  Using my bash script we can ensure every port is checked, and that a deeper scan is only performed on open ports." />
+#!/bin/bash ports=$(nmap -p- --min-rate=1000 -T4 $1 | grep ^[0-9] | cut -d &#39;/&#39; -f 1 | tr &#39;\n&#39; &#39;,&#39; | sed s/,$//) nmap -sC -sV -p$ports $1  Using my bash script (which was taken from an HTB official writeup) we can ensure every port is checked, and that a deeper scan is only performed on open ports." />
 <meta name="twitter:site" content="/" />
 <meta name="twitter:creator" content="jivex5k" />
 <meta name="twitter:image" content="">
@@ -60,9 +60,9 @@
 <meta property="og:title"
   content="Hack The Box - Beep :: Forest Hex — Explore Hacking">
 <meta property="og:description"
-  content="Welcome to another Forest Hex hacking adventure! Today&amp;rsquo;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&amp;rsquo;s easy, it&amp;rsquo;s linux, and it&amp;rsquo;s rated very highly. All that put together should add up to some serious fun, so let&amp;rsquo;s get started:
+  content="Welcome to another Forest Hex hacking adventure! 🌲🏹 Today&amp;rsquo;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&amp;rsquo;s easy, it&amp;rsquo;s linux, and it&amp;rsquo;s rated very highly. All that put together should add up to some serious fun, so let&amp;rsquo;s get started:
  Port Scan The first thing, as always, is a port scan:
-#!/bin/bash ports=$(nmap -p- --min-rate=1000 -T4 $1 | grep ^[0-9] | cut -d &#39;/&#39; -f 1 | tr &#39;\n&#39; &#39;,&#39; | sed s/,$//) nmap -sC -sV -p$ports $1  Using my bash script we can ensure every port is checked, and that a deeper scan is only performed on open ports." />
+#!/bin/bash ports=$(nmap -p- --min-rate=1000 -T4 $1 | grep ^[0-9] | cut -d &#39;/&#39; -f 1 | tr &#39;\n&#39; &#39;,&#39; | sed s/,$//) nmap -sC -sV -p$ports $1  Using my bash script (which was taken from an HTB official writeup) we can ensure every port is checked, and that a deeper scan is only performed on open ports." />
 <meta property="og:url" content="/posts/beep/" />
 <meta property="og:site_name" content="Hack The Box - Beep" />
 <meta property="og:image" content="">
@@ -166,7 +166,7 @@
   <div class="post-content">
     
 
-<h4 id="welcome-to-another-forest-hex-hacking-adventure">Welcome to another Forest Hex hacking adventure!</h4>
+<h3 id="welcome-to-another-forest-hex-hacking-adventure">Welcome to another Forest Hex hacking adventure! 🌲🏹</h3>
 
 <p>Today&rsquo;s plan is to explore a retired CTF from <a href="http://hackthebox.eu">http://hackthebox.eu</a> named &ldquo;Beep&rdquo;. I chose this box because it&rsquo;s easy, it&rsquo;s linux, and it&rsquo;s rated very highly. All that put together should add up to some serious fun, so let&rsquo;s get started:</p>
 
@@ -189,7 +189,7 @@ ports=$(nmap -p- --min-rate=1000 -T4 $1 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n
 nmap -sC -sV -p$ports $1
 </code></pre>
 
-<p>Using my bash script we can ensure every port is checked, and that a deeper scan is only performed on open ports.</p>
+<p>Using my bash script (which was taken from an HTB official writeup) we can ensure every port is checked, and that a deeper scan is only performed on open ports.</p>
 
 <p>
   <figure class="left" >
