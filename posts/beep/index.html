@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 <meta name="description"
   content="Welcome to another Forest Hex hacking adventure! 🌲🏹 Today&amp;rsquo;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&amp;rsquo;s easy, it&amp;rsquo;s linux, and it&amp;rsquo;s rated very highly. All that put together should add up to some serious fun, so let&amp;rsquo;s get started:
-  Port Scan Poking around the mySql Server Checking out Webmin Hylafax, what are you hiding? Back to Elastix  Port Scan The first thing, as always, is a port scan:" />
+  Port Scan Poking around the mySql Server Checking out Webmin Hylafax, what are you hiding? Back to Elastix Getting User and Root  Port Scan The first thing, as always, is a port scan:" />
 <meta name="keywords"
   content="hacking, " />
 <meta name="robots" content="noodp" />
@@ -47,7 +47,7 @@
   content="Hack The Box - Beep :: Forest Hex — Explore Hacking" />
 <meta name="twitter:description"
   content="Welcome to another Forest Hex hacking adventure! 🌲🏹 Today&amp;rsquo;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&amp;rsquo;s easy, it&amp;rsquo;s linux, and it&amp;rsquo;s rated very highly. All that put together should add up to some serious fun, so let&amp;rsquo;s get started:
-  Port Scan Poking around the mySql Server Checking out Webmin Hylafax, what are you hiding? Back to Elastix  Port Scan The first thing, as always, is a port scan:" />
+  Port Scan Poking around the mySql Server Checking out Webmin Hylafax, what are you hiding? Back to Elastix Getting User and Root  Port Scan The first thing, as always, is a port scan:" />
 <meta name="twitter:site" content="/" />
 <meta name="twitter:creator" content="jivex5k" />
 <meta name="twitter:image" content="">
@@ -59,7 +59,7 @@
   content="Hack The Box - Beep :: Forest Hex — Explore Hacking">
 <meta property="og:description"
   content="Welcome to another Forest Hex hacking adventure! 🌲🏹 Today&amp;rsquo;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&amp;rsquo;s easy, it&amp;rsquo;s linux, and it&amp;rsquo;s rated very highly. All that put together should add up to some serious fun, so let&amp;rsquo;s get started:
-  Port Scan Poking around the mySql Server Checking out Webmin Hylafax, what are you hiding? Back to Elastix  Port Scan The first thing, as always, is a port scan:" />
+  Port Scan Poking around the mySql Server Checking out Webmin Hylafax, what are you hiding? Back to Elastix Getting User and Root  Port Scan The first thing, as always, is a port scan:" />
 <meta property="og:url" content="/posts/beep/" />
 <meta property="og:site_name" content="Hack The Box - Beep" />
 <meta property="og:image" content="">
@@ -181,6 +181,7 @@
 <li><a href="#checking-out-webmin">Checking out Webmin</a></li>
 <li><a href="#hylafax--what-are-you-hiding-">Hylafax, what are you hiding?</a></li>
 <li><a href="#back-to-elastix">Back to Elastix</a></li>
+<li><a href="#Getting-User-and-Root">Getting User and Root</a></li>
 </ul>
 
 <hr />
@@ -311,10 +312,8 @@ nmap -sC -sV -p$ports $1
 
 
 
-<p>The Blind SQL Injection, and PHP Code Injection both look pretty interesting. I went for the php code injection first, but the exploit itself is in PHP which made it harder for me to understand. After messing around with it for a bit I decided to switch tactics and go for SQL injection.</p>
-
-<p>It looked simple enough to understand, a timing attack on a URL, however I couldn&rsquo;t get any response out of the server using them.
-I decided to keep checking Elastix exploits and went with the local file inclusion exploit next.</p>
+<p>The Blind SQL Injection, and PHP Code Injection both look pretty interesting. Long story short, I couldn&rsquo;t get them to work.
+After a lot of messing around I decided to go back to the list and try the next one, which was an LFI exploit.</p>
 
 <p>Checking out the exploit we can see it just crafts a URL:
 <code>/vtigercrm/graph.php?current_language=../../../../../../../..//etc/amportal.conf%00&amp;module=Accounts&amp;action</code></p>
@@ -330,12 +329,13 @@ I decided to keep checking Elastix exploits and went with the local file inclusi
 
 </p>
 
-<p>Paydirt&hellip; We have a local config file, and from the look of it a lot of passwords. I also noticed it mentioned FreePBX, which one exploit that was listed earlier has as a requirement. I played around with this exploit for a while but couldn&rsquo;t get it to work. I suspect perl isn&rsquo;t available on the remote system.</p>
+<p>Paydirt&hellip; We have a local config file, and from the look of it a lot of passwords.</p>
 
-<p>I decided to look at some of the username and passwords in the config file and noticed a lot of reuse. I decided to try my luck against root ssh, and the second one I tried worked.</p>
+<h1 id="getting-user-and-root">Getting User and Root</h1>
 
-<p>amp109
-jEhdIekWmdjE - This was it, it&rsquo;s all over the config file.</p>
+<p>I noticed the config file mentioned FreePBX, part of an RCE exploit. I tried to get this to work but it wouldn&rsquo;t, I suspect perl isn&rsquo;t available on the remote system.</p>
+
+<p>I went back to the config and started looking for credentials to use. I noticed <code>jEhdIekWmdjE</code> was repeating a lot and decided to see if the box reused passwords for the root ssh login. Sure enough <code>jEhdIekWmdjE</code> unlocked it.</p>
 
 
   <figure class="left" >
