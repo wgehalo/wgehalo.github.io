@@ -8,8 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 <meta name="description"
   content="Welcome to another Forest Hex hacking adventure! 🌲🏹 Today&amp;rsquo;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&amp;rsquo;s easy, it&amp;rsquo;s linux, and it&amp;rsquo;s rated very highly. All that put together should add up to some serious fun, so let&amp;rsquo;s get started:
- Port Scan The first thing, as always, is a port scan:
-#!/bin/bash ports=$(nmap -p- --min-rate=1000 -T4 $1 | grep ^[0-9] | cut -d &#39;/&#39; -f 1 | tr &#39;\n&#39; &#39;,&#39; | sed s/,$//) nmap -sC -sV -p$ports $1  Using my bash script (which was taken from an HTB official writeup) we can ensure every port is checked, and that a deeper scan is only performed on open ports." />
+  Port Scan Poking around the mySql Server Checking out Webmin Hylafax, what are you hiding? Back to Elastix  Port Scan The first thing, as always, is a port scan:" />
 <meta name="keywords"
   content="hacking, " />
 <meta name="robots" content="noodp" />
@@ -48,8 +47,7 @@
   content="Hack The Box - Beep :: Forest Hex — Explore Hacking" />
 <meta name="twitter:description"
   content="Welcome to another Forest Hex hacking adventure! 🌲🏹 Today&amp;rsquo;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&amp;rsquo;s easy, it&amp;rsquo;s linux, and it&amp;rsquo;s rated very highly. All that put together should add up to some serious fun, so let&amp;rsquo;s get started:
- Port Scan The first thing, as always, is a port scan:
-#!/bin/bash ports=$(nmap -p- --min-rate=1000 -T4 $1 | grep ^[0-9] | cut -d &#39;/&#39; -f 1 | tr &#39;\n&#39; &#39;,&#39; | sed s/,$//) nmap -sC -sV -p$ports $1  Using my bash script (which was taken from an HTB official writeup) we can ensure every port is checked, and that a deeper scan is only performed on open ports." />
+  Port Scan Poking around the mySql Server Checking out Webmin Hylafax, what are you hiding? Back to Elastix  Port Scan The first thing, as always, is a port scan:" />
 <meta name="twitter:site" content="/" />
 <meta name="twitter:creator" content="jivex5k" />
 <meta name="twitter:image" content="">
@@ -61,8 +59,7 @@
   content="Hack The Box - Beep :: Forest Hex — Explore Hacking">
 <meta property="og:description"
   content="Welcome to another Forest Hex hacking adventure! 🌲🏹 Today&amp;rsquo;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&amp;rsquo;s easy, it&amp;rsquo;s linux, and it&amp;rsquo;s rated very highly. All that put together should add up to some serious fun, so let&amp;rsquo;s get started:
- Port Scan The first thing, as always, is a port scan:
-#!/bin/bash ports=$(nmap -p- --min-rate=1000 -T4 $1 | grep ^[0-9] | cut -d &#39;/&#39; -f 1 | tr &#39;\n&#39; &#39;,&#39; | sed s/,$//) nmap -sC -sV -p$ports $1  Using my bash script (which was taken from an HTB official writeup) we can ensure every port is checked, and that a deeper scan is only performed on open ports." />
+  Port Scan Poking around the mySql Server Checking out Webmin Hylafax, what are you hiding? Back to Elastix  Port Scan The first thing, as always, is a port scan:" />
 <meta property="og:url" content="/posts/beep/" />
 <meta property="og:site_name" content="Hack The Box - Beep" />
 <meta property="og:image" content="">
@@ -178,6 +175,14 @@
 
 
 
+<ul>
+<li><a href="#port-scan">Port Scan</a></li>
+<li><a href="#poking-around-the-mysql-server">Poking around the mySql Server</a></li>
+<li><a href="#checking-out-webmin">Checking out Webmin</a></li>
+<li><a href="#hylafax--what-are-you-hiding-">Hylafax, what are you hiding?</a></li>
+<li><a href="#back-to-elastix">Back to Elastix</a></li>
+</ul>
+
 <hr />
 
 <h1 id="port-scan">Port Scan</h1>
@@ -233,7 +238,7 @@ nmap -sC -sV -p$ports $1
 
 <hr />
 
-<h2 id="poking-around-the-mysql-server">Poking around the mySql Server</h2>
+<h1 id="poking-around-the-mysql-server">Poking around the mySql Server</h1>
 
 <p>There&rsquo;s a mySql server running on port 3306, so I attempted to login with no password:
 
@@ -250,7 +255,7 @@ nmap -sC -sV -p$ports $1
 
 <hr />
 
-<h2 id="checking-out-webmin">Checking out Webmin</h2>
+<h1 id="checking-out-webmin">Checking out Webmin</h1>
 
 <p>There&rsquo;s a server running on port 10000 which nmap identified as Webmin. Sure enough navigating there brought me to a login page. I decided to try several default logins, and after a bit, well&hellip;
 
@@ -277,7 +282,7 @@ nmap -sC -sV -p$ports $1
 
 <hr />
 
-<h2 id="hylafax-what-are-you-hiding">Hylafax, what are you hiding?</h2>
+<h1 id="hylafax-what-are-you-hiding">Hylafax, what are you hiding?</h1>
 
 <p>Hylafax sounds interesting, let&rsquo;s do some digging with searchsploit:
 
@@ -294,7 +299,7 @@ nmap -sC -sV -p$ports $1
 
 <hr />
 
-<h2 id="back-to-elastix">Back to Elastix</h2>
+<h1 id="back-to-elastix">Back to Elastix</h1>
 
 <p>I realized I had not looked at any elastix exploits yet, time to rectify that.</p>
 
