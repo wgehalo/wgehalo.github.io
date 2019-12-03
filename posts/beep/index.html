@@ -10,7 +10,7 @@
   content="Welcome to another Forest Hex hacking adventure! 🌲🏹 Today&amp;rsquo;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&amp;rsquo;s easy, it&amp;rsquo;s linux, and it&amp;rsquo;s rated very highly. All that put together should add up to some serious fun, so let&amp;rsquo;s get started:
   Port Scan Poking around the mySql Server Checking out Webmin Hylafax, what are you hiding? Back to Elastix Getting User and Root  Port Scan The first thing, as always, is a port scan:" />
 <meta name="keywords"
-  content="hacking, " />
+  content="[hacking ctf binary overflow pentest shell]" />
 <meta name="robots" content="noodp" />
 <link rel="canonical" href="/posts/beep/" />
 
@@ -169,7 +169,7 @@
 
 
   <figure class="left" >
-    <img src="../2019-10-13-18-43-45.png"   />
+    <img src="2019-10-13-18-43-45.png"   />
     
   </figure>
 
@@ -191,7 +191,7 @@
 <p>The first thing, as always, is a port scan:</p>
 
 <pre><code class="language-bash">#!/bin/bash
-ports=$(nmap -p- --min-rate=1000 -T4 $1 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//)  
+ports=$(nmap -p- --min-rate=1000 -T4 $1 | grep ^[0-9] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//)
 nmap -sC -sV -p$ports $1
 </code></pre>
 
@@ -199,7 +199,7 @@ nmap -sC -sV -p$ports $1
 
 
   <figure class="left" >
-    <img src="../2019-10-13-19-53-19.png"   />
+    <img src="2019-10-13-19-53-19.png"   />
     
       <figcaption class="center" >Nmap Results</figcaption>
     
@@ -218,7 +218,7 @@ nmap -sC -sV -p$ports $1
 <p>That&rsquo;s a ton of stuff, let&rsquo;s save the output in Cherry Tree and start digging. First let&rsquo;s check out the website.
 
   <figure class="left" >
-    <img src="../2019-10-13-20-23-24.png"   />
+    <img src="2019-10-13-20-23-24.png"   />
     
       <figcaption class="center" >Login Portal</figcaption>
     
@@ -235,7 +235,7 @@ nmap -sC -sV -p$ports $1
 <p>There&rsquo;s a mySql server running on port 3306, so I attempted to login with no password:
 
   <figure class="left" >
-    <img src="../2019-10-13-20-56-05.png"   />
+    <img src="2019-10-13-20-56-05.png"   />
     
       <figcaption class="center" >Trying to login to mySql</figcaption>
     
@@ -252,7 +252,7 @@ nmap -sC -sV -p$ports $1
 <p>There&rsquo;s a server running on port 10000 which nmap identified as Webmin. Sure enough navigating there brought me to a login page. I decided to try several default logins, and after a bit, well&hellip;
 
   <figure class="left" >
-    <img src="../2019-10-13-21-06-43.png"   />
+    <img src="2019-10-13-21-06-43.png"   />
     
   </figure>
 
@@ -262,7 +262,7 @@ nmap -sC -sV -p$ports $1
 
 
   <figure class="left" >
-    <img src="../2019-10-13-21-09-16.png"   />
+    <img src="2019-10-13-21-09-16.png"   />
     
       <figcaption class="center" >Webmin Exploits</figcaption>
     
@@ -279,7 +279,7 @@ nmap -sC -sV -p$ports $1
 <p>Hylafax sounds interesting, let&rsquo;s do some digging with searchsploit:
 
   <figure class="left" >
-    <img src="../2019-10-13-21-21-09.png"   />
+    <img src="2019-10-13-21-21-09.png"   />
     
       <figcaption class="center" >Hylafax Exploits</figcaption>
     
@@ -297,7 +297,7 @@ nmap -sC -sV -p$ports $1
 
 
   <figure class="left" >
-    <img src="../2019-10-13-21-42-57.png"   />
+    <img src="2019-10-13-21-42-57.png"   />
     
   </figure>
 
@@ -312,7 +312,7 @@ After a lot of messing around I decided to go back to the list and try the next 
 <p>To quickly test this exploit I simply pasted it after the URL:
 
   <figure class="left" >
-    <img src="../2019-10-13-22-12-09.png"   />
+    <img src="2019-10-13-22-12-09.png"   />
     
       <figcaption class="center" >A local file from the webserver.</figcaption>
     
@@ -330,7 +330,7 @@ After a lot of messing around I decided to go back to the list and try the next 
 
 
   <figure class="left" >
-    <img src="../2019-10-13-23-28-32.png"   />
+    <img src="2019-10-13-23-28-32.png"   />
     
       <figcaption class="center" >Root and User Flag</figcaption>
     
