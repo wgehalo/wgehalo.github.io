@@ -10,8 +10,8 @@ code[class*="language-"],
 pre[class*="language-"] {
 	color: #ccc;
 	background: none;
-	font-family: Fira Code, Monaco, Consolas, 'Andale Mono', 'Ubuntu Mono', monospace;
-	font-size: 1em;
+	font-family: 'Inconsolata', Monaco, Consolas, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: .95em;
 	text-align: left;
 	white-space: pre;
 	word-spacing: normal;
@@ -191,7 +191,7 @@ div.code-toolbar > .toolbar span:focus {
 body {
 	/* font-family: 'Source Sans P', sans-serif; */
 	font-family: 'Open Sans', sans-serif;
-	font-size: 1.2rem;
+	font-size: 1.1rem;
   
   }
   
