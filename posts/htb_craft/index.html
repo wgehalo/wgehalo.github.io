@@ -469,7 +469,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
   </figure>
 
 
-<p>And&hellip; success! It looks like Gilfoyle has some non-public repos to explore. I took a look at the nginx configuartion file and found a new vhost: <code>vault.craft.htb</code> I added it to /etc/hosts and took a look.</p>
+<p>And&hellip; success! It looks like Gilfoyle has some non-public repos to explore. I took a look at the nginx config file and found a new vhost: <code>vault.craft.htb</code> I added it to <code>/etc/hosts</code> and took a look.</p>
 
   <figure class="left" >
     <img src="image-5.png"   />
@@ -487,7 +487,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 
 
 <p>An OpenSSH private key on his private git. Why hello there darlin&rsquo;, let's take you out for a spin. I copied the key into a new file with nano, saved and modified the permissions (ssh requires this to work), then attempted to log in via ssh:</p>
-<p><code>root@wks104:~/craft# chmod 400 gilfoyle.keyroot@wks104:~/craft# ssh gilfoyle@craft.htb -i gilfoyle.key</code></p>
+<p><code>root@wks104:~/craft# chmod 600 gilfoyle.keyroot@wks104:~/craft# ssh gilfoyle@craft.htb -i gilfoyle.key</code></p>
 
   <figure class="left" >
     <img src="image-6.png"   />
