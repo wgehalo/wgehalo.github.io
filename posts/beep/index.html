@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <title>Hack The Box - Beep :: Forest Hex — Explore Hacking</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description"
+  content="Welcome to another Forest Hex hacking adventure! 🌲🏹 Today&#39;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&#39;s easy, it&#39;s linux, and it&#39;s rated very highly. All that put together should add up to some serious fun, so let&#39;s get started:
+  Port Scan Poking around the mySql Server Checking out Webmin Hylafax, what are you hiding? Back to Elastix Getting User and Root   Port Scan The first thing, as always, is a port scan:" />
+<meta name="keywords"
+  content="[hacking ctf binary overflow pentest shell]" />
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="/posts/beep/" />
+
+
+<link rel="stylesheet" href="/assets/style.css">
+
+<link rel="stylesheet" href="/assets/green.css">
+
+
+
+<link rel="stylesheet" href="/style.css">
+
+<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Inconsolata&display=swap" rel="stylesheet"> 
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-148164972-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-148164972-1');
+</script>
+
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144"
+  href="/img/apple-touch-icon-144-precomposed.png">
+
+<link rel="shortcut icon" href="/images/terrain-forest.png">
+
+
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title"
+  content="Hack The Box - Beep :: Forest Hex — Explore Hacking" />
+<meta name="twitter:description"
+  content="Welcome to another Forest Hex hacking adventure! 🌲🏹 Today&#39;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&#39;s easy, it&#39;s linux, and it&#39;s rated very highly. All that put together should add up to some serious fun, so let&#39;s get started:
+  Port Scan Poking around the mySql Server Checking out Webmin Hylafax, what are you hiding? Back to Elastix Getting User and Root   Port Scan The first thing, as always, is a port scan:" />
+<meta name="twitter:site" content="/" />
+<meta name="twitter:creator" content="jivex5k" />
+<meta name="twitter:image" content="">
+
+
+<meta property="og:locale" content="en" />
+<meta property="og:type" content="article" />
+<meta property="og:title"
+  content="Hack The Box - Beep :: Forest Hex — Explore Hacking">
+<meta property="og:description"
+  content="Welcome to another Forest Hex hacking adventure! 🌲🏹 Today&#39;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&#39;s easy, it&#39;s linux, and it&#39;s rated very highly. All that put together should add up to some serious fun, so let&#39;s get started:
+  Port Scan Poking around the mySql Server Checking out Webmin Hylafax, what are you hiding? Back to Elastix Getting User and Root   Port Scan The first thing, as always, is a port scan:" />
+<meta property="og:url" content="/posts/beep/" />
+<meta property="og:site_name" content="Hack The Box - Beep" />
+<meta property="og:image" content="">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+
+
+<meta property="article:published_time" content="2019-10-13 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+
+</head>
+<body class="">
+
+
+<div class="container center">
+
+  <header class="header">
+  <div class="header__inner">
+    <div class="header__logo">
+      <a href="/">
+  <div class="logo">
+    Forest Hex
+  </div>
+</a>
+
+    </div>
+    <div class="menu-trigger">menu</div>
+  </div>
+  
+    <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+      
+    
+
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+    
+  </ul>
+</nav>
+
+  
+</header>
+
+
+  <div class="content">
+    
+<div class="post">
+  <h1 class="post-title">
+    <a href="/posts/beep/">Hack The Box - Beep</a></h1>
+  <div class="post-meta">
+    
+    <span class="post-date">
+      2019-10-13
+    </span>
+    
+    
+    <span class="post-author">::
+      jivex5k
+    </span>
+    
+  </div>
+
+  
+  <span class="post-tags">
+    tags:
+    
+    #<a href="/tags/ctf/">ctf</a>&nbsp;
+    
+    #<a href="/tags/pentesting/">pentesting</a>&nbsp;
+    
+    #<a href="/tags/hackthebox/">HackTheBox</a>&nbsp;
+    
+    #<a href="/tags/kali/">kali</a>&nbsp;
+    
+  </span>
+  
+
+  
+
+  <div class="post-content">
+    <h3 id="welcome-to-another-forest-hex-hacking-adventure-">Welcome to another Forest Hex hacking adventure! 🌲🏹</h3>
+<p>Today's plan is to explore a retired CTF from <a href="http://hackthebox.eu">http://hackthebox.eu</a> named &ldquo;Beep&rdquo;. I chose this box because it's easy, it's linux, and it's rated very highly. All that put together should add up to some serious fun, so let's get started:</p>
+
+  <figure class="left" >
+    <img src="2019-10-13-18-43-45.png"   />
+    
+  </figure>
+
+
+<ul>
+<li><a href="#port-scan">Port Scan</a></li>
+<li><a href="#poking-around-the-mysql-server">Poking around the mySql Server</a></li>
+<li><a href="#checking-out-webmin">Checking out Webmin</a></li>
+<li><a href="#hylafax--what-are-you-hiding-">Hylafax, what are you hiding?</a></li>
+<li><a href="#back-to-elastix">Back to Elastix</a></li>
+<li><a href="#getting-user-and-root">Getting User and Root</a></li>
+</ul>
+<hr>
+<h1 id="port-scan">Port Scan</h1>
+<p>The first thing, as always, is a port scan:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span>ports<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>nmap -p- --min-rate<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span> -T4 $1 | grep ^<span style="color:#f92672">[</span>0-9<span style="color:#f92672">]</span> | cut -d <span style="color:#e6db74">&#39;/&#39;</span> -f <span style="color:#ae81ff">1</span> | tr <span style="color:#e6db74">&#39;\n&#39;</span> <span style="color:#e6db74">&#39;,&#39;</span> | sed s/,$//<span style="color:#66d9ef">)</span>
+nmap -sC -sV -p$ports $1
+</code></pre></div><p>Using my bash script (which was taken from an HTB official writeup) we can ensure every port is checked, and that a deeper scan is only performed on open ports.</p>
+
+  <figure class="left" >
+    <img src="2019-10-13-19-53-19.png"   />
+    
+      <figcaption class="center" >Nmap Results</figcaption>
+    
+  </figure>
+
+
+
+  <figure class="left" >
+    <img src="../dino.gif"   />
+    
+  </figure>
+
+
+<p>That's a ton of stuff, let's save the output in Cherry Tree and start digging. First let's check out the website.
+
+  <figure class="left" >
+    <img src="2019-10-13-20-23-24.png"   />
+    
+      <figcaption class="center" >Login Portal</figcaption>
+    
+  </figure>
+
+</p>
+<p>Ah, some kind of login called elastix. I looked up some default logins but none of them worked, ah well, I'll take some notes and move on.</p>
+<hr>
+<h1 id="poking-around-the-mysql-server">Poking around the mySql Server</h1>
+<p>There's a mySql server running on port 3306, so I attempted to login with no password:
+
+  <figure class="left" >
+    <img src="2019-10-13-20-56-05.png"   />
+    
+      <figcaption class="center" >Trying to login to mySql</figcaption>
+    
+  </figure>
+
+</p>
+<p>No luck, and from the error it sounds like it's a dead end until we have a shell.</p>
+<hr>
+<h1 id="checking-out-webmin">Checking out Webmin</h1>
+<p>There's a server running on port 10000 which nmap identified as Webmin. Sure enough navigating there brought me to a login page. I decided to try several default logins, and after a bit, well&hellip;
+
+  <figure class="left" >
+    <img src="2019-10-13-21-06-43.png"   />
+    
+  </figure>
+
+</p>
+<p>Maybe there's an exploit for it we can use. We have the version number from nmap: MiniServ 1.570</p>
+
+  <figure class="left" >
+    <img src="2019-10-13-21-09-16.png"   />
+    
+      <figcaption class="center" >Webmin Exploits</figcaption>
+    
+  </figure>
+
+
+<p>There's a couple, namely the RCE ones, but the one that doesn't require user auth isn't for our version unfortunately. Onward to explore other services!</p>
+<hr>
+<h1 id="hylafax-what-are-you-hiding">Hylafax, what are you hiding?</h1>
+<p>Hylafax sounds interesting, let's do some digging with searchsploit:
+
+  <figure class="left" >
+    <img src="2019-10-13-21-21-09.png"   />
+    
+      <figcaption class="center" >Hylafax Exploits</figcaption>
+    
+  </figure>
+
+</p>
+<p>Damn, nothing for version 4.3.1, ah well that's the breaks. Time to keep searching.</p>
+<hr>
+<h1 id="back-to-elastix">Back to Elastix</h1>
+<p>I realized I had not looked at any elastix exploits yet, time to rectify that.</p>
+
+  <figure class="left" >
+    <img src="2019-10-13-21-42-57.png"   />
+    
+  </figure>
+
+
+<p>The Blind SQL Injection, and PHP Code Injection both look pretty interesting. Long story short, I couldn't get them to work.
+After a lot of messing around I decided to go back to the list and try the next one, which was an LFI exploit.</p>
+<p>Checking out the exploit we can see it just crafts a URL:
+<code>/vtigercrm/graph.php?current_language=../../../../../../../..//etc/amportal.conf%00&amp;module=Accounts&amp;action</code></p>
+<p>To quickly test this exploit I simply pasted it after the URL:
+
+  <figure class="left" >
+    <img src="2019-10-13-22-12-09.png"   />
+    
+      <figcaption class="center" >A local file from the webserver.</figcaption>
+    
+  </figure>
+
+</p>
+<p>Paydirt&hellip; We have a local config file, and from the look of it a lot of passwords.</p>
+<h1 id="getting-user-and-root">Getting User and Root</h1>
+<p>I noticed the config file mentioned FreePBX, part of an RCE exploit. I tried to get this to work but it wouldn't, I suspect perl isn't available on the remote system.</p>
+<p>I went back to the config and started looking for credentials to use. I noticed <code>jEhdIekWmdjE</code> was repeating a lot and decided to see if the box reused passwords for the root ssh login. Sure enough <code>jEhdIekWmdjE</code> unlocked it.</p>
+
+  <figure class="left" >
+    <img src="2019-10-13-23-28-32.png"   />
+    
+      <figcaption class="center" >Root and User Flag</figcaption>
+    
+  </figure>
+
+
+<hr>
+<p>Until next time, this is jivex5k signing off.</p>
+
+  </div>
+  <br>
+
+  
+  <span class="post-tags">
+    tags:
+    
+    #<a href="/tags/ctf/">ctf</a>&nbsp;
+    
+    #<a href="/tags/pentesting/">pentesting</a>&nbsp;
+    
+    #<a href="/tags/hackthebox/">HackTheBox</a>&nbsp;
+    
+    #<a href="/tags/kali/">kali</a>&nbsp;
+    
+  </span>
+  
+
+
+  
+  <div class="pagination">
+    <div class="pagination__title">
+      <span class="pagination__title-h">Read other posts</span>
+      <hr />
+    </div>
+    <div class="pagination__buttons">
+      
+      <span class="button previous">
+        <a href="/posts/htb_craft/">
+          <span class="button__icon">←</span>
+          <span class="button__text">Hack The Box - Craft</span>
+        </a>
+      </span>
+      
+      
+      <span class="button next">
+        <a href="/posts/buffer-overflow-on-arm-controlling-the-return-address/">
+          <span class="button__text">Buffer Overflow on ARM #2</span>
+          <span class="button__icon">→</span>
+        </a>
+      </span>
+      
+    </div>
+  </div>
+  
+
+  <script src="https://utteranc.es/client.js"
+        repo="wgehalo/wgehalo.github.io"
+        issue-term="pathname"
+        label="comment"
+        theme="photon-dark"
+        crossorigin="anonymous"
+        async>
+</script>
+</div>
+
+  </div>
+
+  
+    <footer class="footer">
+  <div class="footer__inner">
+    
+    <div class="copyright copyright--user">
+      <span>Forest Hex 2019</span>
+      
+
+      </div>
+    </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script>
+
+
+
+
+  
+</div>
+
+</body>
+</html>

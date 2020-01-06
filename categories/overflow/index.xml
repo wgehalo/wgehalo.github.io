@@ -2,20 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>overflow on Forest Hex</title>
-    <link>https://foresthex/categories/overflow/</link>
+    <link>/categories/overflow/</link>
     <description>Recent content in overflow on Forest Hex</description>
     <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Forest Hex 2019</copyright>
     <lastBuildDate>Mon, 02 Sep 2019 23:34:59 +0000</lastBuildDate>
     
-	<atom:link href="https://foresthex/categories/overflow/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/overflow/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>ARM CTF - Sending Bytes</title>
-      <link>https://foresthex/posts/arm-ctf-sending-bytes/</link>
+      <link>/posts/buffer-overflow-on-arm-part-2/</link>
       <pubDate>Mon, 02 Sep 2019 23:34:59 +0000</pubDate>
       
-      <guid>https://foresthex/posts/arm-ctf-sending-bytes/</guid>
+      <guid>/posts/buffer-overflow-on-arm-part-2/</guid>
       <description>Why hello there faithful reader! It&#39;s time again for another hacking related post.
 Today we&#39;ll be continuing on from our last post where we executed a buffer overflow to overwrite a secret number to reveal a flag.
 So, a quick recap:
