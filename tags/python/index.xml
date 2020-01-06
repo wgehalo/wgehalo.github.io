@@ -2,22 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Python on Forest Hex</title>
-    <link>/tags/python/</link>
+    <link>https://foresthex/tags/python/</link>
     <description>Recent content in Python on Forest Hex</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>William Gehalo</copyright>
     <lastBuildDate>Sat, 04 Jan 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/python/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://foresthex/tags/python/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Hack The Box - Craft</title>
-      <link>/posts/htb_craft/</link>
+      <link>https://foresthex/posts/hack-the-box-craft/</link>
       <pubDate>Sat, 04 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/posts/htb_craft/</guid>
+      <guid>https://foresthex/posts/hack-the-box-craft/</guid>
       <description>Welcome to another Forest Hex hacking adventure! 🌲🏹 Today I&amp;rsquo;m going to exploit some poor programming decisions and leverage those into a root shell. Grab a beer and come along for the ride.
 Feel free to jump around:
  Port Scan Exploring the Web Server Exploring Git Exploiting Python for a Reverse Shell Pivoting for More Access Gaining Root Access  Port Scan As always, I start with a port scan to see what&amp;rsquo;s open.</description>

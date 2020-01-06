@@ -2,58 +2,56 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Forest Hex</title>
-    <link>/categories/</link>
+    <link>https://foresthex/categories/</link>
     <description>Recent content in Categories on Forest Hex</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>William Gehalo</copyright>
     <lastBuildDate>Wed, 04 Sep 2019 02:30:14 +0000</lastBuildDate>
     
-	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://foresthex/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Binary Exploitation</title>
-      <link>/categories/binary-exploitation/</link>
+      <link>https://foresthex/categories/binary-exploitation/</link>
       <pubDate>Wed, 04 Sep 2019 02:30:14 +0000</pubDate>
       
-      <guid>/categories/binary-exploitation/</guid>
+      <guid>https://foresthex/categories/binary-exploitation/</guid>
       <description></description>
     </item>
     
     <item>
       <title>arm</title>
-      <link>/categories/arm/</link>
+      <link>https://foresthex/categories/arm/</link>
       <pubDate>Mon, 02 Sep 2019 23:34:59 +0000</pubDate>
       
-      <guid>/categories/arm/</guid>
+      <guid>https://foresthex/categories/arm/</guid>
       <description></description>
     </item>
     
     <item>
       <title>binary explotation</title>
-      <link>/categories/binary-explotation/</link>
+      <link>https://foresthex/categories/binary-explotation/</link>
       <pubDate>Mon, 02 Sep 2019 23:34:59 +0000</pubDate>
       
-      <guid>/categories/binary-explotation/</guid>
+      <guid>https://foresthex/categories/binary-explotation/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ctf</title>
-      <link>/categories/ctf/</link>
+      <link>https://foresthex/categories/ctf/</link>
       <pubDate>Mon, 02 Sep 2019 23:34:59 +0000</pubDate>
       
-      <guid>/categories/ctf/</guid>
+      <guid>https://foresthex/categories/ctf/</guid>
       <description></description>
     </item>
     
     <item>
       <title>overflow</title>
-      <link>/categories/overflow/</link>
+      <link>https://foresthex/categories/overflow/</link>
       <pubDate>Mon, 02 Sep 2019 23:34:59 +0000</pubDate>
       
-      <guid>/categories/overflow/</guid>
+      <guid>https://foresthex/categories/overflow/</guid>
       <description></description>
     </item>
     

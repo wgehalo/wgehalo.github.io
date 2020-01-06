@@ -2,22 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>binary explotation on Forest Hex</title>
-    <link>/categories/binary-explotation/</link>
+    <link>https://foresthex/categories/binary-explotation/</link>
     <description>Recent content in binary explotation on Forest Hex</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>William Gehalo</copyright>
     <lastBuildDate>Mon, 02 Sep 2019 23:34:59 +0000</lastBuildDate>
     
-	<atom:link href="/categories/binary-explotation/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://foresthex/categories/binary-explotation/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>ARM CTF - Sending Bytes</title>
-      <link>/posts/buffer-overflow-on-arm-part-2/</link>
+      <link>https://foresthex/posts/arm-ctf-sending-bytes/</link>
       <pubDate>Mon, 02 Sep 2019 23:34:59 +0000</pubDate>
       
-      <guid>/posts/buffer-overflow-on-arm-part-2/</guid>
+      <guid>https://foresthex/posts/arm-ctf-sending-bytes/</guid>
       <description>Why hello there faithful reader! It&amp;rsquo;s time again for another hacking related post.
 Today we&amp;rsquo;ll be continuing on from our last post where we executed a buffer overflow to overwrite a secret number to reveal a flag.
 So, a quick recap:
@@ -26,10 +24,10 @@ So, a quick recap:
     
     <item>
       <title>Buffer Overflow on ARM #1</title>
-      <link>/posts/buffer-overflow-on-arm/</link>
+      <link>https://foresthex/posts/buffer-overflow-on-arm-#1/</link>
       <pubDate>Fri, 30 Aug 2019 20:27:30 +0000</pubDate>
       
-      <guid>/posts/buffer-overflow-on-arm/</guid>
+      <guid>https://foresthex/posts/buffer-overflow-on-arm-#1/</guid>
       <description>Hello again faithful readers! Today&amp;rsquo;s post is about exploiting a buffer overflow.
 A few days ago I was invited to attempt some binary exploitation challenges for ARM architecture. Of course I agreed, despite the fact that I have no experience debugging ARM binaries. That&amp;rsquo;s okay though, it&amp;rsquo;s how you learn.
 I was happy to see the source code provided, and even happier when I was able to quickly identify the path to success without needing a debugger at all.</description>
