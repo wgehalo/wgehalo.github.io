@@ -28,7 +28,7 @@ Feel free to jump around:
       
       <guid>https://foresthex/posts/hack-the-box-beep/</guid>
       <description>Welcome to another Forest Hex hacking adventure! 🌲🏹 Today&amp;rsquo;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&amp;rsquo;s easy, it&amp;rsquo;s linux, and it&amp;rsquo;s rated very highly. All that put together should add up to some serious fun, so let&amp;rsquo;s get started:
-   Port Scan Poking around the mySql Server Checking out Webmin Hylafax, what are you hiding? Back to Elastix Getting User and Root  Port Scan The first thing, as always, is a port scan:</description>
+  Port Scan Poking around the mySql Server Checking out Webmin Hylafax, what are you hiding? Back to Elastix Getting User and Root  Port Scan The first thing, as always, is a port scan:</description>
     </item>
     
     <item>
