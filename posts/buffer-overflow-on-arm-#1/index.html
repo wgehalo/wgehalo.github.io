@@ -7,8 +7,8 @@
 <meta name="author"
   content="jivex5k">
 <meta name="description"
-  content="Hello again faithful readers! Today&amp;rsquo;s post is about exploiting a buffer overflow.
-A few days ago I was invited to attempt some binary exploitation challenges for ARM architecture. Of course I agreed, despite the fact that I have no experience debugging ARM binaries. That&amp;rsquo;s okay though, it&amp;rsquo;s how you learn.
+  content="Hello again faithful readers! Today&#39;s post is about exploiting a buffer overflow.
+A few days ago I was invited to attempt some binary exploitation challenges for ARM architecture. Of course I agreed, despite the fact that I have no experience debugging ARM binaries. That&#39;s okay though, it&#39;s how you learn.
 I was happy to see the source code provided, and even happier when I was able to quickly identify the path to success without needing a debugger at all." />
 <meta name="keywords" content="" />
 <meta name="robots" content="noodp" />
@@ -29,7 +29,7 @@ I was happy to see the source code provided, and even happier when I was able to
 
 
 
-<link rel="stylesheet" href="https://foresthex/main.min.73f55a8d452be4a71b2960620b80252cf69abd84d63fe7501abf0a39b1a70a78.css">
+<link rel="stylesheet" href="https://foresthex/main.min.5dcefbf8102eb536dd3e2de53ffebfa58599ab2435c241a0db81728a5e015f2e.css">
 <link rel="stylesheet" type="text/css" href="https://foresthex/style.css">
 
 
@@ -44,16 +44,14 @@ I was happy to see the source code provided, and even happier when I was able to
 
 <meta itemprop="name" content="Buffer Overflow on ARM #1">
 <meta itemprop="description" content="Learn how to overwrite another variable with a buffer overflow.">
-
-
 <meta itemprop="datePublished" content="2019-08-30T20:27:30&#43;00:00" />
 <meta itemprop="dateModified" content="2019-08-30T20:27:30&#43;00:00" />
 <meta itemprop="wordCount" content="1174">
+<meta itemprop="image" content="https://foresthex"/>
 
 
 
-<meta itemprop="keywords" content="binary explotation,ctf,arm,overflow," />
-<meta name="twitter:card" content="summary_large_image"/>
+<meta itemprop="keywords" content="binary explotation,ctf,arm,overflow," /><meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://foresthex"/>
 
 <meta name="twitter:title" content="Buffer Overflow on ARM #1"/>
@@ -141,26 +139,22 @@ I was happy to see the source code provided, and even happier when I was able to
     
 
     <div class="post-content">
-      
-
-<p>Hello again faithful readers! Today&rsquo;s post is about exploiting a buffer overflow.</p>
-
-<p>A few days ago I was invited to attempt some binary exploitation challenges for ARM architecture. Of course I agreed, despite the fact that I have no experience debugging ARM binaries. That&rsquo;s okay though, it&rsquo;s how you learn.</p>
-
-<p>I was happy to see the source code provided, and even happier when I was able to quickly identify the path to success without needing a debugger at all. Here&rsquo;s the code:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv)
+      <p>Hello again faithful readers! Today's post is about exploiting a buffer overflow.</p>
+<p>A few days ago I was invited to attempt some binary exploitation challenges for ARM architecture. Of course I agreed, despite the fact that I have no experience debugging ARM binaries. That's okay though, it's how you learn.</p>
+<p>I was happy to see the source code provided, and even happier when I was able to quickly identify the path to success without needing a debugger at all. Here's the code:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span><span style="color:#f92672">*</span>argv)
 {
         <span style="color:#66d9ef">struct</span> {
                 <span style="color:#66d9ef">char</span> buffer[<span style="color:#ae81ff">0x80</span>]; <span style="color:#75715e">//Reserves 0x80 (128) bytes in memory.
 </span><span style="color:#75715e"></span>                <span style="color:#66d9ef">char</span> secret[<span style="color:#ae81ff">0x10</span>]; <span style="color:#75715e">//Reserves 0x10 (16) bytes in memory.
 </span><span style="color:#75715e"></span>        } local_vars; <span style="color:#75715e">//Allows access to reserved memory.
 </span><span style="color:#75715e"></span>        <span style="color:#66d9ef">int</span> i;
-        <span style="color:#66d9ef">for</span>(i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; i<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0x10</span>; i<span style="color:#f92672">++</span>) <span style="color:#75715e">//Loops 0x10 (16) times.
+        <span style="color:#66d9ef">for</span>(i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; i<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0x10</span>; i<span style="color:#f92672">+</span><span style="color:#f92672">+</span>) <span style="color:#75715e">//Loops 0x10 (16) times.
 </span><span style="color:#75715e"></span>        {
         		<span style="color:#75715e">//Stores a random number in local_vars.secret
 </span><span style="color:#75715e"></span>                local_vars.secret[i] <span style="color:#f92672">=</span> (<span style="color:#66d9ef">char</span>)(random()<span style="color:#f92672">%</span><span style="color:#ae81ff">94</span><span style="color:#f92672">+</span><span style="color:#ae81ff">33</span>);
         }
-        printf(<span style="color:#e6db74">&#34;Try to guess my secret:&#34;</span>);
+        printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Try to guess my secret:</span><span style="color:#e6db74">&#34;</span>);
 
         <span style="color:#75715e">//Saves input from STDIN in local_vars.buffer
 </span><span style="color:#75715e"></span>        gets(local_vars.buffer);
@@ -168,35 +162,27 @@ I was happy to see the source code provided, and even happier when I was able to
         <span style="color:#75715e">//Compares values of buffer against secret, gives flag if they match.
 </span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span>strcmp(local_vars.buffer,local_vars.secret))
         {
-                printf(<span style="color:#e6db74">&#34;Congratulations, here&#39;s your flag %s&#34;</span>, FLAG);
+                printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Congratulations, here&#39;s your flag %s</span><span style="color:#e6db74">&#34;</span>, FLAG);
         }
         <span style="color:#66d9ef">else</span>
         {
-                printf(<span style="color:#e6db74">&#34;Failed!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;);
+                printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Failed!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;);
         }
 }
-</code></pre></div>
-<p>I&rsquo;ve commented the code explaining what each piece does. Keep in mind, when numbers are defined using <code>0xn</code> notation it means they are hexadecimal numbers, so <code>0x80</code> is <code>128</code> bytes.</p>
-
+</code></pre></div><p>I've commented the code explaining what each piece does. Keep in mind, when numbers are defined using <code>0xn</code> notation it means they are hexadecimal numbers, so <code>0x80</code> is <code>128</code> bytes.</p>
 <p>The vulnerability exists because of the function <code>gets()</code>, which has since been removed from glibc. You can read about it here: <a href="https://linux.die.net/man/3/fgets">https://linux.die.net/man/3/fgets</a></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-root" data-lang="root">gets() reads a line from stdin into the buffer pointed to by s until either a terminating newline or EOF,
-which it replaces with a null byte (&#39;\0&#39;).
-No check for buffer overrun is performed (see BUGS below).</code></pre></div>
-<p>The gets command will continue to store values from STDIN in memory until it reaches a <code>newline</code>, <code>EOF</code>, or it runs out of memory.</p>
-
-<hr />
-
+<pre><code class="language-root" data-lang="root">gets() reads a line from stdin into the buffer pointed to by s until either a terminating newline or EOF,
+which it replaces with a null byte ('\0').
+No check for buffer overrun is performed (see BUGS below).
+</code></pre><p>The gets command will continue to store values from STDIN in memory until it reaches a <code>newline</code>, <code>EOF</code>, or it runs out of memory.</p>
+<hr>
 <h1 id="so-how-can-we-exploit-this">So how can we exploit this?</h1>
-
 <p>Well, seeing as we only have 128 bytes allocated for our input, once we hit the 129th byte it will continue to overwrite into the 16 bytes reserved for the <code>local_vars.secret</code> data. We can overwrite the secret with whatever value we want by sending 128 characters to input. The next 16 characters of our input will become the new value for secret.</p>
-
 <p>The code will then compare the strings using <code>strcmp</code>, which&hellip;well&hellip; according to the man page:</p>
-
 <blockquote>
 <p>The strcmp() function compares the two strings s1 and s2.  It returns an integer less than, equal to, or greater than zero if s1 is found, respectively, to be less than, to match, or be greater than s2.</p>
 </blockquote>
-
-<p>That didn&rsquo;t really make sense to me, so I found the source code for the function to see what&rsquo;s going on. Here it is:</p>
+<p>That didn't really make sense to me, so I found the source code for the function to see what's going on. Here it is:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">STRCMP (<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>p1, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>p2) <span style="color:#75715e">// p1 and p2 are memory addresses
 </span><span style="color:#75715e"></span>{
   <span style="color:#75715e">//saves both addresses in new memory location
@@ -207,64 +193,45 @@ No check for buffer overrun is performed (see BUGS below).</code></pre></div>
 </span><span style="color:#75715e"></span>  <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> c1, c2;
   <span style="color:#66d9ef">do</span>
     {
-      c1 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span>) <span style="color:#f92672">*</span>s1<span style="color:#f92672">++</span>; <span style="color:#75715e">//saves value at address
-</span><span style="color:#75715e"></span>      c2 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span>) <span style="color:#f92672">*</span>s2<span style="color:#f92672">++</span>; <span style="color:#75715e">//saves value at address
-</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">if</span> (c1 <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;\0&#39;</span>) <span style="color:#75715e">//check first value for null byte
+      c1 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span>) <span style="color:#f92672">*</span>s1<span style="color:#f92672">+</span><span style="color:#f92672">+</span>; <span style="color:#75715e">//saves value at address
+</span><span style="color:#75715e"></span>      c2 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span>) <span style="color:#f92672">*</span>s2<span style="color:#f92672">+</span><span style="color:#f92672">+</span>; <span style="color:#75715e">//saves value at address
+</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">if</span> (c1 <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">\0</span><span style="color:#e6db74">&#39;</span>) <span style="color:#75715e">//check first value for null byte
 </span><span style="color:#75715e"></span>
         <span style="color:#75715e">//subtract value of c1 from c2.
 </span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> c1 <span style="color:#f92672">-</span> c2;
     }
 
   <span style="color:#75715e">//keep going if it matches and there&#39;s no null byte yet
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">while</span> (c1 <span style="color:#f92672">==</span> c2);
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">while</span> (c1 <span style="color:#f92672">=</span><span style="color:#f92672">=</span> c2);
 
   <span style="color:#75715e">//If it ever doesnt match, end up here.
 </span><span style="color:#75715e"></span>  <span style="color:#66d9ef">return</span> c1 <span style="color:#f92672">-</span> c2;
 }
-</code></pre></div>
-<p>I added comments to the code, but basically it iterates through both strings one character at a time until it hits a null byte (0) in the first string, or a character which doesn&rsquo;t match. It then returns the value of the last characters compared, subtracted from each other, which will always be 0 if it&rsquo;s a match.</p>
-
-<p>So the takeaway here is, <code>gets()</code> won&rsquo;t stop at null bytes, but <code>strcmp()</code> will. Because of this, we can happily pass null bytes to the input, and still execute an overflow into <code>local_vars.secret</code></p>
-
-<hr />
-
+</code></pre></div><p>I added comments to the code, but basically it iterates through both strings one character at a time until it hits a null byte (0) in the first string, or a character which doesn't match. It then returns the value of the last characters compared, subtracted from each other, which will always be 0 if it's a match.</p>
+<p>So the takeaway here is, <code>gets()</code> won't stop at null bytes, but <code>strcmp()</code> will. Because of this, we can happily pass null bytes to the input, and still execute an overflow into <code>local_vars.secret</code></p>
+<hr>
 <h1 id="crafting-the-payload-the-magic-part">Crafting the payload (the magic part)</h1>
-
 <p>Knowing this we can craft a payload that will overwrite <code>local_vars.secret</code> with whatever value we want, and can set our <code>local_vars.buffer</code> to the same string using null bytes to terminate it for <code>strcmp()</code>. On top of that, we can abuse the fact the <code>gets()</code> will happily save as many null bytes as we want, which means we can make both our input, and the secret, immediately terminate by setting the first byte value to 0. It will work like this:</p>
-
 <p><code>0</code> + <code>127 bytes of whatever we want</code> + <code>\n (for newline)</code></p>
-
-<p>That&rsquo;s 129 bytes of data, for the 128 byte buffer. Let&rsquo;s step through the logic and see why this works.</p>
+<p>That's 129 bytes of data, for the 128 byte buffer. Let's step through the logic and see why this works.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">char</span> buffer[<span style="color:#ae81ff">0x80</span>]; <span style="color:#75715e">//Reserves 0x80 (128) bytes in memory.
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">char</span> secret[<span style="color:#ae81ff">0x10</span>]; <span style="color:#75715e">//Reserves 0x10 (16) bytes in memory.
-</span></code></pre></div>
-<p>This code reserves <code>128 bytes</code> in memory for our buffer, and 16 bytes for our secret. This is a continuous block of memory, so immediately after the 128 bytes for the buffer are the 16 bytes for the secret.</p>
+</span></code></pre></div><p>This code reserves <code>128 bytes</code> in memory for our buffer, and 16 bytes for our secret. This is a continuous block of memory, so immediately after the 128 bytes for the buffer are the 16 bytes for the secret.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">gets(local_vars.buffer); <span style="color:#75715e">//Saves input from STDIN in memory allocated for local_vars.buffer
-</span></code></pre></div>
-<p>This accepts our input, which is <code>0</code> + <code>127 bytes of whatever</code> + <code>\n</code>, and stores it in memory starting at the address reserved for our buffer. Once it hits the <code>\n</code> value, it will know to stop copying. On top of that, it replaces the <code>\n</code> with <code>0</code>, this is simply how the function works. That&rsquo;s not something I knew off hand, I had to research the <code>gets()</code> function.</p>
-
+</span></code></pre></div><p>This accepts our input, which is <code>0</code> + <code>127 bytes of whatever</code> + <code>\n</code>, and stores it in memory starting at the address reserved for our buffer. Once it hits the <code>\n</code> value, it will know to stop copying. On top of that, it replaces the <code>\n</code> with <code>0</code>, this is simply how the function works. That's not something I knew off hand, I had to research the <code>gets()</code> function.</p>
 <p>Since the memory allocated for the secret is immediately after the first byte of the secret is now <code>0</code> since <code>gets()</code> replaced <code>\n</code> with it.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span>strcmp(local_vars.buffer,local_vars.secret))
-</code></pre></div>
-<p>This conditional statement checks if the value returned by <code>strcmp()</code> is 0. We must again refer to documentation, or in this case the source code, to understand what the function is doing.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">if</span> (c1 <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;\0&#39;</span>) <span style="color:#75715e">//check first value for null byte
-</span></code></pre></div>
-<p>In the above snippet from the <code>strcmp()</code> source code, it checks the first byte at the starting memory address of the first argument passed to the function, which in this case is <code>local_vars.buffer</code>. We set this byte to <code>0</code> with our payload.</p>
-
+</code></pre></div><p>This conditional statement checks if the value returned by <code>strcmp()</code> is 0. We must again refer to documentation, or in this case the source code, to understand what the function is doing.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">if</span> (c1 <span style="color:#f92672">=</span><span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">\0</span><span style="color:#e6db74">&#39;</span>) <span style="color:#75715e">//check first value for null byte
+</span></code></pre></div><p>In the above snippet from the <code>strcmp()</code> source code, it checks the first byte at the starting memory address of the first argument passed to the function, which in this case is <code>local_vars.buffer</code>. We set this byte to <code>0</code> with our payload.</p>
 <p>Since the if condition is met, the following code is executed:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">return</span> c1 <span style="color:#f92672">-</span> c2; <span style="color:#75715e">//if null, subtract value of c1 from c2. will be 0 if same
-</span></code></pre></div>
-<p>So, it will subtract <code>c2</code> from <code>c1</code>. Well <code>c2</code> is the value at the starting memory address of the second argument passed to the function, which in this case is <code>local_vars.secret</code>. Since our payload overwrote this value by exceeding the 128 byte buffer, the value here is now <code>0</code>.</p>
-
+</span></code></pre></div><p>So, it will subtract <code>c2</code> from <code>c1</code>. Well <code>c2</code> is the value at the starting memory address of the second argument passed to the function, which in this case is <code>local_vars.secret</code>. Since our payload overwrote this value by exceeding the 128 byte buffer, the value here is now <code>0</code>.</p>
 <p>Well, <code>0-0 = 0</code>, so it returns 0, which means the statement <code>if(!strcmp(local_vars.buffer,local_vars.secret))</code> evaluates to true, and execution continues to this line:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">printf(<span style="color:#e6db74">&#34;Congratulations, here&#39;s your flag %s&#34;</span>, FLAG);
-</code></pre></div>
-<p>Now getting these values to the actual program is kind of tricky. <a href="https://foresthex.com/buffer-overflow-on-arm-part-2/">I made a post that goes into more detail about how to do this.</a></p>
-
-<p>I&rsquo;m not going to leave you hanging though, the following python statement will send raw binary, represented by <code>\xNN</code> where N is a hexadecimal digit, to netcat:</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Congratulations, here&#39;s your flag %s</span><span style="color:#e6db74">&#34;</span>, FLAG);
+</code></pre></div><p>Now getting these values to the actual program is kind of tricky. <a href="https://foresthex.com/buffer-overflow-on-arm-part-2/">I made a post that goes into more detail about how to do this.</a></p>
+<p>I'm not going to leave you hanging though, the following python statement will send raw binary, represented by <code>\xNN</code> where N is a hexadecimal digit, to netcat:</p>
 <p><code>python -c 'print(&quot;\x00&quot;*128 + &quot;\n&quot;)' | nc localhost 9001</code></p>
-
 
     <figure class="left" >
         <img src="arm_ctf_win.png"   />

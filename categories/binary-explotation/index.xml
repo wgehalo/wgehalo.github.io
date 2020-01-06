@@ -16,10 +16,10 @@
       <pubDate>Mon, 02 Sep 2019 23:34:59 +0000</pubDate>
       
       <guid>https://foresthex/posts/arm-ctf-sending-bytes/</guid>
-      <description>Why hello there faithful reader! It&amp;rsquo;s time again for another hacking related post.
-Today we&amp;rsquo;ll be continuing on from our last post where we executed a buffer overflow to overwrite a secret number to reveal a flag.
+      <description>Why hello there faithful reader! It&#39;s time again for another hacking related post.
+Today we&#39;ll be continuing on from our last post where we executed a buffer overflow to overwrite a secret number to reveal a flag.
 So, a quick recap:
- We have a buffer overflow for a service which accepts our input. We can send it anything we want, if we have some way to represent non-printable characters.</description>
+ We have a buffer overflow for a service which accepts our input. We can send it anything we want, if we have some way to represent non-printable characters. We need to send it 129 bytes, with the first being 0x0 and the last being \n The program lives on a remote server that we can connect via an IPv4 address.</description>
     </item>
     
     <item>
@@ -28,8 +28,8 @@ So, a quick recap:
       <pubDate>Fri, 30 Aug 2019 20:27:30 +0000</pubDate>
       
       <guid>https://foresthex/posts/buffer-overflow-on-arm-#1/</guid>
-      <description>Hello again faithful readers! Today&amp;rsquo;s post is about exploiting a buffer overflow.
-A few days ago I was invited to attempt some binary exploitation challenges for ARM architecture. Of course I agreed, despite the fact that I have no experience debugging ARM binaries. That&amp;rsquo;s okay though, it&amp;rsquo;s how you learn.
+      <description>Hello again faithful readers! Today&#39;s post is about exploiting a buffer overflow.
+A few days ago I was invited to attempt some binary exploitation challenges for ARM architecture. Of course I agreed, despite the fact that I have no experience debugging ARM binaries. That&#39;s okay though, it&#39;s how you learn.
 I was happy to see the source code provided, and even happier when I was able to quickly identify the path to success without needing a debugger at all.</description>
     </item>
     
