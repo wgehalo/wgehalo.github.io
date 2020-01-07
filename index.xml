@@ -2,51 +2,51 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Forest Hex</title>
-    <link>https://example.com/</link>
+    <link>https://foresthex.com/</link>
     <description>Recent content on Forest Hex</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Sat, 04 Jan 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://example.com/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://foresthex.com/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Hack The Box - Craft</title>
-      <link>https://example.com/posts/hack-the-box-craft/</link>
+      <link>https://foresthex.com/posts/hack-the-box-craft/</link>
       <pubDate>Sat, 04 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://example.com/posts/hack-the-box-craft/</guid>
+      <guid>https://foresthex.com/posts/hack-the-box-craft/</guid>
       <description>Welcome to another Forest Hex hacking adventure! 🌲🏹 Today I&#39;m going to exploit some poor programming decisions and leverage those into a root shell. Grab a beer and come along for the ride.  Feel free to jump around:
  Port Scan Exploring the Web Server Exploring Git Exploiting Python for a Reverse Shell Pivoting for More Access Gaining Root Access   Port Scan As always, I start with a port scan to see what&#39;s open.</description>
     </item>
     
     <item>
       <title>Hack The Box - Beep</title>
-      <link>https://example.com/posts/hack-the-box-beep/</link>
+      <link>https://foresthex.com/posts/hack-the-box-beep/</link>
       <pubDate>Sun, 13 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://example.com/posts/hack-the-box-beep/</guid>
+      <guid>https://foresthex.com/posts/hack-the-box-beep/</guid>
       <description>Welcome to another Forest Hex hacking adventure! 🌲🏹 Today&#39;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&#39;s easy, it&#39;s linux, and it&#39;s rated very highly. All that put together should add up to some serious fun, so let&#39;s get started:
   Port Scan Poking around the mySql Server Checking out Webmin Hylafax, what are you hiding? Back to Elastix Getting User and Root   Port Scan The first thing, as always, is a port scan:</description>
     </item>
     
     <item>
       <title>Buffer Overflow on ARM #2</title>
-      <link>https://example.com/posts/buffer-overflow-on-arm-#2/</link>
+      <link>https://foresthex.com/posts/buffer-overflow-on-arm-#2/</link>
       <pubDate>Wed, 04 Sep 2019 02:30:14 +0000</pubDate>
       
-      <guid>https://example.com/posts/buffer-overflow-on-arm-#2/</guid>
+      <guid>https://foresthex.com/posts/buffer-overflow-on-arm-#2/</guid>
       <description>Hello again faithful readers! Today we are going to explore another buffer overflow on an ARM binary. The previous challenge involved overwriting a variable. This one is going to overflow the return address instead.
 What&#39;s the return address? The return address is a value stored on the stack whenever a function is called. After the function finishes, the CPU will load the value of the return address and attempt to execute the data there.</description>
     </item>
     
     <item>
       <title>ARM CTF - Sending Bytes</title>
-      <link>https://example.com/posts/arm-ctf-sending-bytes/</link>
+      <link>https://foresthex.com/posts/arm-ctf-sending-bytes/</link>
       <pubDate>Mon, 02 Sep 2019 23:34:59 +0000</pubDate>
       
-      <guid>https://example.com/posts/arm-ctf-sending-bytes/</guid>
+      <guid>https://foresthex.com/posts/arm-ctf-sending-bytes/</guid>
       <description>Why hello there faithful reader! It&#39;s time again for another hacking related post.
 Today we&#39;ll be continuing on from our last post where we executed a buffer overflow to overwrite a secret number to reveal a flag.
 So, a quick recap:
@@ -55,10 +55,10 @@ So, a quick recap:
     
     <item>
       <title>Buffer Overflow on ARM #1</title>
-      <link>https://example.com/posts/buffer-overflow-on-arm-#1/</link>
+      <link>https://foresthex.com/posts/buffer-overflow-on-arm-#1/</link>
       <pubDate>Fri, 30 Aug 2019 20:27:30 +0000</pubDate>
       
-      <guid>https://example.com/posts/buffer-overflow-on-arm-#1/</guid>
+      <guid>https://foresthex.com/posts/buffer-overflow-on-arm-#1/</guid>
       <description>Hello again faithful readers! Today&#39;s post is about exploiting a buffer overflow.
 A few days ago I was invited to attempt some binary exploitation challenges for ARM architecture. Of course I agreed, despite the fact that I have no experience debugging ARM binaries. That&#39;s okay though, it&#39;s how you learn.
 I was happy to see the source code provided, and even happier when I was able to quickly identify the path to success without needing a debugger at all.</description>
@@ -66,10 +66,10 @@ I was happy to see the source code provided, and even happier when I was able to
     
     <item>
       <title>About this blog:</title>
-      <link>https://example.com/about/</link>
+      <link>https://foresthex.com/about/</link>
       <pubDate>Tue, 11 Jun 2019 18:51:11 +0000</pubDate>
       
-      <guid>https://example.com/about/</guid>
+      <guid>https://foresthex.com/about/</guid>
       <description>I created this page to follow my journey through the world of hacking. The term &amp;ldquo;hacking&amp;rdquo; is very broad, so to be more specific this blog will focus on hacking software.
 That&#39;s still a pretty large field, so let&#39;s break it down a bit:
  Binary Exploitation Web App Exploitation Cryptography Cracking  My main method for learning will be participating in CTF challenges.

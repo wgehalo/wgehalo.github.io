@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>overflow on Forest Hex</title>
-    <link>https://example.com/tags/overflow/</link>
+    <link>https://foresthex.com/tags/overflow/</link>
     <description>Recent content in overflow on Forest Hex</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Wed, 04 Sep 2019 02:30:14 +0000</lastBuildDate>
     
-	<atom:link href="https://example.com/tags/overflow/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://foresthex.com/tags/overflow/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Buffer Overflow on ARM #2</title>
-      <link>https://example.com/posts/buffer-overflow-on-arm-#2/</link>
+      <link>https://foresthex.com/posts/buffer-overflow-on-arm-#2/</link>
       <pubDate>Wed, 04 Sep 2019 02:30:14 +0000</pubDate>
       
-      <guid>https://example.com/posts/buffer-overflow-on-arm-#2/</guid>
+      <guid>https://foresthex.com/posts/buffer-overflow-on-arm-#2/</guid>
       <description>Hello again faithful readers! Today we are going to explore another buffer overflow on an ARM binary. The previous challenge involved overwriting a variable. This one is going to overflow the return address instead.
 What&#39;s the return address? The return address is a value stored on the stack whenever a function is called. After the function finishes, the CPU will load the value of the return address and attempt to execute the data there.</description>
     </item>
     
     <item>
       <title>ARM CTF - Sending Bytes</title>
-      <link>https://example.com/posts/arm-ctf-sending-bytes/</link>
+      <link>https://foresthex.com/posts/arm-ctf-sending-bytes/</link>
       <pubDate>Mon, 02 Sep 2019 23:34:59 +0000</pubDate>
       
-      <guid>https://example.com/posts/arm-ctf-sending-bytes/</guid>
+      <guid>https://foresthex.com/posts/arm-ctf-sending-bytes/</guid>
       <description>Why hello there faithful reader! It&#39;s time again for another hacking related post.
 Today we&#39;ll be continuing on from our last post where we executed a buffer overflow to overwrite a secret number to reveal a flag.
 So, a quick recap:
@@ -35,10 +35,10 @@ So, a quick recap:
     
     <item>
       <title>Buffer Overflow on ARM #1</title>
-      <link>https://example.com/posts/buffer-overflow-on-arm-#1/</link>
+      <link>https://foresthex.com/posts/buffer-overflow-on-arm-#1/</link>
       <pubDate>Fri, 30 Aug 2019 20:27:30 +0000</pubDate>
       
-      <guid>https://example.com/posts/buffer-overflow-on-arm-#1/</guid>
+      <guid>https://foresthex.com/posts/buffer-overflow-on-arm-#1/</guid>
       <description>Hello again faithful readers! Today&#39;s post is about exploiting a buffer overflow.
 A few days ago I was invited to attempt some binary exploitation challenges for ARM architecture. Of course I agreed, despite the fact that I have no experience debugging ARM binaries. That&#39;s okay though, it&#39;s how you learn.
 I was happy to see the source code provided, and even happier when I was able to quickly identify the path to success without needing a debugger at all.</description>
