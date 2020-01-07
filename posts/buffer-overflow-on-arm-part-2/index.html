@@ -183,7 +183,7 @@ What&#39;s the return address? The return address is a value stored on the stack
 <p><code>arm-none-eabi-objdump -d a.out | grep win</code></p>
 
     <figure class="left" >
-        <img src="win_address.png"   />
+        <img src="win_address.webp"   />
 
         
             <figcaption class="center" >Memory address of win()</figcaption>
@@ -198,7 +198,7 @@ What&#39;s the return address? The return address is a value stored on the stack
 <p>When a function is called in ARM assembly, the function creates a &ldquo;stack frame&rdquo;. There's a lot of that can be said about this concept, but we can get some help using this image from Azeria Labs:</p>
 
     <figure class="left" >
-        <img src="stack.png"   />
+        <img src="stack.webp"   />
 
         
             <figcaption class="center" >Stack layout during function call.</figcaption>
@@ -216,7 +216,7 @@ What&#39;s the return address? The return address is a value stored on the stack
 <p><code>python -c 'print(&quot;\x41&quot;*132 + &quot;\xb0\x04\x01\x00&quot;)' | nc localhost 9003</code></p>
 
     <figure class="left" >
-        <img src="flag2.png"   />
+        <img src="flag2.webp"   />
 
         
             <figcaption class="center" >Overflow working.</figcaption>

