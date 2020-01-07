@@ -231,7 +231,7 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
 
 
     <figure class="left" >
-        <img src="swanson.gif"   />
+        <img src="swanson.webm"   />
 
         
     </figure>
@@ -259,7 +259,7 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
 
 
     <figure class="left" >
-        <img src="2.gif"   />
+        <img src="2.webm"   />
 
         
     </figure>
@@ -366,7 +366,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 
 
     <figure class="left" >
-        <img src="thumbsup.gif"   />
+        <img src="thumbsup.webm"   />
 
         
     </figure>
@@ -457,7 +457,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 
 
     <figure class="left" >
-        <img src="success.gif"   />
+        <img src="success.webm"   />
 
         
     </figure>
@@ -512,7 +512,7 @@ nmap -sC -sV -p$ports $1
 
 
     <figure class="left" >
-        <img src="dino.gif"   />
+        <img src="dino.webm"   />
 
         
     </figure>
