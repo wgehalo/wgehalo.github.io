@@ -2,102 +2,102 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Forest Hex</title>
-    <link>https://foresthex.com/tags/</link>
+    <link>/tags/</link>
     <description>Recent content in Tags on Forest Hex</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Sat, 04 Jan 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://foresthex.com/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>ctf</title>
-      <link>https://foresthex.com/tags/ctf/</link>
+      <link>/tags/ctf/</link>
       <pubDate>Sat, 04 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://foresthex.com/tags/ctf/</guid>
+      <guid>/tags/ctf/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Custom Exploitation</title>
-      <link>https://foresthex.com/tags/custom-exploitation/</link>
+      <link>/tags/custom-exploitation/</link>
       <pubDate>Sat, 04 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://foresthex.com/tags/custom-exploitation/</guid>
+      <guid>/tags/custom-exploitation/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Git</title>
-      <link>https://foresthex.com/tags/git/</link>
+      <link>/tags/git/</link>
       <pubDate>Sat, 04 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://foresthex.com/tags/git/</guid>
+      <guid>/tags/git/</guid>
       <description></description>
     </item>
     
     <item>
       <title>HackTheBox</title>
-      <link>https://foresthex.com/tags/hackthebox/</link>
+      <link>/tags/hackthebox/</link>
       <pubDate>Sat, 04 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://foresthex.com/tags/hackthebox/</guid>
+      <guid>/tags/hackthebox/</guid>
       <description></description>
     </item>
     
     <item>
       <title>pentesting</title>
-      <link>https://foresthex.com/tags/pentesting/</link>
+      <link>/tags/pentesting/</link>
       <pubDate>Sat, 04 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://foresthex.com/tags/pentesting/</guid>
+      <guid>/tags/pentesting/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Python</title>
-      <link>https://foresthex.com/tags/python/</link>
+      <link>/tags/python/</link>
       <pubDate>Sat, 04 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://foresthex.com/tags/python/</guid>
+      <guid>/tags/python/</guid>
       <description></description>
     </item>
     
     <item>
       <title>kali</title>
-      <link>https://foresthex.com/tags/kali/</link>
+      <link>/tags/kali/</link>
       <pubDate>Sun, 13 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://foresthex.com/tags/kali/</guid>
+      <guid>/tags/kali/</guid>
       <description></description>
     </item>
     
     <item>
       <title>arm</title>
-      <link>https://foresthex.com/tags/arm/</link>
+      <link>/tags/arm/</link>
       <pubDate>Wed, 04 Sep 2019 02:30:14 +0000</pubDate>
       
-      <guid>https://foresthex.com/tags/arm/</guid>
+      <guid>/tags/arm/</guid>
       <description></description>
     </item>
     
     <item>
       <title>binary explotation</title>
-      <link>https://foresthex.com/tags/binary-explotation/</link>
+      <link>/tags/binary-explotation/</link>
       <pubDate>Wed, 04 Sep 2019 02:30:14 +0000</pubDate>
       
-      <guid>https://foresthex.com/tags/binary-explotation/</guid>
+      <guid>/tags/binary-explotation/</guid>
       <description></description>
     </item>
     
     <item>
       <title>overflow</title>
-      <link>https://foresthex.com/tags/overflow/</link>
+      <link>/tags/overflow/</link>
       <pubDate>Wed, 04 Sep 2019 02:30:14 +0000</pubDate>
       
-      <guid>https://foresthex.com/tags/overflow/</guid>
+      <guid>/tags/overflow/</guid>
       <description></description>
     </item>
     
