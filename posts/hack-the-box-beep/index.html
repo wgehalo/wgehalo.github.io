@@ -135,7 +135,7 @@
 <p>Today's plan is to explore a retired CTF from <a href="http://hackthebox.eu">http://hackthebox.eu</a> named &ldquo;Beep&rdquo;. I chose this box because it's easy, it's linux, and it's rated very highly. All that put together should add up to some serious fun, so let's get started:</p>
 
     <figure class="left" >
-        <img src="2019-10-13-18-43-45.png"   />
+        <img src="2019-10-13-18-43-45.webp"   />
 
         
     </figure>
@@ -158,7 +158,7 @@ nmap -sC -sV -p$ports $1
 </code></pre></div><p>Using my bash script (which was taken from an HTB official writeup) we can ensure every port is checked, and that a deeper scan is only performed on open ports.</p>
 
     <figure class="left" >
-        <img src="2019-10-13-19-53-19.png"   />
+        <img src="2019-10-13-19-53-19.webp"   />
 
         
             <figcaption class="center" >Nmap Results</figcaption>
@@ -166,18 +166,11 @@ nmap -sC -sV -p$ports $1
     </figure>
 
 
-
-    <figure class="left" >
-        <img src="dino.gif"   />
-
-        
-    </figure>
-
-
+<!-- raw HTML omitted -->
 <p>That's a ton of stuff, let's save the output in Cherry Tree and start digging. First let's check out the website.
 
     <figure class="left" >
-        <img src="2019-10-13-20-23-24.png"   />
+        <img src="2019-10-13-20-23-24.webp"   />
 
         
             <figcaption class="center" >Login Portal</figcaption>
@@ -191,7 +184,7 @@ nmap -sC -sV -p$ports $1
 <p>There's a mySql server running on port 3306, so I attempted to login with no password:
 
     <figure class="left" >
-        <img src="2019-10-13-20-56-05.png"   />
+        <img src="2019-10-13-20-56-05.webp"   />
 
         
             <figcaption class="center" >Trying to login to mySql</figcaption>
@@ -205,7 +198,7 @@ nmap -sC -sV -p$ports $1
 <p>There's a server running on port 10000 which nmap identified as Webmin. Sure enough navigating there brought me to a login page. I decided to try several default logins, and after a bit, well&hellip;
 
     <figure class="left" >
-        <img src="2019-10-13-21-06-43.png"   />
+        <img src="2019-10-13-21-06-43.webp"   />
 
         
     </figure>
@@ -214,7 +207,7 @@ nmap -sC -sV -p$ports $1
 <p>Maybe there's an exploit for it we can use. We have the version number from nmap: MiniServ 1.570</p>
 
     <figure class="left" >
-        <img src="2019-10-13-21-09-16.png"   />
+        <img src="2019-10-13-21-09-16.webp"   />
 
         
             <figcaption class="center" >Webmin Exploits</figcaption>
@@ -228,7 +221,7 @@ nmap -sC -sV -p$ports $1
 <p>Hylafax sounds interesting, let's do some digging with searchsploit:
 
     <figure class="left" >
-        <img src="2019-10-13-21-21-09.png"   />
+        <img src="2019-10-13-21-21-09.webp"   />
 
         
             <figcaption class="center" >Hylafax Exploits</figcaption>
@@ -242,7 +235,7 @@ nmap -sC -sV -p$ports $1
 <p>I realized I had not looked at any elastix exploits yet, time to rectify that.</p>
 
     <figure class="left" >
-        <img src="2019-10-13-21-42-57.png"   />
+        <img src="2019-10-13-21-42-57.webp"   />
 
         
     </figure>
@@ -255,7 +248,7 @@ After a lot of messing around I decided to go back to the list and try the next 
 <p>To quickly test this exploit I simply pasted it after the URL:
 
     <figure class="left" >
-        <img src="2019-10-13-22-12-09.png"   />
+        <img src="2019-10-13-22-12-09.webp"   />
 
         
             <figcaption class="center" >A local file from the webserver.</figcaption>
@@ -269,7 +262,7 @@ After a lot of messing around I decided to go back to the list and try the next 
 <p>I went back to the config and started looking for credentials to use. I noticed <code>jEhdIekWmdjE</code> was repeating a lot and decided to see if the box reused passwords for the root ssh login. Sure enough <code>jEhdIekWmdjE</code> unlocked it.</p>
 
     <figure class="left" >
-        <img src="2019-10-13-23-28-32.png"   />
+        <img src="2019-10-13-23-28-32.webp"   />
 
         
             <figcaption class="center" >Root and User Flag</figcaption>
