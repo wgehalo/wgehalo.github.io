@@ -14,10 +14,11 @@
             <pubDate>Sat, 04 Jan 2020 00:00:00 +0000</pubDate>
             
             <guid>https://foresthex.com/posts/hack-the-box-craft/</guid>
-            <description>Welcome to another Forest Hex hacking adventure! 🌲🏹 Today I&#39;m going to exploit some poor programming decisions and leverage those into a root shell. Grab a beer and come along for the ride.  Feel free to jump around:
+            <description>Welcome to another Forest Hex hacking adventure! 🌲🏹 ####Today I&#39;m going to exploit some poor programming decisions and leverage those into a root shell. Grab a beer and come along for the ride.
+ Feel free to jump around:
  Port Scan Exploring the Web Server Exploring Git Exploiting Python for a Reverse Shell Pivoting for More Access Gaining Root Access   Port Scan As always, I start with a port scan to see what&#39;s open.</description>
-            <content type="html"><![CDATA[<h1 id="welcome-to-another-forest-hex-hacking-adventure-">Welcome to another Forest Hex hacking adventure! 🌲🏹</h1>
-<h4 id="today-im-going-to-exploit-some-poor-programming-decisions-and-leverage-those-into-a-root-shell-grab-a-beer-and-come-along-for-the-ride"><em>Today I'm going to exploit some poor programming decisions and leverage those into a root shell. Grab a beer and come along for the ride.</em></h4>
+            <content type="html"><![CDATA[<h3 id="welcome-to-another-forest-hex-hacking-adventure-">Welcome to another Forest Hex hacking adventure! 🌲🏹</h3>
+<p>####<em>Today I'm going to exploit some poor programming decisions and leverage those into a root shell. Grab a beer and come along for the ride.</em></p>
 
     <figure class="left" >
         <img src="image-8.png"   />
