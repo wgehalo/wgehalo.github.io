@@ -2,103 +2,102 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Forest Hex</title>
-    <link>/tags/</link>
+    <link>https://example.com/tags/</link>
     <description>Recent content in Tags on Forest Hex</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>Forest Hex 2019</copyright>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Sat, 04 Jan 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://example.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>ctf</title>
-      <link>/tags/ctf/</link>
+      <link>https://example.com/tags/ctf/</link>
       <pubDate>Sat, 04 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/ctf/</guid>
+      <guid>https://example.com/tags/ctf/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Custom Exploitation</title>
-      <link>/tags/custom-exploitation/</link>
+      <link>https://example.com/tags/custom-exploitation/</link>
       <pubDate>Sat, 04 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/custom-exploitation/</guid>
+      <guid>https://example.com/tags/custom-exploitation/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Git</title>
-      <link>/tags/git/</link>
+      <link>https://example.com/tags/git/</link>
       <pubDate>Sat, 04 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/git/</guid>
+      <guid>https://example.com/tags/git/</guid>
       <description></description>
     </item>
     
     <item>
       <title>HackTheBox</title>
-      <link>/tags/hackthebox/</link>
+      <link>https://example.com/tags/hackthebox/</link>
       <pubDate>Sat, 04 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/hackthebox/</guid>
+      <guid>https://example.com/tags/hackthebox/</guid>
       <description></description>
     </item>
     
     <item>
       <title>pentesting</title>
-      <link>/tags/pentesting/</link>
+      <link>https://example.com/tags/pentesting/</link>
       <pubDate>Sat, 04 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/pentesting/</guid>
+      <guid>https://example.com/tags/pentesting/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Python</title>
-      <link>/tags/python/</link>
+      <link>https://example.com/tags/python/</link>
       <pubDate>Sat, 04 Jan 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/python/</guid>
+      <guid>https://example.com/tags/python/</guid>
       <description></description>
     </item>
     
     <item>
       <title>kali</title>
-      <link>/tags/kali/</link>
+      <link>https://example.com/tags/kali/</link>
       <pubDate>Sun, 13 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/kali/</guid>
+      <guid>https://example.com/tags/kali/</guid>
       <description></description>
     </item>
     
     <item>
       <title>arm</title>
-      <link>/tags/arm/</link>
+      <link>https://example.com/tags/arm/</link>
       <pubDate>Wed, 04 Sep 2019 02:30:14 +0000</pubDate>
       
-      <guid>/tags/arm/</guid>
+      <guid>https://example.com/tags/arm/</guid>
       <description></description>
     </item>
     
     <item>
       <title>binary explotation</title>
-      <link>/tags/binary-explotation/</link>
+      <link>https://example.com/tags/binary-explotation/</link>
       <pubDate>Wed, 04 Sep 2019 02:30:14 +0000</pubDate>
       
-      <guid>/tags/binary-explotation/</guid>
+      <guid>https://example.com/tags/binary-explotation/</guid>
       <description></description>
     </item>
     
     <item>
       <title>overflow</title>
-      <link>/tags/overflow/</link>
+      <link>https://example.com/tags/overflow/</link>
       <pubDate>Wed, 04 Sep 2019 02:30:14 +0000</pubDate>
       
-      <guid>/tags/overflow/</guid>
+      <guid>https://example.com/tags/overflow/</guid>
       <description></description>
     </item>
     

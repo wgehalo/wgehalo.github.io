@@ -1,130 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
-  <url>
-    <loc>/tags/ctf/</loc>
-    <lastmod>2020-01-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/custom-exploitation/</loc>
-    <lastmod>2020-01-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/</loc>
-    <lastmod>2020-01-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/git/</loc>
-    <lastmod>2020-01-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/posts/htb_craft/</loc>
-    <lastmod>2020-01-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/hackthebox/</loc>
-    <lastmod>2020-01-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/pentesting/</loc>
-    <lastmod>2020-01-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/posts/</loc>
-    <lastmod>2020-01-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/python/</loc>
-    <lastmod>2020-01-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
-    <lastmod>2020-01-04T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/posts/beep/</loc>
-    <lastmod>2019-10-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/kali/</loc>
-    <lastmod>2019-10-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/arm/</loc>
-    <lastmod>2019-09-04T02:30:14+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/binary-exploitation/</loc>
-    <lastmod>2019-09-04T02:30:14+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/binary-explotation/</loc>
-    <lastmod>2019-09-04T02:30:14+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/posts/buffer-overflow-on-arm-controlling-the-return-address/</loc>
-    <lastmod>2019-09-04T02:30:14+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/</loc>
-    <lastmod>2019-09-04T02:30:14+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/overflow/</loc>
-    <lastmod>2019-09-04T02:30:14+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/arm/</loc>
-    <lastmod>2019-09-02T23:34:59+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/posts/buffer-overflow-on-arm-part-2/</loc>
-    <lastmod>2019-09-02T23:34:59+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/binary-explotation/</loc>
-    <lastmod>2019-09-02T23:34:59+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/ctf/</loc>
-    <lastmod>2019-09-02T23:34:59+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/overflow/</loc>
-    <lastmod>2019-09-02T23:34:59+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/posts/buffer-overflow-on-arm/</loc>
-    <lastmod>2019-08-30T20:27:30+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/about/</loc>
-    <lastmod>2019-06-11T18:51:11+00:00</lastmod>
-  </url>
-  
-</urlset>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	
+	<sitemap>
+	   	<loc>https://example.com/en/sitemap.xml</loc>
+		
+	   	<lastmod>2020-01-04T00:00:00+00:00</lastmod>
+		
+	</sitemap>
+	
+	<sitemap>
+	   	<loc>https://example.com/fr/sitemap.xml</loc>
+		
+	</sitemap>
+	
+</sitemapindex>

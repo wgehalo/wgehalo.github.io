@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="jivex5k">
+<meta name="description" content="Why hello there faithful reader! It&#39;s time again for another hacking related post.
+Today we&#39;ll be continuing on from our last post where we executed a buffer overflow to overwrite a secret number to reveal a flag.
+So, a quick recap:
+ We have a buffer overflow for a service which accepts our input. We can send it anything we want, if we have some way to represent non-printable characters. We need to send it 129 bytes, with the first being 0x0 and the last being \n The program lives on a remote server that we can connect via an IPv4 address." />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="#252627" />
+<link rel="canonical" href="https://example.com/posts/arm-ctf-sending-bytes/" />
+
+
+    <title>
+        
+            ARM CTF - Sending Bytes :: Forest Hex  — Hello Friend NG Theme
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://example.com/main.min.5dcefbf8102eb536dd3e2de53ffebfa58599ab2435c241a0db81728a5e015f2e.css">
+
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="https://example.com/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://example.com/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://example.com/favicon-16x16.png">
+    <link rel="manifest" href="https://example.com/site.webmanifest">
+    <link rel="mask-icon" href="https://example.com/safari-pinned-tab.svg" color="#252627">
+    <link rel="shortcut icon" href="https://example.com/favicon.ico">
+    <meta name="msapplication-TileColor" content="#252627">
+    <meta name="theme-color" content="#252627">
+
+<meta itemprop="name" content="ARM CTF - Sending Bytes">
+<meta itemprop="description" content="Learn how to pipe raw bytes into STDIN.">
+<meta itemprop="datePublished" content="2019-09-02T23:34:59&#43;00:00" />
+<meta itemprop="dateModified" content="2019-09-02T23:34:59&#43;00:00" />
+<meta itemprop="wordCount" content="633">
+<meta itemprop="image" content="https://example.com"/>
+
+
+
+<meta itemprop="keywords" content="binary explotation,ctf,arm,overflow," /><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://example.com"/>
+
+<meta name="twitter:title" content="ARM CTF - Sending Bytes"/>
+<meta name="twitter:description" content="Learn how to pipe raw bytes into STDIN."/>
+
+
+
+    <meta property="article:section" content="binary explotation" />
+
+    <meta property="article:section" content="ctf" />
+
+    <meta property="article:section" content="arm" />
+
+    <meta property="article:section" content="overflow" />
+
+
+
+    <meta property="article:published_time" content="2019-09-02 23:34:59 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+    </head>
+
+    <body class="dark-theme">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://example.com/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">$ cd /home/ForestHex</span>
+            <span class="logo__cursor" style="background-color:#3f913d"></span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://example.com/about/">about</a></li><li><a href="https://example.com/posts/">posts</a></li><li><a href="https://example.com/tags/">tags</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>3 minutes
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title">
+                <a href="https://example.com/posts/arm-ctf-sending-bytes/">ARM CTF - Sending Bytes</a>
+            </h1>
+
+            
+
+            <div class="post-content">
+                <p>Why hello there faithful reader! It's time again for another hacking related post.</p>
+<p>Today we'll be continuing on from our <a href="https://foresthex.com/buffer-overflow-on-arm/">last post</a> where we executed a buffer overflow to overwrite a secret number to reveal a flag.</p>
+<p>So, a quick recap:</p>
+<ol>
+<li>We have a buffer overflow for a service which accepts our input.</li>
+<li>We can send it anything we want, if we have some way to represent non-printable characters.</li>
+<li>We need to send it 129 bytes, with the first being <code>0x0</code> and the last being <code>\n</code></li>
+<li>The program lives on a remote server that we can connect via an IPv4 address.</li>
+</ol>
+<h2 id="how-to-connect">How to connect?</h2>
+<p>Well, there's more than one way to skin a cat, and the quickest way to get an interface is using a program called <code>netcat</code>.</p>
+<p>Netcat is pretty old, but it's reliable, and included on almost every linux distribution, which means we can usually rely on it for quick testing. Let's connect and see what's what.</p>
+<p><code>nc localhost 9001</code></p>
+
+    <figure class="left" >
+        <img src="nc_guess.png"   />
+
+        
+            <figcaption class="center" >Using netcat to connect to the ARM binary.</figcaption>
+        
+    </figure>
+
+
+<p>Netcat connects to the remote server, and displays the message asking for the secret. It then waits for input, terminated by <code>\n</code>, which is automatically sent by netcat when we press enter.</p>
+<p>After that the remote program compares the secret (which is randomly generated every time it's run) to our input. If it doesn't match it sends a failure message and closes the connection.</p>
+<h3 id="theres-a-slight-problem-though">There's a slight problem though&hellip;</h3>
+<p>We can't send null bytes over the netcat interactive interface because it's a non-printable character. If we send <code>0</code>, or <code>0x0</code>, it will send <code>\x30</code> or <code>\x30\x78\x30</code> respectively.</p>
+<p>The reason is, the socket doesn't send the actual characters, instead it sends a byte of data in binary which represents the character. One byte is represented by two hexadecimal characters, and you can look up the hexadecimal representation of each character on an <a href="http://www.asciitable.com/">ascii table</a>.</p>
+<p>So the netcat interface will convert any character we enter into it's raw binary form, chosen off the ascii table. That's why <code>0x0</code> will send the byte values for each one of those characters.</p>
+<h1 id="getting-around-this-issue">Getting around this issue</h1>
+<p>Theres several different ways to accomplish sending non-printable characters to a socket. I'll cover 2 that are achievable in the command line.</p>
+<h2 id="method-one---echo--e">Method One - echo -e</h2>
+<p>This is the most portable version since <code>echo -e</code> will be available on all but extremely locked down/customzed linux distributions.</p>
+<p>The syntax is very simple:</p>
+<p><code>echo -e &quot;\x30\n&quot; | nc localhost 9001</code></p>
+<p>The big problem with it, we have to manually put 128 <code>\x00</code>'s in the command. That's messy, but doable. Using python I can print the string I need like so:</p>
+<p><code>print(b'\x00'*128 + b'\n')</code></p>
+
+    <figure class="left" >
+        <img src="big.png"   />
+
+        
+            <figcaption class="center" >Printing bytes via python for echo -e.</figcaption>
+        
+    </figure>
+
+
+<p>Then we just copy it into our echo command.</p>
+<p><code>echo -e &quot;\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\n&quot; | nc localhost 9001</code></p>
+
+    <figure class="left" >
+        <img src="image-3.png"   />
+
+        
+            <figcaption class="center" >echo -e grabbing the flag</figcaption>
+        
+    </figure>
+
+
+<p>There it is, blanked out of course. No free flags here!</p>
+<h2 id="method-2---command-line-python">Method 2 - Command Line Python</h2>
+<p>So the first method works, but it's annoying to have to generate those characters and paste them. There could be a more efficient way to do it just using bash, but I usually just stick with Python since I'm extremely comfortable with it.</p>
+<p>Python can achieve what we need using this syntax:</p>
+<p><code>python -c 'print(&quot;\x00&quot;*128 + &quot;\n&quot;)' | nc localhost 9001</code></p>
+<p>That's a lot easier to type, and a lot nicer looking. We can invoke python with the <code>-c</code> flag to execute the statment in quotes immediately, and display the output to STDOUT. Then it's piped into netcat using <code>|</code>.</p>
+
+    <figure class="left" >
+        <img src="image-4.png"   />
+
+        
+            <figcaption class="center" >Using python -c to pipe output into netcat.</figcaption>
+        
+    </figure>
+
+
+<p>There's the lovely flag again, with a lot less of a headache getting the command right.</p>
+<p>This concludes the two part post for the ARM buffer overflow challenge. Stay tuned for a post on the next one!</p>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://example.com/tags/binary-explotation">binary explotation</a></span><span class="tag"><a href="https://example.com/tags/ctf">ctf</a></span><span class="tag"><a href="https://example.com/tags/arm">arm</a></span><span class="tag"><a href="https://example.com/tags/overflow">overflow</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>633 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2019-09-02 23:34 &#43;0000</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h"></span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+                        <span class="button previous">
+                            <a href="https://example.com/posts/buffer-overflow-on-arm-#2/">
+                                <span class="button__icon">←</span>
+                                <span class="button__text">Buffer Overflow on ARM #2</span>
+                            </a>
+                        </span>
+                    
+
+                    
+                        <span class="button next">
+                            <a href="https://example.com/posts/buffer-overflow-on-arm-#1/">
+                                <span class="button__text">Buffer Overflow on ARM #1</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    
+                </div>
+            </div>
+        
+
+        
+    </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2020</span>
+            
+                <span><a href="https://example.com">jivex5k</a></span>
+            
+            <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
+            <span> <a href="https://example.com/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+        </div>
+    </div>
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>Powered by <a href="http://gohugo.io">Hugo</a></span>
+            <span>Made with &#10084; by <a href="https://github.com/rhazdon">rhazdon</a></span>
+        </div>
+    </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="https://example.com/bundle.min.2d5469329143160ae2456a69c3c76dc2d0a3b212b46afe291a51bd68650ed6f8697e001dab54f1c272c77ce08092a8c55e5bb4314e0ee334aab4b927ec896638.js" integrity="sha512-LVRpMpFDFgriRWppw8dtwtCjshK0av4pGlG9aGUO1vhpfgAdq1TxwnLHfOCAkqjFXlu0MU4O4zSqtLkn7IlmOA=="></script>
+
+
+
+    </body>
+</html>
