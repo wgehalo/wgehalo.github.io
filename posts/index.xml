@@ -146,7 +146,7 @@
 
 <p>Can you see the vulnerability?</p>
 <p><code>eval('%s &gt; 1' % request.json['abv'])</code></p>
-<p>Ah, our good pal <code>eval</code>. It's dangerous to run <code>eval</code> on user input because it will evaluate a string as a python expression. [You can read more about it here.] (<a href="https://docs.python.org/3/library/functions.html#eval">https://docs.python.org/3/library/functions.html#eval</a>)</p>
+<p>Ah, our good pal <code>eval</code>. It's dangerous to run <code>eval</code> on user input because it will evaluate a string as a python expression. <a href="https://docs.python.org/3/library/functions.html#eval">You can read more about it here.</a></p>
 <p>Here's the entire function:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a6e22e">@auth.auth_required</span>
 <span style="color:#a6e22e">@api.expect</span>(beer_entry)
