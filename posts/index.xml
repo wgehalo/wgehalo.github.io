@@ -231,7 +231,10 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
 
 
 <figure class='left'>
-  <video src="swanson.webm" loop="true" autoplay="true" muted="true" playsinline="true"></video>
+  <video style="object-fit:contain" src="swanson.webm" loop="true" autoplay="true" m uted="true"
+    playsinline="true">
+  </video>
+
 </figure>
 
 <p>Success! It's not a shell, but it's a start and confirms that I can execute commands on the machine. It's time to modify the script to have it use socat to create a reverse shell. I can do this using the following commands:</p>
@@ -256,7 +259,10 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
 
 
 <figure class='left'>
-  <video src="2.webm" loop="true" autoplay="true" muted="true" playsinline="true"></video>
+  <video style="object-fit:contain" src="2.webm" loop="true" autoplay="true" m uted="true"
+    playsinline="true">
+  </video>
+
 </figure>
 
 <p>Success! But&hellip; wait&hellip; I'm root? Hmmm&hellip; that seemed very suspicious to me. I started poking around and found:</p>
@@ -360,7 +366,10 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 
 
 <figure class='left'>
-  <video src="thumbsup.webm" loop="true" autoplay="true" muted="true" playsinline="true"></video>
+  <video style="object-fit:contain" src="thumbsup.webm" loop="true" autoplay="true" m uted="true"
+    playsinline="true">
+  </video>
+
 </figure>
 
 <p>There's the user flag. I was almost stymied at the required passphrase on the key, but the same password Gilfoyle used for git was used here! For shame&hellip; for as much smack as Gilfoyle talks on Dinesh, he has reused his password in three places here.</p>
@@ -448,7 +457,10 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 
 
 <figure class='left'>
-  <video src="success.webm" loop="true" autoplay="true" muted="true" playsinline="true"></video>
+  <video style="object-fit:contain" src="success.webm" loop="true" autoplay="true" m uted="true"
+    playsinline="true">
+  </video>
+
 </figure>
 
 <p>A very cool box. Until next time hackers, this is jivex5k signing off!</p>
@@ -500,7 +512,10 @@ nmap -sC -sV -p$ports $1
 
 
 <figure class='left'>
-  <video src="dino.webm" loop="true" autoplay="true" muted="true" playsinline="true"></video>
+  <video style="object-fit:contain" src="dino.webm" loop="true" autoplay="true" m uted="true"
+    playsinline="true">
+  </video>
+
 </figure>
 
 <p>That's a ton of stuff, let's save the output in Cherry Tree and start digging. First let's check out the website.
