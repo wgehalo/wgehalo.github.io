@@ -231,7 +231,7 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
 
 
 <figure class='left'>
-  <video style="height:100%;width:100%" src="swanson.webm" loop="true" autoplay="true" m uted="true"
+  <video style="height:100%;width:100%" src="swanson.webm" loop="true" autoplay="true" muted="true"
     playsinline="true">
   </video>
 
@@ -259,7 +259,7 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
 
 
 <figure class='left'>
-  <video style="height:100%;width:100%" src="2.webm" loop="true" autoplay="true" m uted="true"
+  <video style="height:100%;width:100%" src="2.webm" loop="true" autoplay="true" muted="true"
     playsinline="true">
   </video>
 
@@ -366,7 +366,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 
 
 <figure class='left'>
-  <video style="height:100%;width:100%" src="thumbsup.webm" loop="true" autoplay="true" m uted="true"
+  <video style="height:100%;width:100%" src="thumbsup.webm" loop="true" autoplay="true" muted="true"
     playsinline="true">
   </video>
 
@@ -457,7 +457,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 
 
 <figure class='left'>
-  <video style="height:100%;width:100%" src="success.webm" loop="true" autoplay="true" m uted="true"
+  <video style="height:100%;width:100%" src="success.webm" loop="true" autoplay="true" muted="true"
     playsinline="true">
   </video>
 
@@ -512,7 +512,7 @@ nmap -sC -sV -p$ports $1
 
 
 <figure class='left'>
-  <video style="height:100%;width:100%" src="dino.webm" loop="true" autoplay="true" m uted="true"
+  <video style="height:100%;width:100%" src="dino.webm" loop="true" autoplay="true" muted="true"
     playsinline="true">
   </video>
 
