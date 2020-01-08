@@ -146,7 +146,7 @@
 
 <p>Can you see the vulnerability?</p>
 <p><code>eval('%s &gt; 1' % request.json['abv'])</code></p>
-<p>Ah, our good pal <code>eval</code>. It's dangerous to run <code>eval</code> on user input because it will evaluate a string as a python expression. You can read more about it here: <a href="https://docs.python.org/3/library/functions.html#eval">https://docs.python.org/3/library/functions.html#eval</a></p>
+<p>Ah, our good pal <code>eval</code>. It's dangerous to run <code>eval</code> on user input because it will evaluate a string as a python expression. [You can read more about it here.] (<a href="https://docs.python.org/3/library/functions.html#eval">https://docs.python.org/3/library/functions.html#eval</a>)</p>
 <p>Here's the entire function:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a6e22e">@auth.auth_required</span>
 <span style="color:#a6e22e">@api.expect</span>(beer_entry)
@@ -296,8 +296,9 @@ MYSQL_DATABASE_PASSWORD <span style="color:#f92672">=</span> <span style="color:
 MYSQL_DATABASE_DB <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">craft</span><span style="color:#e6db74">&#39;</span>
 MYSQL_DATABASE_HOST <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">db</span><span style="color:#e6db74">&#39;</span>
 SQLALCHEMY_TRACK_MODIFICATIONS <span style="color:#f92672">=</span> False
-</code></pre></div><p>Just look at all those juicy secrets! An inspection of the environment variables reveals something interesting as well:<code>GPG_KEY='0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D'</code></p>
-<p>Searching this key reveals that it's part of a python 3.6 docker instance. Hmmm, I need to escape this docker instance somehow. I have doubts that it will be via an exploit, rather it will probably involve the found credentials and API key.</p>
+</code></pre></div><p>Just look at all those juicy secrets! An inspection of the environment variables reveals something interesting as well:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">GPG_KEY<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D&#39;</span>
+</code></pre></div><p>Searching this key reveals that it's part of a python 3.6 docker instance. Hmmm, I need to escape this docker instance somehow. I have doubts that it will be via an exploit, rather it will probably involve the found credentials and API key.</p>
 <p>So let's see if we can access the database. I can modify the DB test script to do this since the database is only available internally. I could also set up a proxy and use a mySQL client, but the python is already set up to work so I'm going to take the path of least resistance here.</p>
 <p>Here's my modified DBTest script:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/env python</span>
