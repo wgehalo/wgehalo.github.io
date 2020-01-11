@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Git on Forest Hex</title>
+    <title>git on Forest Hex</title>
     <link>/tags/git/</link>
-    <description>Recent content in Git on Forest Hex</description>
+    <description>Recent content in git on Forest Hex</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Sat, 04 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Jan 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/git/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Hack The Box - Bitlab</title>
+      <link>/posts/hack-the-box-bitlab/</link>
+      <pubDate>Sat, 11 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/hack-the-box-bitlab/</guid>
+      <description>Welcome to another Forest Hex hacking adventure! 🌲🏹 Today I will be hacking an HTB box named bitlab.
+ Let&#39;s jump right in with a port scan, and as always, feel free to jump around.
+ Port Scan Poking around the Web Server The Initial Foothold Escalating to Root Creating the Git Hook   Port Scan Port Scan  Not a lot here, just a web server on port 80 and ssh on port 22.</description>
+    </item>
     
     <item>
       <title>Hack The Box - Craft</title>
@@ -17,9 +28,9 @@
       <pubDate>Sat, 04 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>/posts/hack-the-box-craft/</guid>
-      <description>Welcome to another Forest Hex hacking adventure! 🌲🏹 Today I&#39;m going to exploit some poor programming decisions and leverage those into a root shell. Grab a beer and come along for the ride.
- Feel free to jump around:
- Port Scan Exploring the Web Server Exploring Git Exploiting Python for a Reverse Shell Pivoting for More Access Gaining Root Access   Port Scan As always, I start with a port scan to see what&#39;s open.</description>
+      <description>Welcome to another Forest Hex hacking adventure! 🌲🏹
+Today I&#39;m going to exploit some poor programming decisions and leverage those into a root shell. Grab a beer and come along for the ride.
+  Port Scan As always, I start with a port scan to see what&#39;s open. I do a quick scan of all ports using nmap and then pipe those into a new, more thorough nmap scan.</description>
     </item>
     
   </channel>

