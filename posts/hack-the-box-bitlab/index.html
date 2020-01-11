@@ -8,7 +8,7 @@
   content="jivex5k">
 <meta name="description"
   content="Welcome to another Forest Hex hacking adventure! 🌲🏹 Today I will be hacking an HTB box named bitlab.
- Let&#39;s jump right in with a port scan, and as always, feel free to jump around.
+ Let&#39;s dive right in with a port scan, and as always, feel free to jump around.
  Port Scan Poking around the Web Server The Initial Foothold Escalating to Root Creating the Git Hook   Port Scan Port Scan  Not a lot here, just a web server on port 80 and ssh on port 22." />
 <meta name="keywords" content="" />
 <meta name="robots" content="noodp" />
@@ -153,7 +153,7 @@
     </figure>
 
 
-<p>Let's jump right in with a port scan, and as always, feel free to jump around.</p>
+<p>Let's dive right in with a port scan, and as always, feel free to jump around.</p>
 <ul>
 <li><a href="#port-scan">Port Scan</a></li>
 <li><a href="#poking-around-the-web-server">Poking around the Web Server</a></li>
@@ -226,10 +226,10 @@ document[<span style="color:#a6e22e">getElementById</span>](<span style="color:#
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
 $db_connection <span style="color:#f92672">=</span> <span style="color:#a6e22e">pg_connect</span>(<span style="color:#e6db74">&#34;host=localhost dbname=profiles user=profiles password=profiles&#34;</span>);
 $result <span style="color:#f92672">=</span> <span style="color:#a6e22e">pg_query</span>($db_connection, <span style="color:#e6db74">&#34;SELECT * FROM profiles&#34;</span>);
-</code></pre></div><p>This will be useful once I find a way to achieve code execution. For now I can't access the sql server since the port isn't exposed, and they don't work as ssh creds.</p>
+</code></pre></div><p>This could be useful once I find a way to achieve code execution. For now I can't access the sql server since the port isn't exposed, and they don't work as ssh creds.</p>
 <hr>
 <h1 id="the-initial-foothold">The Initial Foothold</h1>
-<p>While I was looking around I started to gain a better understanding of what was happening. There are two projects: Profile and Deployer. Profile is a simple php page, and deployer contains a script which will automatically pull any merge requests to the master branch in Profile. The php file is hosted on the web server at <code>/profile</code>, which I discovered by clicking on the settings link in the gitlab page.</p>
+<p>While I was looking around I started to gain a better understanding of what was happening. There are two projects: <code>Profile</code> and <code>Deployer</code>. Profile is a simple php page, and deployer contains a script which will automatically pull any merge requests to the master branch in Profile. The php file is hosted on the web server at <code>/profile</code>, which I discovered by clicking on the settings link in the gitlab page.</p>
 <p>This means I should be able to create a reverse shell by editing the php file. The web interface allows me to do it so I don't even have to bother cloning the repo locally.</p>
 <p>In fact, this is a rare chance to try out a php web shell, I'm going to use the one here:
 <a href="https://raw.githubusercontent.com/artyuum/Simple-PHP-Web-Shell/master/index.php">https://raw.githubusercontent.com/artyuum/Simple-PHP-Web-Shell/master/index.php</a></p>

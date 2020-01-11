@@ -18,7 +18,7 @@
       
       <guid>/posts/hack-the-box-bitlab/</guid>
       <description>Welcome to another Forest Hex hacking adventure! 🌲🏹 Today I will be hacking an HTB box named bitlab.
- Let&#39;s jump right in with a port scan, and as always, feel free to jump around.
+ Let&#39;s dive right in with a port scan, and as always, feel free to jump around.
  Port Scan Poking around the Web Server The Initial Foothold Escalating to Root Creating the Git Hook   Port Scan Port Scan  Not a lot here, just a web server on port 80 and ssh on port 22.</description>
     </item>
     
