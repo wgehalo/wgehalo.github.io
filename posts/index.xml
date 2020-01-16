@@ -156,10 +156,10 @@ $branch <span style="color:#f92672">=</span> $payload<span style="color:#f92672"
 <blockquote>
 <p>you only need to know that you can run sudo git pull as www-data</p>
 </blockquote>
-<p>It hit me like a ton of bricks.. I could simply copy the existing git repo to another folder and add a githook. The passwordless sudo access doesn't specify a folder so I can make a new one in /tmp and I will have the ability to create a new git hook. 
+<p>It hit me like a ton of bricks.. I could simply copy the existing git repo to another folder and add a githook. The passwordless sudo access doesn't specify a folder so I can make a new one in /tmp and I will have the ability to create a new git hook.
 <code>git</code> itself is restricted, so I can't just do a git init either.</p>
-<h1 id="creating-the-git-hook">Creating the Git Hook</h1>
 <hr>
+<h1 id="creating-the-git-hook">Creating the Git Hook</h1>
 <p>I tested if I could simply copy the <code>.git</code> folder and add a hook on my local machine, and had an issue with my powershell script. Apparently even in windows the githook still needs <code>#!/bin/bash</code>. I tried that but ended up with an error:
 <code>New-Item : A positional parameter cannot be found that accepts argument 'is</code></p>
 <p>Hm, something in my test string maybe. I changed the git hook to:</p>
