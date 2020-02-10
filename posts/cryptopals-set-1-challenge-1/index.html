@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author"
+  content="jivex5k ">
+<meta name="description"
+  content="Welcome to another Forest Hex crypto adventure! 🌲🏹 Today I will be walking through the first Cryptopals challenge.
+Cryptopals is a series of cryptology related challenges broken into sets, escalating in difficulty. I was recommended to check out this site by another user in a Nintendo Switch Hacking discord server.You can find this server here: https://discord.gg/ZdqEhed
+In fact, a lot of my recent drive to learn hacking was watching the Nintendo Switch hacking scene unfold." />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="#252627" />
+<link rel="canonical" href="/posts/cryptopals-set-1-challenge-1/" />
+
+
+<title>
+  
+  Cryptopals Set 1 - Challenge 1 :: Forest Hex  — An exploration of hacking and programming.
+  
+</title>
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-148164972-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', 'UA-148164972-1');
+</script>
+
+
+<link href="/flag-icon.min.css" rel="stylesheet" type="text/css">
+
+
+
+<link rel="stylesheet" href="/main.min.5dcefbf8102eb536dd3e2de53ffebfa58599ab2435c241a0db81728a5e015f2e.css">
+
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#252627">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="msapplication-TileColor" content="#252627">
+    <meta name="theme-color" content="#252627">
+
+<meta itemprop="name" content="Cryptopals Set 1 - Challenge 1">
+<meta itemprop="description" content="Begin your journey of crypto enlightenment.">
+<meta itemprop="datePublished" content="2019-06-11T21:14:35&#43;00:00" />
+<meta itemprop="dateModified" content="2019-06-11T21:14:35&#43;00:00" />
+<meta itemprop="wordCount" content="280">
+<meta itemprop="image" content="/"/>
+
+
+
+<meta itemprop="keywords" content="Cryptography,Cryptology,Crypto,Hacking,Challenge," /><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="/"/>
+
+<meta name="twitter:title" content="Cryptopals Set 1 - Challenge 1"/>
+<meta name="twitter:description" content="Begin your journey of crypto enlightenment."/>
+
+
+
+
+
+<meta property="article:published_time" content="2019-06-11 21:14:35 &#43;0000 UTC" />
+
+
+
+
+
+
+
+    </head>
+
+    <body class="dark-theme">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">$ cd /home</span>
+            <span class="logo__cursor" style="background-color:#3f913d"></span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="/about/">about</a></li><li><a href="/tags/">tags</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>2 minutes
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title">
+                <a href="/posts/cryptopals-set-1-challenge-1/">Cryptopals Set 1 - Challenge 1</a>
+            </h1>
+
+            
+
+            <div class="post-content">
+                <h3 id="welcome-to-another-forest-hex-crypto-adventure-">Welcome to another Forest Hex crypto adventure! 🌲🏹</h3>
+<p><em>Today I will be walking through the first Cryptopals challenge.</em></p>
+<p>Cryptopals is a series of cryptology related challenges broken into sets, escalating in difficulty. I was recommended to check out this site by another user in a Nintendo Switch Hacking discord server.You can find this server here: <a href="https://discord.gg/ZdqEhed">https://discord.gg/ZdqEhed</a></p>
+<p>In fact, a lot of my recent drive to learn hacking was watching the Nintendo Switch hacking scene unfold. It was extremely interesting to see the breadth, and depth of knowledge that came together.</p>
+<p>Anyway, on to the first challenge. Here is the description on the site:</p>
+<p><a href="https://cryptopals.com/sets/1/challenges/1">https://cryptopals.com/sets/1/challenges/1</a></p>
+<pre><code>Convert hex to base64
+The string: 49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d
+Should produce: SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t
+So go ahead and make that happen. You'll need to use this code for the rest of the exercises.
+Cryptopals Rule
+Always operate on raw bytes, never on encoded strings. Only use hex and base64 for pretty-printing.
+</code></pre><hr>
+<p>This is a simple conversion of hex to base64. This is easily achievable with Python.</p>
+<p>Something that may be easily missed: <code>Always operate on raw bytes, never on encoded strings. Only use hex and base64 for pretty-printing. </code></p>
+<p>In order to achieve this:</p>
+<ol>
+<li>Input = Hex String</li>
+<li>Convert input to bytes.</li>
+<li>Convert bytes to base 64.</li>
+<li>Print result.</li>
+</ol>
+<p>Python includes a handy way to convert a hex string to bytes: <code>bytes.fromhex()</code>
+It also has a standard library <code>base64</code> which includes <code>base64.b64encode()</code>
+So we simply call these functions in the right order and print the result.</p>
+<p>Here is the code that achieves this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> base64
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">hex_to_b64</span>(input):
+    <span style="color:#66d9ef">return</span> base64<span style="color:#f92672">.</span>b64encode(bytes<span style="color:#f92672">.</span>fromhex(input))
+<span style="color:#66d9ef">print</span>(hex_to_b64(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d</span><span style="color:#e6db74">&#39;</span>))
+</code></pre></div><p>Our function properly prints</p>
+<p><code>b'SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t'</code></p>
+<p>The <code>b</code> in front of the string means it&rsquo;s a bytes type instead of a string.</p>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="/tags/cryptography">Cryptography</a></span><span class="tag"><a href="/tags/cryptology">Cryptology</a></span><span class="tag"><a href="/tags/crypto">Crypto</a></span><span class="tag"><a href="/tags/hacking">Hacking</a></span><span class="tag"><a href="/tags/challenge">Challenge</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>280 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2019-06-11 21:14 &#43;0000</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h"></span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+                        <span class="button previous">
+                            <a href="/posts/buffer-overflow-on-arm-part-1/">
+                                <span class="button__icon">←</span>
+                                <span class="button__text">Buffer Overflow on ARM - Part 1</span>
+                            </a>
+                        </span>
+                    
+
+                    
+                </div>
+            </div>
+        
+
+
+        <div id="comments" class="thin"><script src="https://utteranc.es/client.js"
+        repo="wgehalo/wgehalo.github.io"
+        issue-term="pathname"
+        label="comment"
+        theme="photon-dark"
+        crossorigin="anonymous"
+        async>
+</script></div>
+
+    </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2020</span>
+            
+                <span><a href="/">jivex5k</a></span>
+            
+            <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
+            <span> <a href="/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+        </div>
+    </div>
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>Powered by <a href="http://gohugo.io">Hugo</a></span>
+            <span>Made with &#10084; by <a href="https://github.com/rhazdon">rhazdon</a></span>
+        </div>
+    </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="/bundle.min.2d5469329143160ae2456a69c3c76dc2d0a3b212b46afe291a51bd68650ed6f8697e001dab54f1c272c77ce08092a8c55e5bb4314e0ee334aab4b927ec896638.js" integrity="sha512-LVRpMpFDFgriRWppw8dtwtCjshK0av4pGlG9aGUO1vhpfgAdq1TxwnLHfOCAkqjFXlu0MU4O4zSqtLkn7IlmOA=="></script>
+
+
+
+    </body>
+</html>

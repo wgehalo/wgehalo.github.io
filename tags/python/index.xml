@@ -18,8 +18,8 @@
       
       <guid>/posts/hack-the-box-craft/</guid>
       <description>Welcome to another Forest Hex hacking adventure! 🌲🏹
-Today I&#39;m going to exploit some poor programming decisions and leverage those into a root shell. Grab a beer and come along for the ride.
-  Port Scan As always, I start with a port scan to see what&#39;s open. I do a quick scan of all ports using nmap and then pipe those into a new, more thorough nmap scan.</description>
+Today I&amp;rsquo;m going to exploit some poor programming decisions and leverage those into a root shell. Grab a beer and come along for the ride.
+  Port Scan As always, I start with a port scan to see what&amp;rsquo;s open. I do a quick scan of all ports using nmap and then pipe those into a new, more thorough nmap scan.</description>
     </item>
     
   </channel>
