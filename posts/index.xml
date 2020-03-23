@@ -5,8 +5,286 @@
         <description>Recent content in Posts on Forest Hex</description>
         <generator>Hugo -- gohugo.io</generator>
         <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-        <lastBuildDate>Sat, 11 Jan 2020 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Fri, 20 Mar 2020 00:00:00 +0000</lastBuildDate>
         <atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Hack The Box - Postman</title>
+            <link>/posts/hack-the-box-postman/</link>
+            <pubDate>Fri, 20 Mar 2020 00:00:00 +0000</pubDate>
+            
+            <guid>/posts/hack-the-box-postman/</guid>
+            <description>Welcome to another Forest Hex hacking adventure! 🌲🏹 Today I will be hacking a box named Postman.
+Postman HTB Card  Feel free to jump around as always:
+ Port Scan Investigating Open Ports Finding a Foothold Escalating to a user shell Getting Root   Port Scan Let&amp;rsquo;s dive right in with a port scan: nmap -p- -sC -sV --min-rate=1000 -T4 10.10.10.160
+ Looks like I have a few avenues of attack here.</description>
+            <content type="html"><![CDATA[<h3 id="welcome-to-another-forest-hex-hacking-adventure-">Welcome to another Forest Hex hacking adventure! 🌲🏹</h3>
+<p><em>Today I will be hacking a box named Postman.</em></p>
+
+    <figure class="left" >
+        <img src="1575350169.png"   />
+
+        
+            <figcaption class="center" >Postman HTB Card</figcaption>
+        
+    </figure>
+
+
+<p>Feel free to jump around as always:</p>
+<ul>
+<li><a href="#port-scan">Port Scan</a></li>
+<li><a href="#investigating-open-ports">Investigating Open Ports</a></li>
+<li><a href="#finding-a-foothold">Finding a Foothold</a></li>
+<li><a href="#escalating-to-a-user-shell">Escalating to a user shell</a></li>
+<li><a href="#getting-root">Getting Root</a></li>
+</ul>
+<hr>
+<h1 id="port-scan">Port Scan</h1>
+<p>Let&rsquo;s dive right in with a port scan: <code>nmap -p- -sC -sV --min-rate=1000 -T4 10.10.10.160</code></p>
+
+    <figure class="left" >
+        <img src="1575350463.png"   />
+
+        
+    </figure>
+
+
+<p>Looks like I have a few avenues of attack here. Webmin on port 10000 interests me greatly, I remember a lot of webmin exploits existing the last time I searched for them. My gut is to always check port 80 first though:</p>
+<hr>
+<h1 id="investigating-open-ports">Investigating Open Ports</h1>
+<h4 id="port-80">Port 80:</h4>
+<p>
+    <figure class="left" >
+        <img src="1575350617.png"   />
+
+        
+            <figcaption class="center" >Cyber Geek&#39;s Pesonal Web Site</figcaption>
+        
+    </figure>
+
+
+Hmmm, the Cyber Geek eh? Well there&rsquo;s not much to the site here, there&rsquo;s no place for input and the source doesn&rsquo;t seem to be hiding anything. Ah well, time to move along.</p>
+<h4 id="port-1000">Port 1000:</h4>
+
+    <figure class="left" >
+        <img src="1575350786.png"   />
+
+        
+            <figcaption class="center" >Hint to use HTTPS</figcaption>
+        
+    </figure>
+
+
+<p>A suggestion to try SSL protocol, alright then&hellip;
+
+    <figure class="left" >
+        <img src="1575350837.png"   />
+
+        
+            <figcaption class="center" >Webmin Login</figcaption>
+        
+    </figure>
+
+</p>
+<p>A Webmin login page, cool. I messed around a bit here with some SQL injection and default password combos but got nowhere, I wasn&rsquo;t expecting it to but you never know.</p>
+<h4 id="port-6379">Port 6379</h4>
+
+    <figure class="left" >
+        <img src="1575351187.png"   />
+
+        
+    </figure>
+
+
+<p>Interesting&hellip; I worked with Redis a while back, it&rsquo;s a way to store key value pairs on a server that you can interface with over HTTP requests. I looked up how to list all key value pairs: <a href="https://chartio.com/resources/tutorials/how-to-get-all-keys-in-redis/">https://chartio.com/resources/tutorials/how-to-get-all-keys-in-redis/</a></p>
+
+    <figure class="left" >
+        <img src="1575351346.png"   />
+
+        
+    </figure>
+
+
+<p>So I need to figure out how to send this command, maybe I can just use netcat.
+
+    <figure class="left" >
+        <img src="1575351407.png"   />
+
+        
+    </figure>
+
+</p>
+<p>Paydirt, though I&rsquo;m not sure what it&rsquo;s for yet. Cracklist sounds interesting&hellip;
+
+    <figure class="left" >
+        <img src="1575351538.png"   />
+
+        
+    </figure>
+
+</p>
+<p>Hm, a public ssh key, interesting. I&rsquo;ll save it in CherryTree for now.</p>
+<p>Well the initial enumeration is done, time to search for some exploits.</p>
+<blockquote>
+<p>It turns out that this SSH key was from another hacking attempt, I just did not realize it at the time.</p>
+</blockquote>
+<hr>
+<h1 id="finding-a-foothold">Finding a Foothold</h1>
+<p>First I decided to use searchsploit for a Webmin exploit:</p>
+
+    <figure class="left" >
+        <img src="1575351841.png"   />
+
+        
+    </figure>
+
+
+<p>The highlighted one seems perfect, according to NMap the versions is 1.910. It&rsquo;s a metasploit module which means it could be easy to use, but you never know. I read the details on this exploit, it&rsquo;s clear we need credentials first:
+<code>Any user authorized to the &quot;Package Updates&quot; module can execute arbitrary commands with root privileges.</code></p>
+<p>That could be something we use later, but for now it&rsquo;s time to move somewhere else. The other exploits for versions above 1.910 are worth investigating.</p>
+<p>This one sounds promising: <a href="https://www.exploit-db.com/exploits/47230">https://www.exploit-db.com/exploits/47230</a></p>
+<p><code>This module exploits a backdoor in Webmin versions 1.890 through 1.920. Only the SourceForge downloads were backdoored, but they are listed as official downloads on the project's site</code></p>
+<p>It could work, the chances are lower for our version however according to the details. Well, we can check it pretty quickly with metasploit so let&rsquo;s do that.</p>
+
+    <figure class="left" >
+        <img src="1575352689.png"   />
+
+        
+    </figure>
+
+
+<p>Bummer. The other one listed was the same exploit, just a different version so that won&rsquo;t work either. That leaves me with Apache exploits, which are usually a dead end in my experience.</p>
+<h2 id="the-redis-modules-rce-exploit">The Redis Modules RCE Exploit</h2>
+<hr>
+<p>After checking out searchsploit I confirmed there are no suitable apache exploits here. My gut points me back at the redis server, I&rsquo;m going to install redis-cli to see what I can find.</p>
+<p>Running the <code>INFO</code> command in netcat got me the version number:
+<code>redis_version:4.0.9</code></p>
+<p>Poking around in the actual client led me to believe the cracklist variable was a fluke. There&rsquo;s also an exploit I found for redis 4/5 that has RCE, I&rsquo;m going to try it out.</p>
+
+    <figure class="left" >
+        <img src="1575354776.png"   />
+
+        
+    </figure>
+
+
+<p>Oh yeah, that&rsquo;s what I like to see. Time to cross my fingers and run <code>exploit</code>.</p>
+
+    <figure class="left" >
+        <img src="1575354982.png"   />
+
+        
+    </figure>
+
+
+<p>Close but no cigar&hellip; I played around a bit and decided to manually listen on netcat but that didn&rsquo;t work either. I did some more research and decided to update metasploit, if this fails I&rsquo;ll try to understand the exploit manually and see if there&rsquo;s a non-metasploit version.</p>
+<p>After a bit of searching I found a python version:
+<a href="https://github.com/Ridter/redis-rce">https://github.com/Ridter/redis-rce</a></p>
+<p>I also found a very detailed explanation of how the redis rogue server exploit works:
+<a href="https://medium.com/@knownsec404team/rce-exploits-of-redis-based-on-master-slave-replication-ef7a664ce1d0">https://medium.com/@knownsec404team/rce-exploits-of-redis-based-on-master-slave-replication-ef7a664ce1d0</a></p>
+<h2 id="adding-an-ssh-key-vis-redis">Adding an SSH key vis Redis</h2>
+<hr>
+<p>After a ton of playing around with these exploits and understanding them better I realized this type of exploit won&rsquo;t work due to the lack of supports for MODULES on the other system.</p>
+<p>I did realize I have some alternate paths to a shell however, since I can write files to the other system I can try to stick a bash shell in a crontab, or a php shell on the www server, or an SSH key somewhere.</p>
+<p>I managed to find this tutorial
+<a href="https://medium.com/@Victor.Z.Zhu/redis-unauthorized-access-vulnerability-simulation-victor-zhu-ac7a71b2e419">https://medium.com/@Victor.Z.Zhu/redis-unauthorized-access-vulnerability-simulation-victor-zhu-ac7a71b2e419</a></p>
+<p>On top of that, playing around with the redis client allowed me to find the config file was already present at /var/lib/redis/.ssh</p>
+<p>I created a public key and followed the tutorial.</p>
+<p>Basically it works like this:</p>
+<ol>
+<li>Get redis-cli. <a href="https://redis.io/topics/rediscli">https://redis.io/topics/rediscli</a></li>
+<li>Wrap newlines around a public key. <code>(echo -e &quot;\n\n&quot;; cat ~/.ssh/id_rsa.pub; echo -e &quot;\n\n&quot;) &gt; temp.txt</code></li>
+<li>Save the formatted key in Redis. <code>cat ~/.ssh/temp.txt | redis-cli -h 10.10.10.160 -x set s-key</code></li>
+<li>Connect with redis-cli interactive mode. <code>redis-cli -h 10.10.10.160</code></li>
+<li>Set redis save directory to .ssh folder. <code>CONFIG SET dir /var/lib/redis/.ssh</code></li>
+<li>Set redis db name to authorized_keys. <code>CONFIG SET dbfilename authorized_keys</code></li>
+<li>Save it. <code>save</code></li>
+</ol>
+<p>This saves a public key to the redis server, which is then saved in the db filename under the configured dir. It ends up having the ssh public key value here: <code>/var/lib/redis/.ssh/authorized_keys</code></p>
+<p>Redis will append some metadata to the top, that&rsquo;s why the public key was wrapped in newlines. OpenSSH will manage to parse the public key correctly since it just checks every newline for a valid key, ignoring invalid entries. The metadata is ignored, and the real public key is loaded.</p>
+<p>This allowed me to SSH into the system as <code>redis</code> using my key, which seems a bit strange. I checked out <code>/etc/passwd</code> and confirmed redis is set up to use bash on login, this is definitely towards the CTF style of things. You normally wouldn&rsquo;t allow the redis service to have a bash login.</p>
+<p>I eventually figured out this was the method when I realized the previous cracklist key I had found was attempting to do this very method of gaining access.</p>
+<hr>
+<h1 id="escalating-to-a-user-shell">Escalating to a user shell</h1>
+<p>Once I was in I came across a file matt was running:
+
+    <figure class="left" >
+        <img src="1575393423.png"   />
+
+        
+            <figcaption class="center" >Suspicious File</figcaption>
+        
+    </figure>
+
+</p>
+<p>It looks like I can just put files on the server under his name. Well, I can probably stick a new authorized_keys file under his SSH folder and gain access as him. There&rsquo;s a problem though, the file isn&rsquo;t running and if I start it as redis it won&rsquo;t be able to write anywhere redis can&rsquo;t.</p>
+<p>I started poking around some familiar areas, and on a whim checked <code>/opt</code>. Lo and behold:
+
+    <figure class="left" >
+        <img src="1575418758.png"   />
+
+        
+            <figcaption class="center" >An Encrypted SSH Key</figcaption>
+        
+    </figure>
+
+</p>
+<p>Time to crack this baby. There&rsquo;s a python script named ssh2john which I used to convert the ssh key into a format John the Ripper here: <a href="https://github.com/koboi137/john">https://github.com/koboi137/john</a></p>
+<p>After that I just crack it with John and Rockyou:
+<code>john hash -d --wordlist=/usr/share/wordlists/rockyou.txt</code>
+
+    <figure class="left" >
+        <img src="1575419152.png"   />
+
+        
+            <figcaption class="center" >Cracked SSH Passphrase</figcaption>
+        
+    </figure>
+
+</p>
+<p>Bingo, looks like it&rsquo;s <code>computer2008</code>.
+Well considering there are only 3 accounts with bash logins (Matt, Root, redis), hopefully it works for Matt at least if not root.</p>
+<p>
+    <figure class="left" >
+        <img src="1575419472.png"   />
+
+        
+    </figure>
+
+
+Hmm&hellip; suspicious. When I enter the cracked passphrase it immediately closes the connection, which means the passphrase is right. There&rsquo;s some post login script that&rsquo;s closing the connection. I know you can have SSH execute commands on connect, maybe I can get a reverse shell going before it closes the connection.</p>
+<p>I think another option is to send it <code>vi</code> and then <code>vi</code> should open and I can escape to a shell.</p>
+<p>None of that worked, and after some more frustration I decided to look at the sshd_config file&hellip;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#deny users</span>
+DenyUsers Matt
+</code></pre></div><p>Well god damnit. No matter, maybe he reused this password for his account and I can just su into it.</p>
+
+    <figure class="left" >
+        <img src="1575422055.png"   />
+
+        
+            <figcaption class="center" >Got User</figcaption>
+        
+    </figure>
+
+
+<p>Awesome, got ya Matt! Time to try for root.</p>
+<hr>
+<h1 id="getting-root">Getting Root</h1>
+<p>I poked around for a bit looking for anything obvious, but came up empty. Then I ran the <code>lse.sh</code> script: <a href="https://github.com/diego-treitos/linux-smart-enumeration">https://github.com/diego-treitos/linux-smart-enumeration</a></p>
+<p>Nothing extraordinary came up, but I noticed binaries running as root was green and it reminded me that webmin was running. I quickly tried the credentials <code>Matt</code> <code>computer2008</code> on it, and bingo I was in. I checked what webmin was running as, and it&rsquo;s root!</p>
+<p>Remember that webmin exploit we checked out first? It required the webmin user to have creds, which we now do. Let&rsquo;s try and get root with it.</p>
+<p>
+    <figure class="left" >
+        <img src="1575428772.png"   />
+
+        
+    </figure>
+
+
+Success! All I had to do was set the options and exploit. I got a bit tripped up with the SSL option but after I checked the options again I noticed it and it worked like a charm.</p>
+]]></content>
+        </item>
         
         <item>
             <title>Hack The Box - Bitlab</title>
@@ -1174,284 +1452,6 @@ So we simply call these functions in the right order and print the result.</p>
 </code></pre></div><p>Our function properly prints</p>
 <p><code>b'SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t'</code></p>
 <p>The <code>b</code> in front of the string means it&rsquo;s a bytes type instead of a string.</p>
-]]></content>
-        </item>
-        
-        <item>
-            <title>Hack The Box - Postman</title>
-            <link>/posts/hack-the-box-postman/</link>
-            <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-            
-            <guid>/posts/hack-the-box-postman/</guid>
-            <description>Welcome to another Forest Hex hacking adventure! 🌲🏹 Today I will be hacking a box named Postman.
-Postman HTB Card  Feel free to jump around as always:
- Port Scan Investigating Open Ports Finding a Foothold Escalating to a user shell Getting Root   Port Scan Let&amp;rsquo;s dive right in with a port scan: nmap -p- -sC -sV --min-rate=1000 -T4 10.10.10.160
- Looks like I have a few avenues of attack here.</description>
-            <content type="html"><![CDATA[<h3 id="welcome-to-another-forest-hex-hacking-adventure-">Welcome to another Forest Hex hacking adventure! 🌲🏹</h3>
-<p><em>Today I will be hacking a box named Postman.</em></p>
-
-    <figure class="left" >
-        <img src="1575350169.png"   />
-
-        
-            <figcaption class="center" >Postman HTB Card</figcaption>
-        
-    </figure>
-
-
-<p>Feel free to jump around as always:</p>
-<ul>
-<li><a href="#port-scan">Port Scan</a></li>
-<li><a href="#investigating-open-ports">Investigating Open Ports</a></li>
-<li><a href="#finding-a-foothold">Finding a Foothold</a></li>
-<li><a href="#escalating-to-a-user-shell">Escalating to a user shell</a></li>
-<li><a href="#getting-root">Getting Root</a></li>
-</ul>
-<hr>
-<h1 id="port-scan">Port Scan</h1>
-<p>Let&rsquo;s dive right in with a port scan: <code>nmap -p- -sC -sV --min-rate=1000 -T4 10.10.10.160</code></p>
-
-    <figure class="left" >
-        <img src="1575350463.png"   />
-
-        
-    </figure>
-
-
-<p>Looks like I have a few avenues of attack here. Webmin on port 10000 interests me greatly, I remember a lot of webmin exploits existing the last time I searched for them. My gut is to always check port 80 first though:</p>
-<hr>
-<h1 id="investigating-open-ports">Investigating Open Ports</h1>
-<h4 id="port-80">Port 80:</h4>
-<p>
-    <figure class="left" >
-        <img src="1575350617.png"   />
-
-        
-            <figcaption class="center" >Cyber Geek&#39;s Pesonal Web Site</figcaption>
-        
-    </figure>
-
-
-Hmmm, the Cyber Geek eh? Well there&rsquo;s not much to the site here, there&rsquo;s no place for input and the source doesn&rsquo;t seem to be hiding anything. Ah well, time to move along.</p>
-<h4 id="port-1000">Port 1000:</h4>
-
-    <figure class="left" >
-        <img src="1575350786.png"   />
-
-        
-            <figcaption class="center" >Hint to use HTTPS</figcaption>
-        
-    </figure>
-
-
-<p>A suggestion to try SSL protocol, alright then&hellip;
-
-    <figure class="left" >
-        <img src="1575350837.png"   />
-
-        
-            <figcaption class="center" >Webmin Login</figcaption>
-        
-    </figure>
-
-</p>
-<p>A Webmin login page, cool. I messed around a bit here with some SQL injection and default password combos but got nowhere, I wasn&rsquo;t expecting it to but you never know.</p>
-<h4 id="port-6379">Port 6379</h4>
-
-    <figure class="left" >
-        <img src="1575351187.png"   />
-
-        
-    </figure>
-
-
-<p>Interesting&hellip; I worked with Redis a while back, it&rsquo;s a way to store key value pairs on a server that you can interface with over HTTP requests. I looked up how to list all key value pairs: <a href="https://chartio.com/resources/tutorials/how-to-get-all-keys-in-redis/">https://chartio.com/resources/tutorials/how-to-get-all-keys-in-redis/</a></p>
-
-    <figure class="left" >
-        <img src="1575351346.png"   />
-
-        
-    </figure>
-
-
-<p>So I need to figure out how to send this command, maybe I can just use netcat.
-
-    <figure class="left" >
-        <img src="1575351407.png"   />
-
-        
-    </figure>
-
-</p>
-<p>Paydirt, though I&rsquo;m not sure what it&rsquo;s for yet. Cracklist sounds interesting&hellip;
-
-    <figure class="left" >
-        <img src="1575351538.png"   />
-
-        
-    </figure>
-
-</p>
-<p>Hm, a public ssh key, interesting. I&rsquo;ll save it in CherryTree for now.</p>
-<p>Well the initial enumeration is done, time to search for some exploits.</p>
-<blockquote>
-<p>It turns out that this SSH key was from another hacking attempt, I just did not realize it at the time.</p>
-</blockquote>
-<hr>
-<h1 id="finding-a-foothold">Finding a Foothold</h1>
-<p>First I decided to use searchsploit for a Webmin exploit:</p>
-
-    <figure class="left" >
-        <img src="1575351841.png"   />
-
-        
-    </figure>
-
-
-<p>The highlighted one seems perfect, according to NMap the versions is 1.910. It&rsquo;s a metasploit module which means it could be easy to use, but you never know. I read the details on this exploit, it&rsquo;s clear we need credentials first:
-<code>Any user authorized to the &quot;Package Updates&quot; module can execute arbitrary commands with root privileges.</code></p>
-<p>That could be something we use later, but for now it&rsquo;s time to move somewhere else. The other exploits for versions above 1.910 are worth investigating.</p>
-<p>This one sounds promising: <a href="https://www.exploit-db.com/exploits/47230">https://www.exploit-db.com/exploits/47230</a></p>
-<p><code>This module exploits a backdoor in Webmin versions 1.890 through 1.920. Only the SourceForge downloads were backdoored, but they are listed as official downloads on the project's site</code></p>
-<p>It could work, the chances are lower for our version however according to the details. Well, we can check it pretty quickly with metasploit so let&rsquo;s do that.</p>
-
-    <figure class="left" >
-        <img src="1575352689.png"   />
-
-        
-    </figure>
-
-
-<p>Bummer. The other one listed was the same exploit, just a different version so that won&rsquo;t work either. That leaves me with Apache exploits, which are usually a dead end in my experience.</p>
-<h2 id="the-redis-modules-rce-exploit">The Redis Modules RCE Exploit</h2>
-<hr>
-<p>After checking out searchsploit I confirmed there are no suitable apache exploits here. My gut points me back at the redis server, I&rsquo;m going to install redis-cli to see what I can find.</p>
-<p>Running the <code>INFO</code> command in netcat got me the version number:
-<code>redis_version:4.0.9</code></p>
-<p>Poking around in the actual client led me to believe the cracklist variable was a fluke. There&rsquo;s also an exploit I found for redis 4/5 that has RCE, I&rsquo;m going to try it out.</p>
-
-    <figure class="left" >
-        <img src="1575354776.png"   />
-
-        
-    </figure>
-
-
-<p>Oh yeah, that&rsquo;s what I like to see. Time to cross my fingers and run <code>exploit</code>.</p>
-
-    <figure class="left" >
-        <img src="1575354982.png"   />
-
-        
-    </figure>
-
-
-<p>Close but no cigar&hellip; I played around a bit and decided to manually listen on netcat but that didn&rsquo;t work either. I did some more research and decided to update metasploit, if this fails I&rsquo;ll try to understand the exploit manually and see if there&rsquo;s a non-metasploit version.</p>
-<p>After a bit of searching I found a python version:
-<a href="https://github.com/Ridter/redis-rce">https://github.com/Ridter/redis-rce</a></p>
-<p>I also found a very detailed explanation of how the redis rogue server exploit works:
-<a href="https://medium.com/@knownsec404team/rce-exploits-of-redis-based-on-master-slave-replication-ef7a664ce1d0">https://medium.com/@knownsec404team/rce-exploits-of-redis-based-on-master-slave-replication-ef7a664ce1d0</a></p>
-<h2 id="adding-an-ssh-key-vis-redis">Adding an SSH key vis Redis</h2>
-<hr>
-<p>After a ton of playing around with these exploits and understanding them better I realized this type of exploit won&rsquo;t work due to the lack of supports for MODULES on the other system.</p>
-<p>I did realize I have some alternate paths to a shell however, since I can write files to the other system I can try to stick a bash shell in a crontab, or a php shell on the www server, or an SSH key somewhere.</p>
-<p>I managed to find this tutorial
-<a href="https://medium.com/@Victor.Z.Zhu/redis-unauthorized-access-vulnerability-simulation-victor-zhu-ac7a71b2e419">https://medium.com/@Victor.Z.Zhu/redis-unauthorized-access-vulnerability-simulation-victor-zhu-ac7a71b2e419</a></p>
-<p>On top of that, playing around with the redis client allowed me to find the config file was already present at /var/lib/redis/.ssh</p>
-<p>I created a public key and followed the tutorial.</p>
-<p>Basically it works like this:</p>
-<ol>
-<li>Get redis-cli. <a href="https://redis.io/topics/rediscli">https://redis.io/topics/rediscli</a></li>
-<li>Wrap newlines around a public key. <code>(echo -e &quot;\n\n&quot;; cat ~/.ssh/id_rsa.pub; echo -e &quot;\n\n&quot;) &gt; temp.txt</code></li>
-<li>Save the formatted key in Redis. <code>cat ~/.ssh/temp.txt | redis-cli -h 10.10.10.160 -x set s-key</code></li>
-<li>Connect with redis-cli interactive mode. <code>redis-cli -h 10.10.10.160</code></li>
-<li>Set redis save directory to .ssh folder. <code>CONFIG SET dir /var/lib/redis/.ssh</code></li>
-<li>Set redis db name to authorized_keys. <code>CONFIG SET dbfilename authorized_keys</code></li>
-<li>Save it. <code>save</code></li>
-</ol>
-<p>This saves a public key to the redis server, which is then saved in the db filename under the configured dir. It ends up having the ssh public key value here: <code>/var/lib/redis/.ssh/authorized_keys</code></p>
-<p>Redis will append some metadata to the top, that&rsquo;s why the public key was wrapped in newlines. OpenSSH will manage to parse the public key correctly since it just checks every newline for a valid key, ignoring invalid entries. The metadata is ignored, and the real public key is loaded.</p>
-<p>This allowed me to SSH into the system as <code>redis</code> using my key, which seems a bit strange. I checked out <code>/etc/passwd</code> and confirmed redis is set up to use bash on login, this is definitely towards the CTF style of things. You normally wouldn&rsquo;t allow the redis service to have a bash login.</p>
-<p>I eventually figured out this was the method when I realized the previous cracklist key I had found was attempting to do this very method of gaining access.</p>
-<hr>
-<h1 id="escalating-to-a-user-shell">Escalating to a user shell</h1>
-<p>Once I was in I came across a file matt was running:
-
-    <figure class="left" >
-        <img src="1575393423.png"   />
-
-        
-            <figcaption class="center" >Suspicious File</figcaption>
-        
-    </figure>
-
-</p>
-<p>It looks like I can just put files on the server under his name. Well, I can probably stick a new authorized_keys file under his SSH folder and gain access as him. There&rsquo;s a problem though, the file isn&rsquo;t running and if I start it as redis it won&rsquo;t be able to write anywhere redis can&rsquo;t.</p>
-<p>I started poking around some familiar areas, and on a whim checked <code>/opt</code>. Lo and behold:
-
-    <figure class="left" >
-        <img src="1575418758.png"   />
-
-        
-            <figcaption class="center" >An Encrypted SSH Key</figcaption>
-        
-    </figure>
-
-</p>
-<p>Time to crack this baby. There&rsquo;s a python script named ssh2john which I used to convert the ssh key into a format John the Ripper here: <a href="https://github.com/koboi137/john">https://github.com/koboi137/john</a></p>
-<p>After that I just crack it with John and Rockyou:
-<code>john hash -d --wordlist=/usr/share/wordlists/rockyou.txt</code>
-
-    <figure class="left" >
-        <img src="1575419152.png"   />
-
-        
-            <figcaption class="center" >Cracked SSH Passphrase</figcaption>
-        
-    </figure>
-
-</p>
-<p>Bingo, looks like it&rsquo;s <code>computer2008</code>.
-Well considering there are only 3 accounts with bash logins (Matt, Root, redis), hopefully it works for Matt at least if not root.</p>
-<p>
-    <figure class="left" >
-        <img src="1575419472.png"   />
-
-        
-    </figure>
-
-
-Hmm&hellip; suspicious. When I enter the cracked passphrase it immediately closes the connection, which means the passphrase is right. There&rsquo;s some post login script that&rsquo;s closing the connection. I know you can have SSH execute commands on connect, maybe I can get a reverse shell going before it closes the connection.</p>
-<p>I think another option is to send it <code>vi</code> and then <code>vi</code> should open and I can escape to a shell.</p>
-<p>None of that worked, and after some more frustration I decided to look at the sshd_config file&hellip;</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#deny users</span>
-DenyUsers Matt
-</code></pre></div><p>Well god damnit. No matter, maybe he reused this password for his account and I can just su into it.</p>
-
-    <figure class="left" >
-        <img src="1575422055.png"   />
-
-        
-            <figcaption class="center" >Got User</figcaption>
-        
-    </figure>
-
-
-<p>Awesome, got ya Matt! Time to try for root.</p>
-<hr>
-<h1 id="getting-root">Getting Root</h1>
-<p>I poked around for a bit looking for anything obvious, but came up empty. Then I ran the <code>lse.sh</code> script: <a href="https://github.com/diego-treitos/linux-smart-enumeration">https://github.com/diego-treitos/linux-smart-enumeration</a></p>
-<p>Nothing extraordinary came up, but I noticed binaries running as root was green and it reminded me that webmin was running. I quickly tried the credentials <code>Matt</code> <code>computer2008</code> on it, and bingo I was in. I checked what webmin was running as, and it&rsquo;s root!</p>
-<p>Remember that webmin exploit we checked out first? It required the webmin user to have creds, which we now do. Let&rsquo;s try and get root with it.</p>
-<p>
-    <figure class="left" >
-        <img src="1575428772.png"   />
-
-        
-    </figure>
-
-
-Success! All I had to do was set the options and exploit. I got a bit tripped up with the SSL option but after I checked the options again I noticed it and it worked like a charm.</p>
 ]]></content>
         </item>
         
