@@ -13,6 +13,8 @@ In fact, a lot of my recent drive to learn hacking was watching the Nintendo Swi
 <meta name="keywords" content="" />
 <meta name="robots" content="noodp" />
 <meta name="theme-color" content="#252627" />
+<meta name="twitter:image" content="" />
+<meta name="itemprop:image" content="" />
 <link rel="canonical" href="/posts/cryptopals-set-1-challenge-1/" />
 
 
@@ -58,13 +60,10 @@ In fact, a lot of my recent drive to learn hacking was watching the Nintendo Swi
 <meta itemprop="datePublished" content="2019-06-11T21:14:35&#43;00:00" />
 <meta itemprop="dateModified" content="2019-06-11T21:14:35&#43;00:00" />
 <meta itemprop="wordCount" content="280">
-<meta itemprop="image" content="/"/>
 
 
 
-<meta itemprop="keywords" content="Cryptography,Cryptology,Crypto,Hacking,Challenge," /><meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/"/>
-
+<meta itemprop="keywords" content="Cryptography,Cryptology,Crypto,Hacking,Challenge," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Cryptopals Set 1 - Challenge 1"/>
 <meta name="twitter:description" content="Begin your journey of crypto enlightenment."/>
 
@@ -172,7 +171,7 @@ So we simply call these functions in the right order and print the result.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> base64
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">hex_to_b64</span>(input):
     <span style="color:#66d9ef">return</span> base64<span style="color:#f92672">.</span>b64encode(bytes<span style="color:#f92672">.</span>fromhex(input))
-<span style="color:#66d9ef">print</span>(hex_to_b64(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d</span><span style="color:#e6db74">&#39;</span>))
+<span style="color:#66d9ef">print</span>(hex_to_b64(<span style="color:#e6db74">&#39;49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d&#39;</span>))
 </code></pre></div><p>Our function properly prints</p>
 <p><code>b'SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t'</code></p>
 <p>The <code>b</code> in front of the string means it&rsquo;s a bytes type instead of a string.</p>
@@ -209,6 +208,13 @@ So we simply call these functions in the right order and print the result.</p>
                         </span>
                     
 
+                    
+                        <span class="button next">
+                            <a href="/posts/hack-the-box-postman/">
+                                <span class="button__text">Hack The Box - Postman</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
                     
                 </div>
             </div>

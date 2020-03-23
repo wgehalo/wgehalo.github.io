@@ -12,6 +12,8 @@ What&amp;rsquo;s the return address? The return address is a value stored on the
 <meta name="keywords" content="" />
 <meta name="robots" content="noodp" />
 <meta name="theme-color" content="#252627" />
+<meta name="twitter:image" content="" />
+<meta name="itemprop:image" content="" />
 <link rel="canonical" href="/posts/buffer-overflow-on-arm-part-2/" />
 
 
@@ -57,13 +59,10 @@ What&amp;rsquo;s the return address? The return address is a value stored on the
 <meta itemprop="datePublished" content="2019-09-04T02:30:14&#43;00:00" />
 <meta itemprop="dateModified" content="2019-09-04T02:30:14&#43;00:00" />
 <meta itemprop="wordCount" content="748">
-<meta itemprop="image" content="/"/>
 
 
 
-<meta itemprop="keywords" content="binary explotation,ctf,arm,overflow," /><meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/"/>
-
+<meta itemprop="keywords" content="binary explotation,ctf,arm,overflow," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Buffer Overflow on ARM - Part 2"/>
 <meta name="twitter:description" content="Learn how to overflow a return address to control execution."/>
 
@@ -150,29 +149,29 @@ What&amp;rsquo;s the return address? The return address is a value stored on the
 <hr>
 <h1 id="exploring-the-challenge">Exploring the Challenge</h1>
 <p>Here&rsquo;s the source code for this challenge:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span><span style="color:#75715e">#</span><span style="color:#75715e">include</span> <span style="color:#75715e">&#34;flag.h&#34;</span><span style="color:#75715e">
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;flag.h&#34;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">win</span>()
 {
-        printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Wait, what? How?</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, FLAG);
+        printf(<span style="color:#e6db74">&#34;Wait, what? How?</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">%s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, FLAG);
 }
 
 <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">test</span>()
 {
         <span style="color:#66d9ef">char</span> buffer[<span style="color:#ae81ff">0x80</span>];
-        printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">This time, there really is no way to get to the flag.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">Do you finally give up?</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+        printf(<span style="color:#e6db74">&#34;This time, there really is no way to get to the flag.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">Do you finally give up?</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
         gets(buffer);
-        <span style="color:#66d9ef">if</span>(strcmp(buffer,<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Yes</span><span style="color:#e6db74">&#34;</span>)){
-                printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">That wasn&#39;t a </span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">Yes</span><span style="color:#ae81ff">\&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">You better give up now</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+        <span style="color:#66d9ef">if</span>(strcmp(buffer,<span style="color:#e6db74">&#34;Yes&#34;</span>)){
+                printf(<span style="color:#e6db74">&#34;That wasn&#39;t a </span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">Yes</span><span style="color:#ae81ff">\&#34;\n</span><span style="color:#e6db74">You better give up now</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
         }
         <span style="color:#66d9ef">else</span>
         {
-                printf(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Damn right</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+                printf(<span style="color:#e6db74">&#34;Damn right</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
         }
 }
 
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span><span style="color:#f92672">*</span>argv)
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv)
 {
         test();
 }

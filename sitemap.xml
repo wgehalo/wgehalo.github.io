@@ -8,11 +8,6 @@
   </url>
   
   <url>
-    <loc>/</loc>
-    <lastmod>2020-01-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/tags/git/</loc>
     <lastmod>2020-01-11T00:00:00+00:00</lastmod>
   </url>
@@ -160,6 +155,19 @@
   <url>
     <loc>/about/</loc>
     <lastmod>2019-06-11T18:51:11+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2019-06-11T18:51:11+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/cracking/</loc>
+  </url>
+  
+  <url>
+    <loc>/posts/hack-the-box-postman/</loc>
   </url>
   
 </urlset>

