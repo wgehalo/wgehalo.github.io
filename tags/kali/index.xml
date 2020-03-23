@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>kali on Forest Hex</title>
-    <link>/tags/kali/</link>
+    <link>https://foresthex.com/tags/kali/</link>
     <description>Recent content in kali on Forest Hex</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Sun, 13 Oct 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/kali/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://foresthex.com/tags/kali/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Hack The Box - Beep</title>
-      <link>/posts/hack-the-box-beep/</link>
+      <link>https://foresthex.com/posts/hack-the-box-beep/</link>
       <pubDate>Sun, 13 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>/posts/hack-the-box-beep/</guid>
+      <guid>https://foresthex.com/posts/hack-the-box-beep/</guid>
       <description>Welcome to another Forest Hex hacking adventure! 🌲🏹 Today&amp;rsquo;s plan is to explore a retired CTF from http://hackthebox.eu named &amp;ldquo;Beep&amp;rdquo;. I chose this box because it&amp;rsquo;s easy, it&amp;rsquo;s linux, and it&amp;rsquo;s rated very highly. All that put together should add up to some serious fun, so let&amp;rsquo;s get started:
   Port Scan Poking around the mySql Server Checking out Webmin Hylafax, what are you hiding? Back to Elastix Getting User and Root   Port Scan The first thing, as always, is a port scan:</description>
     </item>
