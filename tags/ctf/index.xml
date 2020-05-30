@@ -6,10 +6,22 @@
     <description>Recent content in ctf on Forest Hex</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Fri, 20 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://foresthex.com/tags/ctf/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Hack The Box - Obscurity</title>
+      <link>https://foresthex.com/posts/hack-the-box-obscurity/</link>
+      <pubDate>Sat, 30 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://foresthex.com/posts/hack-the-box-obscurity/</guid>
+      <description>Welcome to another Forest Hex hacking adventure! 🌲🏹 Today I will be hacking an HTB box named Obscurity.
+ This one is leaning more towards CTF style than real world, let&amp;rsquo;s see if I can manage to figure it out.
+As always, feel free to jump around.
+  Port Scan Checking out the Web Server The Web Server Script Popping the Reverse Shell Getting User Getting Root Getting Root Another Way   Port Scan nmap -p- -sC -sV --min-rate=1000 -T4 10.</description>
+    </item>
     
     <item>
       <title>Hack The Box - Postman</title>

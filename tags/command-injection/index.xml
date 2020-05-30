@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Python on Forest Hex</title>
-    <link>https://foresthex.com/tags/python/</link>
-    <description>Recent content in Python on Forest Hex</description>
+    <title>command injection on Forest Hex</title>
+    <link>https://foresthex.com/tags/command-injection/</link>
+    <description>Recent content in command injection on Forest Hex</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Sat, 30 May 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://foresthex.com/tags/python/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://foresthex.com/tags/command-injection/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -21,17 +21,6 @@
  This one is leaning more towards CTF style than real world, let&amp;rsquo;s see if I can manage to figure it out.
 As always, feel free to jump around.
   Port Scan Checking out the Web Server The Web Server Script Popping the Reverse Shell Getting User Getting Root Getting Root Another Way   Port Scan nmap -p- -sC -sV --min-rate=1000 -T4 10.</description>
-    </item>
-    
-    <item>
-      <title>Hack The Box - Craft</title>
-      <link>https://foresthex.com/posts/hack-the-box-craft/</link>
-      <pubDate>Sat, 04 Jan 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://foresthex.com/posts/hack-the-box-craft/</guid>
-      <description>Welcome to another Forest Hex hacking adventure! 🌲🏹
-Today I&amp;rsquo;m going to exploit some poor programming decisions and leverage those into a root shell. Grab a beer and come along for the ride.
-  Port Scan As always, I start with a port scan to see what&amp;rsquo;s open. I do a quick scan of all ports using nmap and then pipe those into a new, more thorough nmap scan.</description>
     </item>
     
   </channel>
