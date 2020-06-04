@@ -6,10 +6,21 @@
     <description>Recent content on Forest Hex</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Sat, 30 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 04 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://foresthex.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Hack The Box - Mango</title>
+      <link>https://foresthex.com/posts/hack-the-box-mango/</link>
+      <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://foresthex.com/posts/hack-the-box-mango/</guid>
+      <description>Welcome to another Forest Hex hacking adventure! 🌲🏹 Today I&amp;rsquo;ll be hacking an HTB box Named Mango.
+ As always, we start with a port scan. Feel free to jump around.
+ Port Scan Investigating the Web Server Exploiting the Login Page Creating a Python Script The Final Script Getting User Getting Root   Port Scan Port Scan  Pretty standard here, SSH and a web server running on port 80 and 443 for http and https respectively.</description>
+    </item>
     
     <item>
       <title>Hack The Box - Obscurity</title>
@@ -109,18 +120,6 @@ I was happy to see the source code provided, and even happier when I was able to
       <description>Welcome to another Forest Hex crypto adventure! 🌲🏹 Today I will be walking through the first Cryptopals challenge.
 Cryptopals is a series of cryptology related challenges broken into sets, escalating in difficulty. I was recommended to check out this site by another user in a Nintendo Switch Hacking discord server.You can find this server here: https://discord.gg/ZdqEhed
 In fact, a lot of my recent drive to learn hacking was watching the Nintendo Switch hacking scene unfold.</description>
-    </item>
-    
-    <item>
-      <title>About this blog:</title>
-      <link>https://foresthex.com/about/</link>
-      <pubDate>Tue, 11 Jun 2019 18:51:11 +0000</pubDate>
-      
-      <guid>https://foresthex.com/about/</guid>
-      <description>I created this page to follow my journey through the world of hacking. The term &amp;ldquo;hacking&amp;rdquo; is very broad, so to be more specific this blog will focus on hacking software.
-That&amp;rsquo;s still a pretty large field, so let&amp;rsquo;s break it down a bit:
- Binary Exploitation Web App Exploitation Cryptography Cracking  My main method for learning will be participating in CTF challenges.
-CTF (Capture the Flag) challenges are systems that are set up with the purpose of being exploited.</description>
     </item>
     
   </channel>

