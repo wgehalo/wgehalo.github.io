@@ -6,35 +6,53 @@
     <description>Recent content in Tags on Forest Hex</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Thu, 04 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://foresthex.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>cracking</title>
+      <link>https://foresthex.com/tags/cracking/</link>
+      <pubDate>Sat, 13 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://foresthex.com/tags/cracking/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>ctf</title>
       <link>https://foresthex.com/tags/ctf/</link>
-      <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 13 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://foresthex.com/tags/ctf/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Custom Exploit</title>
-      <link>https://foresthex.com/tags/custom-exploit/</link>
-      <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
+      <title>HackTheBox</title>
+      <link>https://foresthex.com/tags/hackthebox/</link>
+      <pubDate>Sat, 13 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://foresthex.com/tags/custom-exploit/</guid>
+      <guid>https://foresthex.com/tags/hackthebox/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>HackTheBox</title>
-      <link>https://foresthex.com/tags/hackthebox/</link>
+      <title>pentesting</title>
+      <link>https://foresthex.com/tags/pentesting/</link>
+      <pubDate>Sat, 13 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://foresthex.com/tags/pentesting/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Custom Exploitation</title>
+      <link>https://foresthex.com/tags/custom-exploitation/</link>
       <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://foresthex.com/tags/hackthebox/</guid>
+      <guid>https://foresthex.com/tags/custom-exploitation/</guid>
       <description></description>
     </item>
     
@@ -44,15 +62,6 @@
       <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>https://foresthex.com/tags/nosqli/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>pentesting</title>
-      <link>https://foresthex.com/tags/pentesting/</link>
-      <pubDate>Thu, 04 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://foresthex.com/tags/pentesting/</guid>
       <description></description>
     </item>
     
@@ -75,29 +84,20 @@
     </item>
     
     <item>
-      <title>cracking</title>
-      <link>https://foresthex.com/tags/cracking/</link>
-      <pubDate>Sat, 30 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://foresthex.com/tags/cracking/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Custom Exploitation</title>
-      <link>https://foresthex.com/tags/custom-exploitation/</link>
-      <pubDate>Sat, 30 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://foresthex.com/tags/custom-exploitation/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>git</title>
       <link>https://foresthex.com/tags/git/</link>
       <pubDate>Sat, 11 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>https://foresthex.com/tags/git/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>kali</title>
+      <link>https://foresthex.com/tags/kali/</link>
+      <pubDate>Sun, 13 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://foresthex.com/tags/kali/</guid>
       <description></description>
     </item>
     

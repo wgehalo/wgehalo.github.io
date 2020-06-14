@@ -6,10 +6,21 @@
     <description>Recent content on Forest Hex</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Thu, 04 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://foresthex.com/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Hack The Box - Traverxec</title>
+      <link>https://foresthex.com/posts/hack-the-box-traverxec/</link>
+      <pubDate>Sat, 13 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://foresthex.com/posts/hack-the-box-traverxec/</guid>
+      <description>Welcome to another Forest Hex hacking adventure! 🌲🏹 Today&amp;rsquo;s box is named &amp;ldquo;Traverxec&amp;rdquo;, which is kind of strange but so be it. Here&amp;rsquo;s the card:
+ A newer easy box. Well let&amp;rsquo;s dive right in with a standard nmap scan. Feel free to jump around:
+ Scanning the Ports Exploring the Web Server Exploring the Limited Shell Cracking the SSH Key Passphrase Getting Root   Scanning the Ports I recently learned my script was redundant, so now I&amp;rsquo;m using a fancy one liner: nmap -p- -sC -sV --min-rate=1000 -T4</description>
+    </item>
     
     <item>
       <title>Hack The Box - Mango</title>
@@ -109,17 +120,6 @@ So, a quick recap:
       <description>Hello again faithful readers! Today&amp;rsquo;s post is about exploiting a buffer overflow.
 A few days ago I was invited to attempt some binary exploitation challenges for ARM architecture. Of course I agreed, despite the fact that I have no experience debugging ARM binaries. That&amp;rsquo;s okay though, it&amp;rsquo;s how you learn.
 I was happy to see the source code provided, and even happier when I was able to quickly identify the path to success without needing a debugger at all.</description>
-    </item>
-    
-    <item>
-      <title>Cryptopals Set 1 - Challenge 1</title>
-      <link>https://foresthex.com/posts/cryptopals-set-1-challenge-1/</link>
-      <pubDate>Tue, 11 Jun 2019 21:14:35 +0000</pubDate>
-      
-      <guid>https://foresthex.com/posts/cryptopals-set-1-challenge-1/</guid>
-      <description>Welcome to another Forest Hex crypto adventure! 🌲🏹 Today I will be walking through the first Cryptopals challenge.
-Cryptopals is a series of cryptology related challenges broken into sets, escalating in difficulty. I was recommended to check out this site by another user in a Nintendo Switch Hacking discord server.You can find this server here: https://discord.gg/ZdqEhed
-In fact, a lot of my recent drive to learn hacking was watching the Nintendo Switch hacking scene unfold.</description>
     </item>
     
   </channel>
