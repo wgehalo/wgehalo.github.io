@@ -594,7 +594,7 @@ After a lot of playing around I did not manage to pop a reverse shell.</p>
     </figure>
 
 
-<p>Success! Although I couldn&rsquo;t see my input the commands were now run. This was a very enjoyable box and I learned a lot about noSQL injection. Until next time this is jivex5k signing off!</p>
+<p>Success! Although I couldn&rsquo;t see my input the commands were now run. This was a very enjoyable box and I learned a lot about noSQL injection. Until next time this is Brian G. signing off!</p>
 ]]></content>
         </item>
         
@@ -1000,7 +1000,7 @@ No matter, I can simply change the access to /etc/passwd so robert can modify it
     </figure>
 
 </p>
-<p>Until next time, this is jivex5k signing off!</p>
+<p>Until next time, this is Brian G. signing off!</p>
 ]]></content>
         </item>
         
@@ -1483,7 +1483,7 @@ cat /root/.ssh/authorized_keys
     </figure>
 
 
-<p>Awesome! Abusing git hooks for fun and profit! Until next time this is jivex5k signing off!</p>
+<p>Awesome! Abusing git hooks for fun and profit! Until next time this is Brian G. signing off!</p>
 ]]></content>
         </item>
         
@@ -1934,7 +1934,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
 
 </figure>
 
-<p>A very cool box. Until next time hackers, this is jivex5k signing off!</p>
+<p>A very cool box. Until next time hackers, this is Brian G. signing off!</p>
 ]]></content>
         </item>
         
@@ -2093,7 +2093,7 @@ After a lot of messing around I decided to go back to the list and try the next 
 
 
 <hr>
-<p>Until next time, this is jivex5k signing off.</p>
+<p>Until next time, this is Brian G. signing off.</p>
 ]]></content>
         </item>
         
