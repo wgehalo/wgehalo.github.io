@@ -6,11 +6,7 @@
     <description>Recent content in overflow on Forest Hex</description>
     <generator>Hugo -- gohugo.io</generator>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Wed, 04 Sep 2019 02:30:14 +0000</lastBuildDate>
-    
-	<atom:link href="https://foresthex.com/tags/overflow/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 04 Sep 2019 02:30:14 +0000</lastBuildDate><atom:link href="https://foresthex.com/tags/overflow/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Buffer Overflow on ARM - Part 2</title>
       <link>https://foresthex.com/posts/buffer-overflow-on-arm-part-2/</link>

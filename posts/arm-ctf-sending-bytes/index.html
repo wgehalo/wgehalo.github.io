@@ -187,7 +187,7 @@ So, a quick recap:
 <p>This is the most portable version since <code>echo -e</code> will be available on all but extremely locked down/customzed linux distributions.</p>
 <p>The syntax is very simple:</p>
 <p><code>echo -e &quot;\x30\n&quot; | nc localhost 9001</code></p>
-<p>The big problem with it, we have to manually put 128 <code>\x00</code>'s in the command. That&rsquo;s messy, but doable. Using python I can print the string I need like so:</p>
+<p>The big problem with it, we have to manually put 128 <code>\x00</code>&rsquo;s in the command. That&rsquo;s messy, but doable. Using python I can print the string I need like so:</p>
 <p><code>print(b'\x00'*128 + b'\n')</code></p>
 
     <figure class="left" >

